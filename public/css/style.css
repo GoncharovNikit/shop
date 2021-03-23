@@ -287,6 +287,14 @@ a:hover {
   margin-bottom: 0;
 }
 
+.container .menu-container-wrap{
+  display: flex;
+  flex-direction:row;
+  justify-content: center;
+  align-items: center;
+  width:100%;
+}
+
 /* Header
 ------------------------------------------------------------------------------*/
 
@@ -1496,7 +1504,7 @@ h1 {
 /* Media
 ------------------------------------------------------------------------------*/
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-reso#lution: 192dpi) {
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   #userCard{
     width: 70%;
     margin-left: auto;
@@ -1848,7 +1856,9 @@ h1 {
 
   #menu .container {
     position: static;
+    
   }
+
 
   #header .container {
     height: auto;
@@ -1964,6 +1974,7 @@ h1 {
     margin-bottom: 106px;
     font-size: 10pt;
   }
+
 }
 
 @media screen and (max-width: 479px) {
@@ -2168,4 +2179,31 @@ input[type="radio"]:checked:after {
 
 .products article:hover{
   border: 2px solid black;
+}
+
+#about-wrap{
+  margin:10px auto;
+  padding:40px;
+  /* border: 1px solid black; */
+  font-size:100%;
+  
+}
+#about-wrap h1{
+  font-size:400%;
+  font-family:'Times New Roman', Times, serif;
+  text-align: center;
+  margin:10px;
+}
+#about-wrap #about-text{
+  padding: 40px;
+  width: 80%;
+  margin:0 auto;
+}
+#about-text p{
+  text-indent: 60px;
+  margin-bottom: 7px;
+}
+.about-ul li{
+  list-style:disc;
+  margin-left: 40px;
 }

@@ -26,9 +26,6 @@
 				<section class="products productList">
 					
 
-				
-				
-				
 				</section>
 			</div>
 			<!-- / content -->

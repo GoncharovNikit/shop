@@ -1,13 +1,10 @@
 <nav id="menu">
     <div class="container">
         <div class="trigger"></div>
-        <ul>
+        <ul class="menu-container-wrap">
             <li><a href="{{route('shop.main')}}">Головна</a></li>
-            <li><a href="products.html">necklaces</a></li>
-            <li><a href="products.html">earrings</a></li>
             <li><a href="{{route('shop.list')}}">Товари</a></li>
-            <li><a href="products.html">Gift cards</a></li>
-            <li><a href="products.html">Promotions</a></li>
+            <li><a href="{{route('about')}}">Про нас</a></li>
         </ul>
     </div>
     <!-- / container -->

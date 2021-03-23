@@ -41,3 +41,5 @@ Route::get('/admin/{id}', 'AdminController@delete')->name('admin.delete');
 Route::get('/basket', 'BasketController@index')->name('basket');
 Route::post('/basket', 'BasketController@store')->name('basket.store');
 Route::delete('/basket', 'BasketController@delete')->name('basket.delete');
+
+Route::view('/about', 'about')->name('about');

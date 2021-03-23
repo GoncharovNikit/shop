@@ -6,18 +6,20 @@
                 <li><a href="{{route('basket')}}"><span class="ico-products"></span>Кошик</a></li>
                 <li><a href="{{Auth::check()?route('personal', Auth::id()):route('login')}}"><span class="ico-account"></span>Акаунт</a></li>
                 <li>
-                    @if(Auth::check())
+                    @auth
                     <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                         <span class="ico-signout"></span> Вийти
                     </a>
-                    @else
+                    @endauth
+                    @guest
                     <a href="{{ route('shop.main') }}">
                         <span class="ico-signout"></span> Вийти
                     </a>
-                    @endif
+                    @endguest
+                    
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        {{ csrf_field() }}
+                        @csrf
                         Вийти
                     </form>
                 </li>
