@@ -8,6 +8,8 @@ use App\Size;
 use App\User;
 use App\Basket;
 
+use Illuminate\Support\Facades\Auth;
+
 class ShopController extends Controller
 {
     public function list(Request $request)
@@ -36,6 +38,7 @@ class ShopController extends Controller
 
     public function personal(Request $request, $userid)
     {
+        if(!(Auth::check() && Auth::id() == $userid))return redirect()->back();
         $user = User::where('id', '=', $userid)->first();
         $basketProdCount = Basket::where('user_id', $userid)->count();
         $ordersCount = 0;//Orders::where('user_id', $userid)->count();

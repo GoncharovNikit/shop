@@ -2,27 +2,21 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center" style="width:100%; margin-bottom: 160px; margin-top: 131px;">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
 
-                <div class="card-body">
-                    @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
-                        </div>
-                    @endif
-
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }},
-                    <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
-                    </form>
-                </div>
-            </div>
+    <div class="card-body">
+        @if (session('resent'))
+        <div class="alert alert-success" role="alert">
+            {{ __('Посилання відправлене повторно!') }}
         </div>
+        @endif
+        <div class="card-header">{{ __('Перед продовженням, перевірте Вашу пошту та підтвердіть Email!') }}</div>
+        <div class="card-header" style="margin-top: 273px; margin-bottom: -120px;">{{ __('Не прийшло повідомлення?') }}</div>
+        <form style="border: none;" class="d-inline" method="POST" action="{{ route('verification.resend') }}">
+            @csrf
+            <button id="verify-mail" type="submit">
+                {{ __('Натисніть, щоб запросити ще одне.') }}
+            </button>.
+        </form>
     </div>
 </div>
 <script src="{{ asset('js/app.js') }}" defer></script>

@@ -36,11 +36,11 @@
                         {{$item->products->description}}
                     </p>
                 </td>
-                <td class="price">&#8372; {{$item->products->price}}</td>
-                <td class="qnt"><input data-singleprice="{{$item->products->price}}" type="number" name="countinp" class="countinp" value="{{$item->count}}" min="1" max="1000"></td>
-                <td class="size">{{$item->sizes['size']}}</td>
-                <td class="total" data-total="{{$item->count * $item->products->price}}">$ {{$item->count * $item->products->price}}</td>
-                <td class="delete"><a data-vendor="{{$item->products->vendorCode}}" class="ico-del"></a></td>
+                <td class="price"><div>&#8372; {{$item->products->price}}</div></td>
+                <td class="qnt"><div><input data-singleprice="{{$item->products->price}}" type="number" name="countinp" class="countinp" value="{{$item->count}}" min="1" max="1000"></div></td>
+                <td class="size"><div>{{$item->sizes['size']}}</div></td>
+                <td class="total" data-total="{{$item->count * $item->products->price}}"><div>$ {{$item->count * $item->products->price}}</div></td>
+                <td class="delete"><div><a data-vendor="{{$item->products->vendorCode}}" class="ico-del"></a></div></td>
             </tr>
             @empty
             <tr>
@@ -83,7 +83,11 @@
 
     <div class="total-count">
         <h3>Всього до сплати: <strong id="totalSum"></strong></h3>
-        <a href="#" class="btn-grey">Сплатити</a>
+        <form action="{{route('order.form')}}" method="post">
+            @csrf
+            <input id="totalSum-form" type="number" step="0.01" name="amount" hidden />   
+            <button class="btn payment" type="submit">Сплатити</button>
+        </form>
     </div>
 
 </div>

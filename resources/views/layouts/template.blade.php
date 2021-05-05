@@ -6,6 +6,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="theme-color" content="red" />
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.7/jquery.jgrowl.min.css" />
@@ -36,8 +37,9 @@
         window.jQuery || document.write("<script src='{{asset('js/jquery-1.11.1.min.js')}}'>\x3C/script>")
     </script>
     <script src="{{asset('js/plugins.js')}}"></script>
-    <script src="{{asset('js/main.js')}}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.7/jquery.jgrowl.min.js"></script>
+    <script src="{{asset('js/jquery.maskedinput.min.js')}}"></script>
+    <script defer src="{{asset('js/main.js')}}"></script>
 </body>
 
 </html>

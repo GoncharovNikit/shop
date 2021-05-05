@@ -3,6 +3,11 @@
         <a href="{{route('shop.main')}}" id="logo" title="Avangard jewelry factory">Avangard jewelry</a>
         <div class="right-links">
             <ul>
+                <li>
+                <img src="{{asset('images/lang.png')}}" id="lang-img" alt="">
+                <a href="{{ LaravelLocalization::getLocalizedURL('uk') }}">Українська</a>
+                /
+                <a href="{{ LaravelLocalization::getLocalizedURL('ru') }}">Русский</a></li>
                 <li><a href="{{route('basket')}}"><span class="ico-products"></span>Кошик</a></li>
                 <li><a href="{{Auth::check()?route('personal', Auth::id()):route('login')}}"><span class="ico-account"></span>Акаунт</a></li>
                 <li>

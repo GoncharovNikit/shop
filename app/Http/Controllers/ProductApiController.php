@@ -13,4 +13,10 @@ class ProductApiController extends Controller
         ->where('products.category_id', $id)
         ->get());
     }
+    public function index(Request $request)
+    {
+        $products = Product::with(['categories', 'metals', 'sizes'])->get();
+
+        return json_encode($products->shuffle());
+    }
 }

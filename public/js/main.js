@@ -1,8 +1,8 @@
 //const { round } = require("lodash");
-
+let currentCategory;
 //const { forEach } = require("lodash");
 $(function () {
-  $("#before-load").find("i").fadeOut().end().delay(100).fadeOut("slow");
+  $("#before-load").find("i").fadeOut().end().fadeOut("slow");
 });
 
 function mobileCheck() {
@@ -44,15 +44,14 @@ $(function () {
     return false;
   });
 
-  
-
-
+  $($('#phone')[0]).mask('+380(99) 999-99-99');
+  $($('#card')[0]).mask('9999 9999 9999 9999');
 
 
 
   let minv = parseInt($("#minv").val());
   let maxv = parseInt($("#maxv").val());
-  let currentCategory = 1;
+  currentCategory = 1;
 
   $("#price-range").slider({
     step: 1,
@@ -121,11 +120,12 @@ $(function () {
         })
         .appendTo($wrapper);
     }
+    paginateProducts(1);
   });
 
   //PAGINATION
   let currentPage = 1;
-  const productsByPage = 20;
+  const productsByPage = 16;
 
   $(".previous").on("click", function () {
     if (currentPage > 1) {
@@ -228,6 +228,7 @@ $(function () {
           sum += parseFloat(parseFloat($(this).data('total')).toFixed(2));
       });
       $("#totalSum").text('₴ ' + sum.toFixed(2));
+      $('#totalSum-form').val(sum.toFixed(2));
 
       $.ajax({
         type: "DELETE",
@@ -275,7 +276,8 @@ $(function () {
     }
   });
   $("#totalSum").text('₴ ' + sum.toFixed(2));
-  
+  $('#totalSum-form').val(sum.toFixed(2));
+
   $(".countinp").on("change", function(){
     sum = ($(this).data("singleprice") * $(this).val()).toFixed(2);
     $(this).parent(".qnt").siblings(".total").text('$ ' + sum);
@@ -288,19 +290,35 @@ $(function () {
     });
     
     $("#totalSum").text('₴ ' + sum.toFixed(2));
+    $('#totalSum-form').val(sum.toFixed(2));
   });
 
 
   upload_products_ajax(1, currentPage);
-  
-  $( document ).ajaxComplete(function(){
-    //alert('ajax complete");
+
+  $(document).ajaxComplete(function(){
     paginateProducts(currentPage);
   });
+
+  $("#sidebar-show-button").on('click', function(){
+    $("#sidebar").toggle({
+      duration: 800,
+    });
+  });
+
+  $(window).on('resize', function(){
+    
+    if(window.innerWidth >= 786){
+      $("#sidebar").show();
+    }
+    else{
+      $("#sidebar").hide();
+    }
+  });
+  
 });
 
 function getNonFilteredProducts() {
-  //alert('get non filtered products");
   return $(".productArt")
     .toArray()
     .filter(function (elem) {
@@ -313,12 +331,9 @@ function getNonFilteredProducts() {
 }
 
 function paginateProducts(currentPage) {
-  //alert('paginate products');
   let products = getNonFilteredProducts();
-  //alert('paginate products after get non filtered");
-  // console.log(products);
-  $(".productArt").hide();
 
+  $(".productArt").hide();
   for (let i = 20 * (currentPage - 1); i <= 20 * currentPage - 1; i++) {
     try {
       $(products[i]).show();
@@ -331,15 +346,12 @@ function csl(item) {
 }
 
 function isSize(elem) {
-  // alert('is size func');
   //Проверка наличия размера товара в списке товаров
   if (
     $(elem).data("category") != "Кольца" &&
     $(elem).data("category") != "Браслеты"
   )
     return true;
-    
-  //console.log($(elem).data("sizes").split(','));
 
   let sizes = $(elem).data("sizes").split(',');
   let cbs = $(".sizeCB").toArray();
@@ -353,53 +365,31 @@ function isSize(elem) {
       }
     }
   }
-  // alert('is size end');
   return false;
 }
 
 
 function upload_products_ajax(index, currentPage)
 {
-  //alert('uploading products');
   $(".productList").empty();
-  
-  $.get(rootDir + "api/products/category/" + index, function(data){
-
-    let productArr = $.parseJSON(data);
-
-    //перебираем все товары из json
-    productArr.forEach(function(elem){
-
-    // console.log(productArr);
-      // получаем массив размеров товара
-
-    let sizeArr = elem.sizes.map(function(val){
-      return val.size;
-    })  
-      /* 
-    let sizeArr = [];
-    elem.sizes.forEach(function(obj){
-      sizeArr.push(obj.size);
-    }); */
-
+  $.get(index == "all" ? rootDir + "api/products/" : rootDir + "api/products/category/" + index, 
+  data => {
+    JSON.parse(data).forEach(elem => {
+    // получаем массив размеров товара
+    let sizeArr = elem.sizes.map( val => val.size );  
     // заполняем товар
     let product = `
-    <article 
+    <article class="hovarticle productArt" 
 						data-sizes="`+ sizeArr +`" 
-						style="position:relative;" 
-						class="productArt" 
 						data-category="` + elem.categories.name + `" 
 						data-price="` + elem.price + `">
-
 						<a href="` + rootDir + `list/` + elem.vendorCode + `">
 							<img 
 								src="` + rootDir + `images/cat/` + elem.categories.name + `/` + elem.vendorCode + `.jpg" 
 								width="194" alt="https://via.placeholder.com/194x210">
 						</a>
-
-						<div style="position: absolute; bottom: 20px; width: 100%;">
+						<div class="art-div">
 							<h3><a href="` + rootDir + `list/` + elem.vendorCode + `">` + elem.vendorCode + `</a></h3>
-
 							<h4><a href="` + rootDir + `list/` + elem.vendorCode + `">&#8372; ` + elem.price + `</a></h4>
 							<small style="padding:3px;">` + elem.description.substring(0, 50) + `</small>
 						</div>
@@ -407,8 +397,5 @@ function upload_products_ajax(index, currentPage)
 
           $(".productList").append(product);
     });
-
-  });//.done(function() { setTimeout(paginateProducts, 4000, currentPage); } );
-  
-
+  });
 }

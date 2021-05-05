@@ -14,32 +14,33 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Auth::routes(['verify' => true]);
+Route::group(['prefix' => LaravelLocalization::setLocale()], function(){
 
-Route::middleware(['auth', 'verified'])->group(function(){
-    Route::get('/personal/{id}', 'ShopController@personal')->name('personal');
+    Auth::routes(['verify' => true]);
+    Route::middleware(['auth', 'verified'])->group(function(){
+        Route::get('/personal/{id}', 'ShopController@personal')->name('personal');
+    });
+    
+    Route::get('/', 'ShopController@main')->name('shop.main');
+
+    Route::get('/list', 'ShopController@list')->name('shop.list');
+    Route::get('/list/{id}', 'ShopController@single')->name('shop.single');
+
+    //BASKET
+    Route::get('/basket', 'BasketController@index')->name('basket');
+    Route::post('/basket', 'BasketController@store')->name('basket.store');
+    Route::delete('/basket', 'BasketController@delete')->name('basket.delete');
+
+    //Route::view('/about', 'about')->name('about');
+    Route::post('/order-form', 'OrderController@form')->name('order.form');
+    Route::post('/order-check', 'OrderController@check')->name('order.check');
+
+    Route::get('/home', function(){ return redirect('/'); });
 });
-
-Route::get('/', 'ShopController@main')->name('shop.main');
-Route::get('/home', function(){
-    return redirect('/');
-});
-
-Route::get('/list', 'ShopController@list')->name('shop.list');
-
-/* Route::get('/test', function(){
-    return view('test');
-}); */
-
-Route::get('/list/{id}', 'ShopController@single')->name('shop.single');
 
 Route::get('/admin', 'AdminController@index')->name('admin');
 Route::post('/admin', 'AdminController@store')->name('admin.store');
 Route::get('/admin/{id}', 'AdminController@delete')->name('admin.delete');
 
-//BASKET
-Route::get('/basket', 'BasketController@index')->name('basket');
-Route::post('/basket', 'BasketController@store')->name('basket.store');
-Route::delete('/basket', 'BasketController@delete')->name('basket.delete');
 
-Route::view('/about', 'about')->name('about');
+Route::get('/home', function(){ return redirect('/'); });
