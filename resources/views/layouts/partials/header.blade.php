@@ -1,38 +1,35 @@
 <header id="header">
     <div class="container">
-        <a href="{{route('shop.main')}}" id="logo" title="Avangard jewelry factory">Avangard jewelry</a>
-        <div class="right-links">
-            <ul>
-                <li>
-                <img src="{{asset('images/lang.png')}}" id="lang-img" alt="">
-                <a href="{{ LaravelLocalization::getLocalizedURL('uk') }}">Українська</a>
+        <div class="logo-wrapper">
+            <a href="{{route('shop.main')}}" id="logo">
+                <img src="{{asset('images/avg/LOGOAVG.png')}}" height="130" alt="">
+            </a>
+        </div>
+        <div class="second-header-row">
+            <div class="lang-wrapper">
+                <img src="{{asset('images/lang.png')}}" class="header-min-img" alt="">
+                <a href="{{ LaravelLocalization::getLocalizedURL('uk') }}">UK</a>
                 /
-                <a href="{{ LaravelLocalization::getLocalizedURL('ru') }}">Русский</a></li>
-                <li><a href="{{route('basket')}}"><span class="ico-products"></span>Кошик</a></li>
-                <li><a href="{{Auth::check()?route('personal', Auth::id()):route('login')}}"><span class="ico-account"></span>Акаунт</a></li>
-                <li>
-                    @auth
-                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                        <span class="ico-signout"></span> Вийти
-                    </a>
-                    @endauth
-                    @guest
-                    <a href="{{ route('shop.main') }}">
-                        <span class="ico-signout"></span> Вийти
-                    </a>
-                    @endguest
-                    
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                        Вийти
-                    </form>
-                </li>
-                <li>
-                    @if(Auth::check() && Auth::id() == 1)
-                    <a href="{{ route('admin') }}">Адмін-панель</a>
-                    @endif
-                </li>
+                <a href="{{ LaravelLocalization::getLocalizedURL('ru') }}">RU</a>
+            </div>
+            <div class="cart">
+                <a href="{{route('basket')}}"><img src="{{asset('images/basket.png')}}" class="header-min-img" alt=""> Кошик</a>
+            </div>
+            <div class="logo-plug"></div>
+            <div class="search-block">
+                <img src="{{asset('images/search.png')}}" class="header-min-img" alt="">
+                <input type="text" name="search" class="search-input-header">
+            </div>
+            <div class="callback-block-header">
+                <span class="phone-callback">+380(99)-635-04-57</span>
+                <button class="callback-btn">Обратный звонок</button>
+            </div>
+        </div>
+        <div class="product-categories-row-header">
+            <ul class="categories-list">
+                @foreach ($categories as $category)
+                    <li><a href="{{ route('shop.list', ['category' => $category->name]) }}">{{ $category->name_rus }}</a></li>
+                @endforeach
             </ul>
         </div>
     </div>

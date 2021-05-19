@@ -16,16 +16,11 @@ use Illuminate\Support\Facades\Auth;
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function(){
 
-    Auth::routes(['verify' => true]);
-    Route::middleware(['auth', 'verified'])->group(function(){
-        Route::get('/personal/{id}', 'ShopController@personal')->name('personal');
-    });
-    
     Route::get('/', 'ShopController@main')->name('shop.main');
 
-    Route::get('/list', 'ShopController@list')->name('shop.list');
-    Route::get('/list/{id}', 'ShopController@single')->name('shop.single');
-
+    Route::get('/list/{category}/{id}', 'ShopController@single')->name('shop.single');
+    Route::get('/list/{category}', 'ShopController@list')->name('shop.list');
+    
     //BASKET
     Route::get('/basket', 'BasketController@index')->name('basket');
     Route::post('/basket', 'BasketController@store')->name('basket.store');

@@ -1,5 +1,4 @@
 //const { round } = require("lodash");
-let currentCategory;
 //const { forEach } = require("lodash");
 $(function () {
   $("#before-load").find("i").fadeOut().end().fadeOut("slow");
@@ -13,8 +12,6 @@ function mobileCheck() {
     $(".products-wrap").before($("#body .pagination:first"));
   }
 }
-
-const rootDir = '/';
 
 $(function () {
   
@@ -33,7 +30,7 @@ $(function () {
     slideWidth: 235,
     slideMargin: 0,
   });
-  $(".tabs .nav a").click(function () {
+  $(".tabs .nav a").on("click", function () {
     var container = $(this).parentsUntil(".tabs").parent();
     if (!$(this).parent().hasClass("active")) {
       container.find(".nav .active").removeClass("active");
@@ -51,7 +48,6 @@ $(function () {
 
   let minv = parseInt($("#minv").val());
   let maxv = parseInt($("#maxv").val());
-  currentCategory = 1;
 
   $("#price-range").slider({
     step: 1,
@@ -82,25 +78,25 @@ $(function () {
     "<span>&#8372; " + $("#price-range").slider("values", 1) + "</span>"
   );
 
-  $("#menu .trigger").click(function () {
+  $("#menu .trigger").on('click', function () {
     $(this).toggleClass("active").next().toggleClass("active");
   });
 
   mobileCheck();
-  $(window).resize(function () {
+  $(window).on('resize', function () {
     mobileCheck();
   });
 
-  $(".categoryCB").on("change", function () {
-    currentCategory = $(this).val();
+  // $(".categoryCB").on("change", function () {
+  //   currentCategory = $(this).val();
 
-    if (!(currentCategory == 1 || currentCategory == 7)) {
-      $("#sizesWidget").hide();
-    } else $("#sizesWidget").show();
+  //   if (!(currentCategory == 1 || currentCategory == 7)) {
+  //     $("#sizesWidget").hide();
+  //   } else $("#sizesWidget").show();
 
-    currentPage = 1;
-    upload_products_ajax(currentCategory, currentPage);
-  });
+  //   currentPage = 1;
+  //   upload_products_ajax(currentCategory, currentPage);
+  // });
 
   let $wrapper = $(".products");
 
@@ -120,7 +116,7 @@ $(function () {
         })
         .appendTo($wrapper);
     }
-    paginateProducts(1);
+
   });
 
   //PAGINATION
@@ -135,12 +131,11 @@ $(function () {
   });
 
   $(".next").on("click", function () {
-    // alert('next start');
-    let pages = getNonFilteredProducts().length / productsByPage;
-    // alert('pages has counted');
-    if (getNonFilteredProducts().length % productsByPage != 0)
+    let countNonFiltered = getNonFilteredProducts().length;
+    let pages = countNonFiltered / productsByPage;
+    if (countNonFiltered % productsByPage != 0)
       pages++;
-    if (currentPage < pages - 1) {
+    if (currentPage < pages - 2) {
       currentPage++;
       paginateProducts(currentPage);
     }
@@ -293,13 +288,6 @@ $(function () {
     $('#totalSum-form').val(sum.toFixed(2));
   });
 
-
-  upload_products_ajax(1, currentPage);
-
-  $(document).ajaxComplete(function(){
-    paginateProducts(currentPage);
-  });
-
   $("#sidebar-show-button").on('click', function(){
     $("#sidebar").toggle({
       duration: 800,
@@ -316,7 +304,14 @@ $(function () {
     }
   });
   
+
+
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  paginateProducts(1);
+});
+
 
 function getNonFilteredProducts() {
   return $(".productArt")
@@ -353,7 +348,7 @@ function isSize(elem) {
   )
     return true;
 
-  let sizes = $(elem).data("sizes").split(',');
+  let sizes = $(elem).data("sizes");
   let cbs = $(".sizeCB").toArray();
   for (let i = 0; i < sizes.length; i++) {
     for (let j = 0; j < cbs.length; j++) {
@@ -369,33 +364,33 @@ function isSize(elem) {
 }
 
 
-function upload_products_ajax(index, currentPage)
-{
-  $(".productList").empty();
-  $.get(index == "all" ? rootDir + "api/products/" : rootDir + "api/products/category/" + index, 
-  data => {
-    JSON.parse(data).forEach(elem => {
-    // получаем массив размеров товара
-    let sizeArr = elem.sizes.map( val => val.size );  
-    // заполняем товар
-    let product = `
-    <article class="hovarticle productArt" 
-						data-sizes="`+ sizeArr +`" 
-						data-category="` + elem.categories.name + `" 
-						data-price="` + elem.price + `">
-						<a href="` + rootDir + `list/` + elem.vendorCode + `">
-							<img 
-								src="` + rootDir + `images/cat/` + elem.categories.name + `/` + elem.vendorCode + `.jpg" 
-								width="194" alt="https://via.placeholder.com/194x210">
-						</a>
-						<div class="art-div">
-							<h3><a href="` + rootDir + `list/` + elem.vendorCode + `">` + elem.vendorCode + `</a></h3>
-							<h4><a href="` + rootDir + `list/` + elem.vendorCode + `">&#8372; ` + elem.price + `</a></h4>
-							<small style="padding:3px;">` + elem.description.substring(0, 50) + `</small>
-						</div>
-					</article>`;
+// function upload_products_ajax(index, currentPage)
+// {
+//   $(".productList").empty();
+//   $.get(index == "all" ? rootDir + "api/products/" : rootDir + "api/products/category/" + index, 
+//   data => {
+//     JSON.parse(data).forEach(elem => {
+//     получаем массив размеров товара
+//     let sizeArr = elem.sizes.map( val => val.size );  
+//     заполняем товар
+//     let product = `
+//     <article class="hovarticle productArt" 
+// 						data-sizes="`+ sizeArr +`" 
+// 						data-category="` + elem.categories.name + `" 
+// 						data-price="` + elem.price + `">
+// 						<a href="` + rootDir + `list/` + elem.categories.name + '/' + elem.vendorCode + `">
+// 							<img 
+// 								src="` + rootDir + `images/cat/` + elem.categories.name_rus + `/` + elem.vendorCode + `.jpg" 
+// 								width="194" alt="https://via.placeholder.com/194x210">
+// 						</a>
+// 						<div class="art-div">
+// 							<h3><a href="` + rootDir + `list/` + elem.vendorCode + `">` + elem.vendorCode + `</a></h3>
+// 							<h4><a href="` + rootDir + `list/` + elem.vendorCode + `">&#8372; ` + elem.price + `</a></h4>
+// 							<small style="padding:3px;">` + elem.description.substring(0, 50) + `</small>
+// 						</div>
+// 					</article>`;
 
-          $(".productList").append(product);
-    });
-  });
-}
+//           $(".productList").append(product);
+//     });
+//   });
+// }

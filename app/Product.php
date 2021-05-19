@@ -30,8 +30,4 @@ class Product extends Model
     {
         return $this->belongsToMany(User::class, 'basket', 'product_vendorCode', 'user_id');
     }
-    public function basket()
-    {
-        return $this->belongsToMany(Basket::class);
-    }
 }

@@ -34,10 +34,10 @@
                 @foreach($products as $product)
                 <article style="padding-top: 60px;" style="position:relative;">
 
-                    <a href="{{route('shop.single', ['id'=>$product->vendorCode])}}"><img src="{{asset('images/cat/'.$product->categories->name.'/'.$product->vendorCode.'.jpg')}}" width="194" alt="https://via.placeholder.com/194x210"></a>
+                    <a href="{{route('shop.single', ['category' => $product->categories->name, 'id'=>$product->vendorCode])}}"><img src="{{asset('images/cat/'.$product->categories->name_rus.'/'.$product->vendorCode.'.jpg')}}" width="194" alt="https://via.placeholder.com/194x210"></a>
 
                     <div style="position: absolute; bottom: 20px; width: 100%;border:none;">
-                        <h3><a href="{{route('shop.single', ['id'=>$product->vendorCode])}}">{{$product->vendorCode}}</a></h3>
+                        <h3><a href="{{route('shop.single', ['category' => $product->categories->name, 'id'=>$product->vendorCode])}}">{{$product->vendorCode}}</a></h3>
                         <!-- <small>{{$product->vendorCode}}</small> -->
 
                     </div>

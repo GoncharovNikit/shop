@@ -6,7 +6,7 @@
 	<div class="container">
 		<ul>
 			<li><a href="{{route('shop.main')}}">Головна</a></li>
-			<li><a href="{{route('shop.list')}}">Товари</a></li>
+			<li><a href="{{route('shop.list', ['category' => 'all'])}}">Товари</a></li>
 			<li>Перегляд товару</li>
 		</ul>
 	</div>
@@ -19,7 +19,7 @@
 		<div id="content" class="full">
 			<div class="product">
 				<div class="image">
-					<img src="{{asset('images/cat/'.$product->categories->name.'/'.$product->vendorCode.'.jpg')}}" alt="">
+					<img src="{{asset('images/cat/'.$product->categories->name_rus.'/'.$product->vendorCode.'.jpg')}}" alt="">
 				</div>
 				<div class="details">
 					<h3>{{$product->vendorCode}}</h3>

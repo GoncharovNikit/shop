@@ -12,24 +12,32 @@ use Illuminate\Support\Facades\Auth;
 
 class ShopController extends Controller
 {
-    public function list(Request $request)
+    public function list(Request $request, $category = 'all')
     {
-        //$products = Product::with('sizes')->get();
-        $products = Product::all();
+        $products = [];
+        if ($category == 'all') $products = Product::with(['sizes'])->get();
+        else {
+            $products = Product::with(['categories', 'sizes'])
+            ->whereHas('categories', function($query) use($category){
+                $query->where('name', $category);
+            })
+            ->get();
+        }
         $maxPrice = Product::max('price');
         $minPrice = Product::min('price');
         $sizes = Size::all();
-
+        
         return view('shop.list', compact('products', 'maxPrice', 'minPrice', 'sizes'));
     }
 
     public function main()
     {
         $products = Product::with('categories')->orderBy('created_at')->take(10)->get();
+        // dd($products);
         return view('shop.main', compact('products'));
     }
 
-    public function single(Request $request, $id)
+    public function single(Request $request, $category, $id)
     {
         $product = Product::with(['categories', 'sizes'])->findOrFail($id);
 
