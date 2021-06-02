@@ -23,8 +23,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function(){
     
     //BASKET
     Route::get('/basket', 'BasketController@index')->name('basket');
-    Route::post('/basket', 'BasketController@store')->name('basket.store');
-    Route::delete('/basket', 'BasketController@delete')->name('basket.delete');
 
     //Route::view('/about', 'about')->name('about');
     Route::post('/order-form', 'OrderController@form')->name('order.form');
@@ -39,3 +37,6 @@ Route::get('/admin/{id}', 'AdminController@delete')->name('admin.delete');
 
 
 Route::get('/home', function(){ return redirect('/'); });
+
+Route::post('/basket', 'BasketController@store')->name('basket.store');
+Route::delete('/basket', 'BasketController@delete')->name('basket.delete');

@@ -171,13 +171,10 @@ $(function () {
   // ДОБАВЛЕНИЕ ТОВАРА В КОРЗИНУ
 
   $(".basket-adding").on("click", function () {
-    $.jGrowl('Товар додано!', {
-      life: 1000,
-      position: 'top-right'
-    });
+    
     $.ajax({
       type: "POST",
-      url: rootDir + "basket",
+      url: "/basket",
       headers: {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
       },
@@ -186,8 +183,12 @@ $(function () {
         size_id: $("#size").val()?$("#size").val():null,
         count: $("#count").val(),
       },
-      /*success: function(){
-        alert('Added!");
+      success: function(){
+        alert('Added!');
+        $.jGrowl('Товар додано!', {
+          life: 1000,
+          position: 'top-right'
+        });
       },
       error: function (jqXHR, exception) {
         var msg = '';
@@ -207,7 +208,7 @@ $(function () {
             msg = 'Uncaught Error.\n' + jqXHR.responseText;
         }
         alert(msg);
-      },*/
+      },
     });
   });
 

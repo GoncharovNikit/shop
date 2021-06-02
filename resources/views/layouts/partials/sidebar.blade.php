@@ -13,7 +13,7 @@
 			<label for="sortPriceAsc">Ціною(по зростанню)</label><br>
 		</fieldset>
 	</div>
-	<div class="widget">
+	<!-- <div class="widget">
 		<h3>Категорії:</h3>
 		<fieldset class="category-fieldset">
 			<input type="radio" id="all" name="categoryRadio" class="categoryCB" value="all">
@@ -26,7 +26,7 @@
 			@endforeach
 
 		</fieldset>
-	</div>
+	</div> -->
 	<div class="widget">
 		<h3>Ціновий діапазон:</h3>
 		<input type="text" name="minv" id="minv" value="{{$minPrice}}" hidden>
