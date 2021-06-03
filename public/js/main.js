@@ -305,7 +305,12 @@ $(function () {
     }
   });
   
-
+  $(".header-min-img, .hide-sidebar").on('click', function(){
+    $(".menu-categories").slideToggle({
+      duration: 1200,
+      direction: 'left'
+    });
+  });
 
 });
 

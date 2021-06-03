@@ -9,13 +9,19 @@
             <div class="menu-categories-wrapper" hidden>
                 <img src="{{asset('images/menu_categories.png')}}" class="header-min-img" alt="">
                 <div class="menu-categories" hidden>
+                    <img src="{{asset('images/hide_sidebar.png')}}" class="hide-sidebar" alt="">
                     <ul class="categories-list categories-list-menu">
                         @foreach ($categories as $category)
-                        <li><a href="{{ route('shop.list', ['category' => $category->name]) }}">{{ $category->name_rus }}</a></li>
+                        <li class="category-mob-menu"><a href="{{ route('shop.list', ['category' => $category->name]) }}">{{ $category->name_rus }}</a></li>
                         @endforeach
                     </ul>
+                    <div class="lang-wrapper">
+                        <img src="{{asset('images/lang.png')}}" class="header-min-img" alt="">
+                        <a href="{{ LaravelLocalization::getLocalizedURL('uk') }}">UK</a>
+                        /
+                        <a href="{{ LaravelLocalization::getLocalizedURL('ru') }}">RU</a>
+                    </div>
                 </div>
-                
             </div>
             <div class="lang-wrapper to-hide">
                 <img src="{{asset('images/lang.png')}}" class="header-min-img" alt="">

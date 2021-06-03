@@ -2013,6 +2013,16 @@ h1 {
     }
 }
 
+.category-mob-menu{
+    border-bottom: 1px solid;
+}
+.category-mob-menu:hover{
+    /* border-left: 1px solid black; */
+    /* background-color: #f7f8f7; */
+    margin-left: 28px;
+    transition: 400ms;
+}
+
 @media screen and (max-width: 480px) {
     #sidebar {
         padding-bottom: 40px;
@@ -2032,6 +2042,7 @@ h1 {
         margin-bottom: 106px;
         font-size: 10pt;
     }
+    
     .productArt {
         margin: 0 auto;
     }
@@ -2044,6 +2055,12 @@ h1 {
     #callback-block-min, .menu-categories-wrapper{
         display: block;
     }
+    .hide-sidebar{
+        position: absolute;
+        top: 70px;
+        right: -58px;
+        width: 70px;
+    }
     .header-min-img {
         width: 30px !important;
     }
@@ -2051,15 +2068,14 @@ h1 {
         padding-bottom: 25px;
     }
     .menu-categories{
-        display:block;  /*DELETE THEN*/
         border: 1px solid;
         position: fixed;
         z-index: 100;
         top: 0;
         left: 0;
         background: white;
-        height: 100%;
-        width: 60%;
+        height: 100%; 
+        max-width: 70%;
     }
     body{
         overflow: hidden;
