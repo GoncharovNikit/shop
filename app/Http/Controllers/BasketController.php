@@ -18,10 +18,8 @@ class BasketController extends Controller
     public function index(Request $request)
     {
         $products = $request->session()->get('tmpbasket') ?? [];
-        dd($products);
         
         return view('basket.index', compact('products'));
-
     }
     public function store(Request $request)
     {
