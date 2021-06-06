@@ -279,7 +279,7 @@ a:hover {
     position: fixed;
     bottom: 132px;
     left: 2px;
-    z-index: 1000;
+    z-index: 98;
     display: none;
 }
 #sidebar-show-button img {
@@ -1740,7 +1740,7 @@ h1 {
 
     #sidebar-show-button {
         display: block;
-        z-index: 1001;
+        left: 2px;
     }
 
     .products-wrap {
@@ -1748,7 +1748,7 @@ h1 {
     }
 
     #body {
-        padding-top: 25px;
+        padding: 0 20px;
     }
 
     .pagination {
@@ -1758,9 +1758,7 @@ h1 {
     .productArt {
         margin: 0 auto;
     }
-}
 
-@media screen and (max-width: 784px) {
     .last-products .bx-viewport {
         width: 466px !important;
     }
@@ -1769,10 +1767,6 @@ h1 {
     }
     .quick-links {
         margin: 0;
-    }
-
-    #sidebar-show-button {
-        left: 2px;
     }
 
     #header .right-links span {
@@ -1957,10 +1951,6 @@ h1 {
         font-size: 14px;
     }
 
-    #body {
-        padding: 20px 0;
-    }
-
     .cart-table .price {
         display: none;
     }
@@ -2023,6 +2013,17 @@ h1 {
     transition: 400ms;
 }
 
+.darkback{
+    position:fixed;
+    top: 0;
+    left: 0;
+    height:100%;
+    width:100%;
+    background:black;
+    opacity: 0.5;
+    z-index: 99;
+}
+
 @media screen and (max-width: 480px) {
     #sidebar {
         padding-bottom: 40px;
@@ -2042,6 +2043,7 @@ h1 {
         margin-bottom: 106px;
         font-size: 10pt;
     }
+
     
     .productArt {
         margin: 0 auto;
@@ -2076,9 +2078,6 @@ h1 {
         background: white;
         height: 100%; 
         max-width: 70%;
-    }
-    body{
-        overflow: hidden;
     }
     .categories-list-menu a{
         text-align: left !important;

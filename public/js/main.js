@@ -305,12 +305,25 @@ $(function () {
     }
   });
   
-  $(".header-min-img, .hide-sidebar").on('click', function(){
-    $(".menu-categories").slideToggle({
-      duration: 1200,
-      direction: 'left'
+  $(".header-min-img").on('click', function(){
+    $(".menu-categories").slideToggle(200, function(){
+      $(".darkback").removeAttr('hidden');
+      $('body').css('overflow', 'hidden');
     });
   });
+  $('.darkback').on('click', function(){
+    $(".menu-categories").slideToggle(200, () => { 
+      $('.darkback').attr('hidden', true)
+      $('body').css('overflow', 'auto');
+    })
+  })
+  
+  
+  
+  
+  
+  
+  
 
 });
 

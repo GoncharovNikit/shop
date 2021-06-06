@@ -9,8 +9,7 @@
             <div class="menu-categories-wrapper" hidden>
                 <img src="{{asset('images/menu_categories.png')}}" class="header-min-img" alt="">
                 <div class="menu-categories" hidden>
-                    <img src="{{asset('images/hide_sidebar.png')}}" class="hide-sidebar" alt="">
-                    <ul class="categories-list categories-list-menu">
+                    <ul class="categories-list-menu categories-list">
                         @foreach ($categories as $category)
                         <li class="category-mob-menu"><a href="{{ route('shop.list', ['category' => $category->name]) }}">{{ $category->name_rus }}</a></li>
                         @endforeach
@@ -23,6 +22,7 @@
                     </div>
                 </div>
             </div>
+            <div class="darkback" hidden></div>
             <div class="lang-wrapper to-hide">
                 <img src="{{asset('images/lang.png')}}" class="header-min-img" alt="">
                 <a href="{{ LaravelLocalization::getLocalizedURL('uk') }}">UK</a>
