@@ -16,4 +16,3 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/products/category/{id}', 'ProductApiController@index_by_categories');
 Route::get('/products', 'ProductApiController@index');
-

@@ -171,7 +171,7 @@ $(function () {
   // ДОБАВЛЕНИЕ ТОВАРА В КОРЗИНУ
 
   $(".basket-adding").on("click", function () {
-    
+    alert($('meta[name="csrf-token"]').attr("content"))
     $.ajax({
       type: "POST",
       url: "/basket",
@@ -184,7 +184,6 @@ $(function () {
         count: $("#count").val(),
       },
       success: function(){
-        alert('Added!');
         $.jGrowl('Товар додано!', {
           life: 1000,
           position: 'top-right'
@@ -290,8 +289,8 @@ $(function () {
   });
 
   $("#sidebar-show-button").on('click', function(){
-    $("#sidebar").toggle({
-      duration: 800,
+    $("#sidebar").slideToggle({
+      duration: 300,
     });
   });
 
@@ -305,7 +304,7 @@ $(function () {
     }
   });
   
-  $(".header-min-img").on('click', function(){
+  $(".menu-categories-wrapper img").on('click', function(){
     $(".menu-categories").slideToggle(200, function(){
       $(".darkback").removeAttr('hidden');
       $('body').css('overflow', 'hidden');

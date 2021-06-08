@@ -61,7 +61,7 @@
         <label for="selectCategory">Категория</label>
         <select name="category" class="form-select" id="selectCategory" value="{{ old('category') }}">
             @foreach($categories as $category)
-            <option value="{{$category->id}}">{{$category->name}}</option>
+            <option value="{{$category->id}}">{{$category->name_rus}}</option>
             @endforeach
         </select>
         <label for="selectSize">Размер</label>
@@ -104,7 +104,7 @@
                 <td>{{$product->stone_colors->name}}</td>
                 <td>{{$product->categories->name}}</td>
                 <td>{{$product->created_at}}</td>
-                <td><img src="{{asset('images/cat/'.$product->categories->name.'/'.$product->vendorCode.'.jpg')}}" width="60"></td>
+                <td><img src="{{asset('images/cat/'.$product->categories->name_rus.'/'.$product->vendorCode.'.jpg')}}" width="60"></td>
                 <td><a href="{{route('admin.delete', ['id' => $product->vendorCode])}}">Удалить</a></td>
             </tr>
             <?php $counter += 1; ?>

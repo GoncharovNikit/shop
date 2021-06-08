@@ -29,14 +29,14 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function(){
     Route::post('/order-check', 'OrderController@check')->name('order.check');
 
     Route::get('/home', function(){ return redirect('/'); });
-});
+    
+    Route::get('/admin', 'AdminController@index')->name('admin');
+    Route::post('/admin', 'AdminController@store')->name('admin.store');
+    Route::get('/admin/{id}', 'AdminController@delete')->name('admin.delete');
 
-Route::get('/admin', 'AdminController@index')->name('admin');
-Route::post('/admin', 'AdminController@store')->name('admin.store');
-Route::get('/admin/{id}', 'AdminController@delete')->name('admin.delete');
-
-
-Route::get('/home', function(){ return redirect('/'); });
+});    
 
 Route::post('/basket', 'BasketController@store')->name('basket.store');
 Route::delete('/basket', 'BasketController@delete')->name('basket.delete');
+
+Route::get('/home', function(){ return redirect('/'); });

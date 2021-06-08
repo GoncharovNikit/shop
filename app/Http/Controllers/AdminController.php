@@ -16,9 +16,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        if (Auth::check() && Auth::id() == 1);
-        else throw new ExceptionHttpException("Page not found (404))");
-
+        
         $products = Product::with(['categories', 'metals', 'stone_colors', 'sizes'])->orderByDesc('created_at')->get();
         $metals = Metal::all();
         $colors = StoneColor::all();

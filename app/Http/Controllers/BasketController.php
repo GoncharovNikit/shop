@@ -21,13 +21,18 @@ class BasketController extends Controller
         
         return view('basket.index', compact('products'));
     }
+
+    
     public function store(Request $request)
     {
+        $this->logM('storing');
         if ($request->has('vendorCode') && $request->has('count')) {
             //добавление товара в сессию
-            $this->logM('adding');
+            $this->logM('adding not firstly');
+            
             if ($request->session()->has('tmpbasket')) {
 
+                $this->logM('has tmpbasket');
                 $prods = $request->session()->get('tmpbasket');
                 $is_add = false;
                 $index = -1;
@@ -56,7 +61,7 @@ class BasketController extends Controller
 
                 $request->session()->put('tmpbasket', $prods);
             } else {
-
+                $this->logM('firstly adding');
                 $request->session()->put(
                     'tmpbasket',
                     [[

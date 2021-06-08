@@ -55,7 +55,7 @@
                 <td class="items">
                     <div class="cart-image">
                         <img 
-                        src="{{asset('images/catComp/'.$item['product']->categories->name.'/'.$item['product']->vendorCode.'.jpg')}}" alt="productImage">
+                        src="{{asset('images/catComp/'.$item['product']->categories->name_rus.'/'.$item['product']->vendorCode.'.jpg')}}" alt="productImage">
                     </div>
                     <h3><a href="#">Lorem ipsum dolor</a></h3>
                     <p>

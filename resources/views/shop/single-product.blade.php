@@ -23,27 +23,31 @@
 				</div>
 				<div class="details">
 					<h3>{{$product->vendorCode}}</h3>
-					<h1 style="font-size: 40pt;">&#8372; {{$product->price}}</h1>
+					<h1>&#8372; {{$product->price}}</h1>
 					<br>
 					<div class="entry">
 						<p>{{$product->description}}</p>
 					</div>
 					<div class="actions">
-						<label for="count">Кілкість:</label>
-						<input type="number" name="count" id="count" min="1" max="1000" value="1">
-						<br>
+						<div class="action-item">
+							<label for="count">Кілкість:</label>
+							<input type="number" name="count" id="count" min="1" max="1000" value="1">
+						</div>
+
 						@if($product->categories->id == 7 || $product->categories->id == 1)
-						<label>Розмір:</label>
-						<select name="size" id="size">
-							@forelse($product->sizes as $size)
-							<option value="{{$size->id}}">{{$size->size}}</option>
-							@empty
-							Товар тимчасово недоступний!
-							@endforelse
-						</select>
-						<br>
+						<div class="action-item">
+							<label>Розмір:</label>
+							<select name="size" id="size">
+								@forelse($product->sizes as $size)
+								<option value="{{$size->id}}">{{$size->size}}</option>
+								@empty
+								Товар тимчасово недоступний!
+								@endforelse
+							</select>
+						</div>
 						@endif
-						<button class="btn-grey basket-adding" data-vendor="{{$product->vendorCode}}">Додати до кошика</button>
+
+						<button class="btn-grey basket-adding action-item" data-vendor="{{$product->vendorCode}}">Додати до кошика</button>
 					</div>
 				</div>
 			</div>
