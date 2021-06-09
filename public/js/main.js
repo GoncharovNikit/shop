@@ -171,10 +171,9 @@ $(function () {
   // ДОБАВЛЕНИЕ ТОВАРА В КОРЗИНУ
 
   $(".basket-adding").on("click", function () {
-    alert($('meta[name="csrf-token"]').attr("content"))
     $.ajax({
       type: "POST",
-      url: "/basket",
+      url: "/basket-api",
       headers: {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
       },
@@ -189,7 +188,7 @@ $(function () {
           position: 'top-right'
         });
       },
-      error: function (jqXHR, exception) {
+      /*error: function (jqXHR, exception) {
         var msg = '';
         if (jqXHR.status === 0) {
             msg = 'Not connect.\n Verify Network.';
@@ -207,7 +206,7 @@ $(function () {
             msg = 'Uncaught Error.\n' + jqXHR.responseText;
         }
         alert(msg);
-      },
+      },*/
     });
   });
 
@@ -227,7 +226,7 @@ $(function () {
 
       $.ajax({
         type: "DELETE",
-        url: rootDir + "basket",
+        url: "/basket-api",
         headers: {
           "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
@@ -236,10 +235,8 @@ $(function () {
           size: $(this).parent(".delete").siblings(".size").text()?$(this).parent(".delete").siblings(".size").text():null,
           count: $(this).parent(".delete").siblings(".qnt").children().first().val(),
         },
-        /*success: function () {
-          alert('Deleted!");
-        },
-        error: function (jqXHR, exception) {
+        success: refreshTotalSum,
+        /*error: function (jqXHR, exception) {
           var msg = "";
           if (jqXHR.status === 0) {
             msg = "Not connect.\n Verify Network.";
@@ -257,37 +254,41 @@ $(function () {
             msg = "Uncaught Error.\n" + jqXHR.responseText;
           }
           alert(msg);
-        },  */
+        },*/
       });
     }
   });
 
   // ИЗМЕНЕНИЕ КОЛ_ВА ТОВАРА В КОРЗИНЕ
 
-  let sum = 0;
-  $(".total").each(function(index){
-    if(index != 0){
-      sum += parseFloat(parseFloat($(this).data('total')).toFixed(2));
-    }
-  });
-  $("#totalSum").text('₴ ' + sum.toFixed(2));
-  $('#totalSum-form').val(sum.toFixed(2));
-
-  $(".countinp").on("change", function(){
-    sum = ($(this).data("singleprice") * $(this).val()).toFixed(2);
-    $(this).parent(".qnt").siblings(".total").text('$ ' + sum);
-    $(this).parent(".qnt").siblings(".total").data('total', sum);
-    sum = 0;
+  function refreshTotalSum()
+  {
+    let sum = 0;
     $(".total").each(function(index){
       if(index != 0){
         sum += parseFloat(parseFloat($(this).data('total')).toFixed(2));
       }
     });
-    
     $("#totalSum").text('₴ ' + sum.toFixed(2));
     $('#totalSum-form').val(sum.toFixed(2));
-  });
 
+    $(".countinp").on("change", function(){
+      sum = ($(this).data("singleprice") * $(this).val()).toFixed(2);
+      $(this).parent(".qnt").siblings(".total").text('$ ' + sum);
+      $(this).parent(".qnt").siblings(".total").data('total', sum);
+      sum = 0;
+      $(".total").each(function(index){
+        if(index != 0){
+          sum += parseFloat(parseFloat($(this).data('total')).toFixed(2));
+        }
+      });
+      
+      $("#totalSum").text('₴ ' + sum.toFixed(2));
+      $('#totalSum-form').val(sum.toFixed(2));
+    });
+  }
+  refreshTotalSum();
+  
   $("#sidebar-show-button").on('click', function(){
     $("#sidebar").slideToggle({
       duration: 300,

@@ -36,7 +36,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function(){
 
 });    
 
-Route::post('/basket', 'BasketController@store')->name('basket.store');
-Route::delete('/basket', 'BasketController@delete')->name('basket.delete');
+Route::post('/basket-api', 'BasketController@store')->name('basket.store');
+Route::delete('/basket-api', 'BasketController@delete')->name('basket.delete');
 
 Route::get('/home', function(){ return redirect('/'); });
