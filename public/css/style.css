@@ -310,29 +310,33 @@ a:hover {
 ------------------------------------------------------------------------------*/
 #header .container {
     width: 100%;
-    font-size: 14pt;
-    padding: 40px 0 20px 0;
+    font-size: 11pt;
+    padding: 10px 0 20px 0;
 }
 
 .second-header-row {
-    width: 100%;
+    width: 80%;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    flex-wrap: nowrap;
+    justify-content: space-between;
     align-items: center;
-    padding-top: 20px;
+    margin: 0 auto;
+    /* поднимать опускать боковухи */
+    margin-top: 100px;
     z-index: 1003;
 }
-.second-header-row div{
-    padding: 18px;
+.second-header-row div {
+    padding: 7px;
 }
 
 .search-input-header {
-    width: 100px;
+    width: 80px;
+    height: 27px;
     border-radius: 10px !important;
-    border: 3px solid rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(0, 0, 0, 0.5);
     outline: none;
+    padding: 0 3px;
 }
 
 .callback-block-header {
@@ -347,21 +351,22 @@ a:hover {
     font-size: 12pt;
 }
 .callback-block-header .callback-btn {
-    font-size: 10pt;
     width: auto !important;
     padding: 0 7px;
     border: 2px solid black;
+    border: none;
     border-radius: 5px;
     color: black;
-    background-color: rgb(219, 226, 255);
-    white-space:pre;
+    white-space: pre;
+    font-size: inherit;
 }
 .callback-block-header .callback-btn:hover {
     background-color: rgb(70, 106, 206);
+    color: rgb(251, 240, 240);
     transition: 300ms;
 }
 
-.callback-block{
+.callback-block {
     border: 3px solid rgb(110, 110, 110);
     border-radius: 10px;
     background-color: rgb(0, 0, 29);
@@ -370,48 +375,50 @@ a:hover {
     font-size: 12pt;
     padding: 10px;
     color: rgb(247, 248, 203);
-
 }
-.callback-block label{
+.callback-block label {
     padding-left: 10px;
 }
-.callback-block small{
+.callback-block small {
     font-size: 10pt;
 }
-.callback-block button{
+.callback-block button {
     background-color: wheat;
     border: 2px solid rgb(110, 110, 110);
     border-radius: 8px;
-    color:rgb(0, 0, 49);
+    color: rgb(0, 0, 49);
 }
-.callback-block button:hover{
+.callback-block button:hover {
     transition: 200ms;
     background-color: rgb(12, 18, 73);
-    color:rgb(247, 248, 203);
+    color: rgb(247, 248, 203);
 }
-.callback-block input{
-    color:rgb(0, 0, 29);
+.callback-block input {
+    color: rgb(0, 0, 29);
     padding: 0 7px;
 }
-.callback-wrapper{
-    position:absolute;
+.callback-wrapper {
+    position: absolute;
     top: 80px;
     right: 10%;
     z-index: 101;
 }
 .logo-wrapper {
     position: absolute;
-    top: 20px;
+    top: 40px;
     left: 50%;
     transform: translate(-50%, 0);
     z-index: 1;
+    align-self: flex-start;
 }
 .logo-plug {
-    width: 300px;
+    width: 450px;
+    align-self: flex-start;
 }
 
 .product-categories-row-header {
-    margin: 50px 5px 0 5px;
+    /* поднимать опускать категории */
+    margin: 12px 30px 0 0;
 }
 .categories-list {
     display: flex;
@@ -428,7 +435,7 @@ a:hover {
 }
 .categories-list li a {
     display: block;
-    padding: 18px;
+    padding: 7px;
     width: 170px;
     text-align: center;
     text-decoration: none;
@@ -439,9 +446,74 @@ a:hover {
     transition: 200ms;
 }
 
-.align-self-end{
-    align-self:flex-end;
+.second-header-row div {
+    white-space: nowrap;
 }
+
+.side-doub-wrap {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: space-between;
+}
+.align-self-right {
+    align-items: flex-end;
+}
+
+
+/* CATEGORY MOB MENU */
+.categories-list-menu{ 
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+.categories-list-menu li{
+    text-align: left !important;
+    color: black;
+
+    width: 170px;
+    margin: 0 0 10px 6px;
+    padding-left: 7px;
+}
+.categories-list-menu a{
+    text-decoration: none;
+}
+
+.menu-categories {
+    width: 75%;
+    border: 1px solid;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    background: white;
+    height: 100%;
+    overflow-y: auto;
+    font-size: 16pt;
+}
+.menu-categories .lang-wrapper{
+    margin-left: 27px;
+}
+
+.category-mob-menu {
+    border-bottom: 1px solid;
+}
+.category-mob-menu:hover {
+    margin-left: 28px;
+    transition: 300ms;
+}
+
+.darkback {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: black;
+    opacity: 0.5;
+    z-index: 99;
+}
+
 
 /* Navigation
 ------------------------------------------------------------------------------*/
@@ -1209,11 +1281,11 @@ h1 {
     width: 90%;
 }
 
-.details h1{
+.details h1 {
     font-size: 37pt;
 }
 
-.action-item{
+.action-item {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -1669,6 +1741,12 @@ h1 {
     }
 }
 
+@media (max-width: 1450px) {
+    .second-header-row {
+        width: 85%;
+    }
+}
+
 @media screen and (max-width: 1220px) {
     .card-body form {
         width: 80%;
@@ -1739,8 +1817,17 @@ h1 {
     .second-header-row .logo-plug {
         display: none;
     }
-    .second-header-row{ 
+    .second-header-row {
         justify-content: space-around;
+        margin-top: 20px;
+    }
+    .side-doub-wrap {
+        flex-direction: row;
+        justify-content: space-around;
+        width: 50%;
+    }
+    .product-categories-row-header {
+        margin-top: 0;
     }
 }
 
@@ -2036,6 +2123,12 @@ h1 {
     }
 }
 
+@media (max-width: 670px) {
+    .second-header-row {
+        flex-wrap: wrap;
+    }
+}
+
 @media screen and (max-width: 600px) {
     .productArt {
         margin: 0 auto;
@@ -2047,6 +2140,12 @@ h1 {
         margin-top: 90px;
         margin-bottom: 106px;
         font-size: 10pt;
+    }
+    .second-header-row {
+        flex-direction: column;
+    }
+    .side-doub-wrap {
+        width: 90%;
     }
 }
 
@@ -2060,27 +2159,6 @@ h1 {
     .last-products .products article {
         border: 0;
     }
-}
-
-.category-mob-menu{
-    border-bottom: 1px solid;
-}
-.category-mob-menu:hover{
-    /* border-left: 1px solid black; */
-    /* background-color: #f7f8f7; */
-    margin-left: 28px;
-    transition: 400ms;
-}
-
-.darkback{
-    position:fixed;
-    top: 0;
-    left: 0;
-    height:100%;
-    width:100%;
-    background:black;
-    opacity: 0.5;
-    z-index: 99;
 }
 
 @media screen and (max-width: 480px) {
@@ -2103,20 +2181,21 @@ h1 {
         font-size: 10pt;
     }
 
-    
     .productArt {
         margin: 0 auto;
     }
-    #logo img{
+    #logo img {
         height: 100px;
     }
-    .second-header-row .to-hide, .product-categories-row-header{
-        display:none;
+    .second-header-row .to-hide,
+    .product-categories-row-header {
+        display: none;
     }
-    #callback-block-min, .menu-categories-wrapper{
+    #callback-block-min,
+    .menu-categories-wrapper {
         display: block;
     }
-    .hide-sidebar{
+    .hide-sidebar {
         position: absolute;
         top: 70px;
         right: -58px;
@@ -2125,23 +2204,18 @@ h1 {
     .header-min-img {
         width: 20px !important;
     }
-    #header .container{
+    #header .container {
         padding-bottom: 25px;
     }
-    .menu-categories{
-        border: 1px solid;
-        position: fixed;
-        z-index: 100;
-        top: 0;
-        left: 0;
-        background: white;
-        height: 100%; 
-        max-width: 70%;
-        overflow-y: auto;
+
+    .second-header-row {
+        flex-direction: row;
+        flex-wrap: wrap;
     }
-    .categories-list-menu a{
-        text-align: left !important;
-        color: black;
+    .side-doub-wrap {
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: auto;
     }
 }
 
@@ -2162,17 +2236,17 @@ h1 {
     }
 }
 
-@media(max-width: 404px){
-    .details .actions{
+@media (max-width: 404px) {
+    .details .actions {
         width: 100%;
         padding: 0;
     }
-    .details h1{
+    .details h1 {
         font-size: 30pt;
     }
-    .basket-adding{
+    .basket-adding {
         width: 90%;
-        margin: 15px 10px; 
+        margin: 15px 10px;
     }
 }
 
@@ -2206,7 +2280,6 @@ h1 {
     #sidebar {
         display: none;
     }
-    
 }
 
 @media (min-width: 786px) {
@@ -2216,7 +2289,6 @@ h1 {
     #sidebar {
         display: block;
     }
-    
 }
 
 @media screen and (min-width: 460px) and (max-width: 768px) {
