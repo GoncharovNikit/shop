@@ -30,6 +30,21 @@ class ShopController extends Controller
         return view('shop.list', compact('products', 'maxPrice', 'minPrice', 'sizes'));
     }
 
+    public function search()
+    {
+        $search_str = request()->input('search', 'def');   
+        $products = Product::with(['categories', 'sizes'])
+            ->where('vendorCode', 'LIKE', "%$search_str%")
+            ->get()
+            ->shuffle();
+        $maxPrice = Product::max('price');
+        $minPrice = Product::min('price');
+        $sizes = Size::all();
+
+        
+        return view('shop.list', compact('products', 'maxPrice', 'minPrice', 'sizes'));
+    }
+
     public function main()
     {
         $products = Product::with('categories')->orderBy('created_at')->take(10)->get();

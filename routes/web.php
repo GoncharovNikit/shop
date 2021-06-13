@@ -30,11 +30,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function(){
 
     Route::get('/home', function(){ return redirect('/'); });
     
-    Route::get('/admin', 'AdminController@index')->name('admin');
+    Route::view('/admin', 'admin.auth')->name('admin');
     Route::post('/admin', 'AdminController@store')->name('admin.store');
     Route::get('/admin/{id}', 'AdminController@delete')->name('admin.delete');
-
+    Route::get('/search', 'ShopController@search');
 });    
+Route::post('/admin-check', 'AdminController@check');
+Route::post('/callback-request', 'AdminController@mobile');
 
 Route::post('/basket-api', 'BasketController@store')->name('basket.store');
 Route::delete('/basket-api', 'BasketController@delete')->name('basket.delete');

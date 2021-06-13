@@ -41,7 +41,7 @@ $(function () {
     return false;
   });
 
-  $($('#phone')[0]).mask('+380(99) 999-99-99');
+  $('.phone-inp').each((id, elem)=>{console.log(elem); $(elem).mask('+380(99) 999-99-99')});
   $($('#card')[0]).mask('9999 9999 9999 9999');
 
 
@@ -86,17 +86,6 @@ $(function () {
   $(window).on('resize', function () {
     mobileCheck();
   });
-
-  // $(".categoryCB").on("change", function () {
-  //   currentCategory = $(this).val();
-
-  //   if (!(currentCategory == 1 || currentCategory == 7)) {
-  //     $("#sizesWidget").hide();
-  //   } else $("#sizesWidget").show();
-
-  //   currentPage = 1;
-  //   upload_products_ajax(currentCategory, currentPage);
-  // });
 
   let $wrapper = $(".products");
 
@@ -312,19 +301,19 @@ $(function () {
     });
   });
   $('.darkback').on('click', function(){
-    $(".menu-categories").slideToggle(200, () => { 
-      $('.darkback').attr('hidden', true)
+    $(".menu-categories").hide(200, () => { 
       $('body').css('overflow', 'auto');
     })
+    $('.callback-wrapper').attr('hidden', true)
+    $('.darkback').attr('hidden', true)
   })
   
   
+  $('.callback-btn, #callback-block-min').on('click', ()=>{
+    $('.callback-wrapper').removeAttr('hidden')
+    $('.darkback').removeAttr('hidden')
+  })
   
-  
-  
-  
-  
-
 });
 
 document.addEventListener("DOMContentLoaded", () => {

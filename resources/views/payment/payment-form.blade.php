@@ -37,7 +37,7 @@
             <div class="form-group row">
                 <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Номер телефону') }}</label>
 
-                <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" 
+                <input type="text" class="form-control @error('phone') is-invalid @enderror phone-inp" 
                     name="phone" value="{{ old('phone') }}" required>
 
                 @error('phone')

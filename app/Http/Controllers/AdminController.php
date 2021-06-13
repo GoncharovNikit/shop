@@ -10,21 +10,34 @@ use App\Size;
 use App\ProductSize;
 use Illuminate\Foundation\Testing\HttpException;
 use Illuminate\Support\Facades\Auth;
+use SebastianBergmann\Environment\Console;
 use Symfony\Component\HttpKernel\Exception\HttpException as ExceptionHttpException;
 
 class AdminController extends Controller
 {
-    public function index()
+    public function check()
     {
-        
-        $products = Product::with(['categories', 'metals', 'stone_colors', 'sizes'])->orderByDesc('created_at')->get();
-        $metals = Metal::all();
-        $colors = StoneColor::all();
-        $sizes = Size::all();
-        array_reverse((array)$products);
-        return view('admin.index', compact('products', 'metals', 'colors', 'sizes'));
+        $passw = request('passw', 'def');
+        $login = request('login', 'def');
+
+        if ($passw == "admin123" && $login == "admin")
+        {
+            $products = Product::with(['categories', 'metals', 'stone_colors', 'sizes'])->orderByDesc('created_at')->get();
+            $metals = Metal::all();
+            $colors = StoneColor::all();
+            $sizes = Size::all();
+            array_reverse((array)$products);
+            return view('admin.index', compact('products', 'metals', 'colors', 'sizes'));
+        }
+        return redirect()->back();        
     }
 
+    public function mobile()
+    {
+        $phone = request('phone', 'error phone!');
+        return redirect()->back();
+    }
+  
     public function store(Request $request)
     {
         $this->validate($request, [
