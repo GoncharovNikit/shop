@@ -27,11 +27,13 @@
 
 					@foreach ($products as $product)
 
-					<article class="hovarticle productArt" 
-						data-sizes="{{ json_encode($product->sizes->pluck('size')) }}" 
-						data-category="{{ $product->categories->name_rus }}" data-price="{{ $product->price }}">
+					<article class="hovarticle productArt" data-sizes="{{ json_encode($product->sizes->pluck('size')) }}" data-category="{{ $product->categories->name_rus }}" data-price="{{ $product->price }}">
 						<a href="{{ route('shop.single', ['category' => $product->categories->name, 'id' => $product->vendorCode]) }}">
-							<img src="{{ asset('./images/cat/'.$product->categories->name_rus.'/'.$product->vendorCode.'.jpg') }}" width="194" alt="https://via.placeholder.com/194x210">
+							<div class="prod-slider">
+								<div><img class="prod-slider-img" src="{{ asset('images/p2.jpg') }}"></div>
+								<div><img class="prod-slider-img" src="{{ asset('images/p1.jpg') }}"></div>
+								<div><img class="prod-slider-img" src="{{ asset('images/p3.jpg') }}"></div>
+							</div>
 						</a>
 						<div class="art-div">
 							<h3><a href="{{ route('shop.single', ['category' => $product->categories->name, 'id' => $product->vendorCode]) }}">{{ $product->vendorCode }}</a></h3>

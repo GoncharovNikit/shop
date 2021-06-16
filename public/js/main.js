@@ -30,6 +30,7 @@ $(function () {
     slideWidth: 235,
     slideMargin: 0,
   });
+  
   $(".tabs .nav a").on("click", function () {
     var container = $(this).parentsUntil(".tabs").parent();
     if (!$(this).parent().hasClass("active")) {
@@ -317,6 +318,17 @@ $(function () {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
+  $('.prod-slider').each((index, item) => { $(item).bxSlider({
+    controls: false,
+    pager: false,
+    speed: 200,
+    pause: 3700,
+    auto: true,
+    mode: "fade",
+    preventDefaultSwipeX: false,
+  })
+  console.log(index)
+  });
   paginateProducts(1);
 });
 

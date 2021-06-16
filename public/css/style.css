@@ -671,6 +671,26 @@ a:hover {
     color: #f7c769;
 }
 
+/* PRODUCT SLIDER */
+
+.prod-slider{
+    max-height: 50%;
+}
+.prod-slider li {
+    color: #fff;
+    background: no-repeat;
+    background-size: cover;
+}
+
+.prod-slider-img{
+    width: 90%;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 5px;
+}
+
+/* END PRODUCT SLIDER */
+
 #content {
     overflow: hidden;
 }
