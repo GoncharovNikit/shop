@@ -26,8 +26,12 @@ class ShopController extends Controller
         $maxPrice = Product::max('price');
         $minPrice = Product::min('price');
         $sizes = Size::all();
-        
-        return view('shop.list', compact('products', 'maxPrice', 'minPrice', 'sizes'));
+
+        $images = [];
+        foreach ($products as $prod)
+            $images[$prod->vendorCode] = array_diff(scandir(public_path("images/cat/{$prod->categories->name_rus}/{$prod->vendorCode}/")), array('..', '.'));
+
+        return view('shop.list', compact('products', 'maxPrice', 'minPrice', 'sizes', 'images'));
     }
 
     public function search()
@@ -55,8 +59,9 @@ class ShopController extends Controller
     public function single(Request $request, $category, $id)
     {
         $product = Product::with(['categories', 'sizes'])->findOrFail($id);
+        $images = array_diff(scandir(public_path("images/cat/{$product->categories->name_rus}/{$product->vendorCode}/")), array('..', '.'));
 
-        return view('shop.single-product', compact('product'));
+        return view('shop.single-product', compact('product', 'images'));
     }
 
     public function personal(Request $request, $userid)

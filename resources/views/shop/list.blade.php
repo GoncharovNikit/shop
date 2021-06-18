@@ -29,10 +29,10 @@
 
 					<article class="hovarticle productArt" data-sizes="{{ json_encode($product->sizes->pluck('size')) }}" data-category="{{ $product->categories->name_rus }}" data-price="{{ $product->price }}">
 						<a href="{{ route('shop.single', ['category' => $product->categories->name, 'id' => $product->vendorCode]) }}">
-							<div class="prod-slider">
-								<div><img class="prod-slider-img" src="{{ asset('images/p2.jpg') }}"></div>
-								<div><img class="prod-slider-img" src="{{ asset('images/p1.jpg') }}"></div>
-								<div><img class="prod-slider-img" src="{{ asset('images/p3.jpg') }}"></div>
+							<div class="prod-slider<?= count($images[$product->vendorCode]) > 1 ? ' to-slide':''; ?>">
+							@foreach ($images["$product->vendorCode"] as $img)
+								<div><img class="prod-slider-img" src="{{ asset('images/cat/'.$product->categories->name_rus.'/'.$product->vendorCode.'/'.$img) }}"></div>
+							@endforeach
 							</div>
 						</a>
 						<div class="art-div">

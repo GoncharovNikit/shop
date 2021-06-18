@@ -323,7 +323,7 @@ a:hover {
     align-items: center;
     margin: 0 auto;
     /* поднимать опускать боковухи */
-    margin-top: 100px;
+    margin-top: 50px;
     z-index: 1003;
 }
 .second-header-row div {
@@ -1184,17 +1184,16 @@ h1 {
     overflow: hidden;
 }
 
-.product .image {
+.slider-wrapper {
     float: left;
     overflow: hidden;
     width: 570px;
     height: 570px;
     margin: 13px 130px 0 0;
-    border: 1px solid #d3d3d3;
     background-color: #fff;
 }
 
-.product .image img {
+.slider-wrapper img {
     width: 100%;
 }
 
@@ -1804,7 +1803,7 @@ h1 {
         overflow: hidden;
     }
 
-    .product .image {
+    .slider-wrapper {
         width: 40%;
         margin: 20px 30px;
         height: auto;
@@ -2024,7 +2023,7 @@ h1 {
         font-size: 24px;
     }
 
-    .product .image {
+    .slider-wrapper {
         width: auto;
         margin: 20px 20px;
         float: none;

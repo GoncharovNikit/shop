@@ -18,8 +18,12 @@
 	<div class="container">
 		<div id="content" class="full">
 			<div class="product">
-				<div class="image">
-					<img src="{{asset('images/cat/'.$product->categories->name_rus.'/'.$product->vendorCode.'.jpg')}}" alt="">
+				<div class="slider-wrapper">
+					<div class="<?= count($images) > 1 ? 'to-slide-single' : ''; ?>">
+						@foreach ($images as $img)
+						<div><img src="{{ asset('images/cat/'.$product->categories->name_rus.'/'.$product->vendorCode.'/'.$img) }}" /></div>
+						@endforeach
+					</div>
 				</div>
 				<div class="details">
 					<h3>{{$product->vendorCode}}</h3>

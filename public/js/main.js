@@ -23,6 +23,16 @@ $(function () {
     mode: "fade",
     preventDefaultSwipeX: false,
   });
+  
+  $($('.to-slide-single')[0]).bxSlider({
+    controls: false,
+    speed: 200,
+    pause: 3700,
+    auto: true,
+    mode: "fade",
+    preventDefaultSwipeX: false,
+  })  
+  
   $(".last-products .products").bxSlider({
     pager: false,
     minSlides: 1,
@@ -318,7 +328,8 @@ $(function () {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  $('.prod-slider').each((index, item) => { $(item).bxSlider({
+  
+  $('.to-slide').each((index, item) => { $(item).bxSlider({
     controls: false,
     pager: false,
     speed: 200,
@@ -327,10 +338,10 @@ document.addEventListener("DOMContentLoaded", () => {
     mode: "fade",
     preventDefaultSwipeX: false,
   })
-  console.log(index)
-  });
-  paginateProducts(1);
+  }) //.then(() => paginateProducts(1));
+
 });
+
 
 
 function getNonFilteredProducts() {
