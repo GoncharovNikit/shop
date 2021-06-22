@@ -333,12 +333,12 @@ document.addEventListener("DOMContentLoaded", () => {
     controls: false,
     pager: false,
     speed: 200,
-    pause: 3700,
+    pause: 30700,
     auto: true,
     mode: "fade",
     preventDefaultSwipeX: false,
   })
-  }) //.then(() => paginateProducts(1));
+  }).promise().done(() => paginateProducts(1));
 
 });
 

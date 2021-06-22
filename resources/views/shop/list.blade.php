@@ -38,7 +38,7 @@
 						<div class="art-div">
 							<h3><a href="{{ route('shop.single', ['category' => $product->categories->name, 'id' => $product->vendorCode]) }}">{{ $product->vendorCode }}</a></h3>
 							<h4><a href="{{ route('shop.single', ['category' => $product->categories->name, 'id' => $product->vendorCode]) }}">&#8372; {{ $product->price }}</a></h4>
-							<small style="padding:3px;">{{ substr($product->description, 0, 50) }}..</small>
+							<div class="prod-description">{{ substr($product->description, 0, 50) }}..</div>
 						</div>
 					</article>
 
