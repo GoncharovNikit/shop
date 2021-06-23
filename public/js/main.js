@@ -22,16 +22,7 @@ $(function () {
     auto: true,
     mode: "fade",
     preventDefaultSwipeX: false,
-  });
-  
-  $($('.to-slide-single')[0]).bxSlider({
-    controls: false,
-    speed: 200,
-    pause: 3700,
-    auto: true,
-    mode: "fade",
-    preventDefaultSwipeX: false,
-  })  
+  }); 
   
   $(".last-products .products").bxSlider({
     pager: false,
@@ -329,16 +320,26 @@ $(function () {
 
 document.addEventListener("DOMContentLoaded", () => {
   
-  $('.to-slide').each((index, item) => { $(item).bxSlider({
+  $('.to-slide').on('mouseenter', (e) => {
+    $('.inner-prod-img-first', e.currentTarget).hide(100)
+    $('.inner-prod-img-second', e.currentTarget).show(100)
+  }).on('mouseleave', (e) => {
+    $('.inner-prod-img-first', e.currentTarget).show(100)
+    $('.inner-prod-img-second', e.currentTarget).hide(100)
+  })
+  
+  
+  $('.to-slide-single').first().bxSlider({
     controls: false,
-    pager: false,
+    pager: true,
     speed: 200,
-    pause: 30700,
+    pause: 3700,
     auto: true,
     mode: "fade",
     preventDefaultSwipeX: false,
-  })
-  }).promise().done(() => paginateProducts(1));
+  }) 
+  
+  paginateProducts(1);
 
 });
 

@@ -29,7 +29,9 @@ class ShopController extends Controller
 
         $images = [];
         foreach ($products as $prod)
-            $images[$prod->vendorCode] = array_diff(scandir(public_path("images/cat/{$prod->categories->name_rus}/{$prod->vendorCode}/")), array('..', '.'));
+            $images[$prod->vendorCode] = array_slice(array_diff(scandir(public_path("images/cat/{$prod->categories->name_rus}/{$prod->vendorCode}/")), array('..', '.')), 0, 2);
+
+        // dd($images["910001"][0]);
 
         return view('shop.list', compact('products', 'maxPrice', 'minPrice', 'sizes', 'images'));
     }

@@ -1189,6 +1189,9 @@ h1 {
 .product {
     overflow: hidden;
 }
+.inner-prod-img-second{
+    display: none;
+}
 
 .slider-wrapper {
     float: left;

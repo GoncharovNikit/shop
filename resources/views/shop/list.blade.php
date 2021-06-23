@@ -27,12 +27,18 @@
 
 					@foreach ($products as $product)
 
-					<article class="hovarticle productArt" data-sizes="{{ json_encode($product->sizes->pluck('size')) }}" data-category="{{ $product->categories->name_rus }}" data-price="{{ $product->price }}">
+					<article class="hovarticle productArt<?= count($images[$product->vendorCode]) > 1 ? " to-slide" : "" ?>" 
+					data-sizes="{{ json_encode($product->sizes->pluck('size')) }}" 
+					data-category="{{ $product->categories->name_rus }}" 
+					data-price="{{ $product->price }}">
 						<a href="{{ route('shop.single', ['category' => $product->categories->name, 'id' => $product->vendorCode]) }}">
-							<div class="prod-slider<?= count($images[$product->vendorCode]) > 1 ? ' to-slide':''; ?>">
-							@foreach ($images["$product->vendorCode"] as $img)
-								<div><img class="prod-slider-img" src="{{ asset('images/cat/'.$product->categories->name_rus.'/'.$product->vendorCode.'/'.$img) }}"></div>
-							@endforeach
+							<div class="prod-slider">
+
+								<div class="inner-prod-img-first"><img class="prod-slider-img" src="{{ asset('images/cat/'.$product->categories->name_rus.'/'.$product->vendorCode.'/'.$images[$product->vendorCode][0]) }}"></div>
+								@if (count($images[$product->vendorCode]) > 1)
+								<div class="inner-prod-img-second"><img class="prod-slider-img second-img" src="{{ asset('images/cat/'.$product->categories->name_rus.'/'.$product->vendorCode.'/'.$images[$product->vendorCode][1]) }}"></div>
+								@endif
+
 							</div>
 						</a>
 						<div class="art-div">
