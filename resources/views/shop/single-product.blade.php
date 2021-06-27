@@ -19,11 +19,11 @@
 		<div id="content" class="full">
 			<div class="product">
 				<div class="slider-wrapper">
-					<div class="<?= count($images) > 1 ? 'to-slide-single' : ''; ?>">
+					<ul class="<?= count($images) > 1 ? 'to-slide-single' : ''; ?>">
 						@foreach ($images as $img)
-						<div><img src="{{ asset('images/cat/'.$product->categories->name_rus.'/'.$product->vendorCode.'/'.$img) }}" /></div>
+						<li><img src="{{ asset('images/cat/'.$product->categories->name_rus.'/'.$product->vendorCode.'/'.$img) }}" /></li>
 						@endforeach
-					</div>
+					</ul>
 				</div>
 				<div class="details">
 					<h3>{{$product->vendorCode}}</h3>

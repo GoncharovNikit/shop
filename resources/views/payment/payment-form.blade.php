@@ -61,7 +61,7 @@
             </div>
 
             <div class="form-group row mb-0">
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" id="order-request-send" class="btn btn-primary">
                     {{ __('Підтвердити замовлення') }}
                 </button>
             </div>
