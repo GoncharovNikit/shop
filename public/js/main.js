@@ -43,8 +43,8 @@ $(function () {
     return false;
   });
 
-  $('.phone-inp').each((id, elem)=>{console.log(elem); $(elem).mask('+380(99) 999-99-99')});
-  $($('#card')[0]).mask('9999 9999 9999 9999');
+  $('.phone-inp').mask('+380(99) 999-99-99')
+  $('#card').mask('9999 9999 9999 9999')
 
 
 
@@ -134,29 +134,26 @@ $(function () {
 
   //SIZES
   $(".sizeCB").on("change", function () {
-    paginateProducts(currentPage);
+    paginateProducts(currentPage)
   });  
 
   $("#checkAll").on("click", function () {
     $(".sizeCB")
-      .toArray()
-      .forEach(function (elem) {
-        $("label[for='" + $(elem).attr("id") + "']").addClass("checked");
+      .each((id, elem) => {
+        $("label[for='" + $(elem).attr("id") + "']").addClass("checked")
       });
     $(".sizeCB").prop("checked", true);
-    paginateProducts(currentPage);
+    paginateProducts(currentPage)
   });
 
   $("#decheckAll").on("click", function () {
     $(".sizeCB")
-      .toArray()
-      .forEach(function (elem) {
-        $("label[for='" + $(elem).attr("id") + "']").removeClass("checked");
+      .each((id, elem) => {
+        $("label[for='" + $(elem).attr("id") + "']").removeClass("checked")
       });
     $(".sizeCB").prop("checked", false);
     $('.productArt').hide();
-    currentPage = 1;
-    //paginateProducts(currentPage);
+    currentPage = 1
   });
 
   // ДОБАВЛЕНИЕ ТОВАРА В КОРЗИНУ

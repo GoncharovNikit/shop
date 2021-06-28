@@ -88,7 +88,7 @@
                 <th scope="col">Цвет камня</th>
                 <th scope="col">Категория</th>
                 <th scope="col">Дата создания</th>
-                <th scope="col">Картинка</th>
+                <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
         </thead>
@@ -104,7 +104,7 @@
                 <td>{{$product->stone_colors->name}}</td>
                 <td>{{$product->categories->name}}</td>
                 <td>{{$product->created_at}}</td>
-                <td><img src="{{asset('images/cat/'.$product->categories->name_rus.'/'.$product->vendorCode.'.jpg')}}" width="60"></td>
+                <td><a href="{{ route('admin.edit', ['id' => $product->vendorCode]) }}">Изменить</a></td>
                 <td><a href="{{route('admin.delete', ['id' => $product->vendorCode])}}">Удалить</a></td>
             </tr>
             <?php $counter += 1; ?>

@@ -15,6 +15,17 @@ use Symfony\Component\HttpKernel\Exception\HttpException as ExceptionHttpExcepti
 
 class AdminController extends Controller
 {
+    
+    public function index()
+    {
+        $products = Product::with(['categories', 'metals', 'stone_colors', 'sizes'])->orderByDesc('created_at')->get();
+        $metals = Metal::all();
+        $colors = StoneColor::all();
+        $sizes = Size::all();
+        array_reverse((array)$products);
+        return view('admin.index', compact('products', 'metals', 'colors', 'sizes'));
+    }
+    
     public function check()
     {
         $passw = request('passw', 'def');
@@ -22,12 +33,7 @@ class AdminController extends Controller
 
         if ($passw == "admin123" && $login == "admin")
         {
-            $products = Product::with(['categories', 'metals', 'stone_colors', 'sizes'])->orderByDesc('created_at')->get();
-            $metals = Metal::all();
-            $colors = StoneColor::all();
-            $sizes = Size::all();
-            array_reverse((array)$products);
-            return view('admin.index', compact('products', 'metals', 'colors', 'sizes'));
+            return $this->index();
         }
         return redirect()->back();        
     }
@@ -64,7 +70,7 @@ class AdminController extends Controller
             }
         }
         
-        return redirect()->back();
+        return $this->index();
     }
     public function delete($id)
     {

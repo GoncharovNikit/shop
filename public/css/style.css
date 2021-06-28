@@ -2602,11 +2602,11 @@ input[type="radio"]:checked:after {
     }
 }
 
-
-@media screen and (max-width: 480px) {
+@media (max-width: 404px) {
     #order-request-send{
-        width: 94%;
-        margin: 3% 20px;
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
     }
 }
 

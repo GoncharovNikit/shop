@@ -8,11 +8,11 @@
         <form method="POST" action="{{ route('order.check') }}">
             @csrf
 
-            <h1 style="text-align: center; margin-bottom:20px;">До сплати: ₴ {{ $amount }}</h1>
+            <h1 style="text-align: center; margin-bottom:20px;">До сплати: <span style="white-space: nowrap">₴ {{ $amount }}</span></h1>
             <div class="form-group row">
                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('ПІБ отримувача') }}</label>
 
-                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') ?? Auth::user()->name ?? '' }}" required autocomplete="name" autofocus>
+                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') ?? '' }}" required autocomplete="name" autofocus>
 
                 @error('name')
                 <span class="invalid-feedback" role="alert">
@@ -21,19 +21,6 @@
                 @enderror
             </div>
 
-            <div class="form-group row">
-                <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Пошта') }}</label>
-
-                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" 
-                    name="email" value="{{ old('email') ?? Auth::user()->email ?? '' }}" autocomplete="email">
-
-                @error('email')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>
-            
             <div class="form-group row">
                 <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Номер телефону') }}</label>
 
@@ -54,6 +41,21 @@
                     name="card" value="{{ old('card') }}" required>
 
                 @error('card')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+
+            <div class="form-group row">
+                <label for="payment-type">Оплата</label>
+
+                <select name="payment-type" id="payment-type" class="form-control @error('payment-type') is-invalid @enderror" value="{{ old('payment-type') }}" required>
+                    <option value="card">Сплатити одразу карткою</option>
+                    <option value="cash">Сплатити при отриманні</option>
+                </select>
+
+                @error('payment-type')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>

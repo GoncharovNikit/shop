@@ -342,6 +342,6 @@ return [
 
     // URLs which should not be processed, e.g. '/nova', '/nova/*', '/nova-api/*' or specific application URLs
     // Defaults to []
-    'urlsIgnored' => ['/api/*', '/basket-api', '/admin-check', '/callback-request'],
+    'urlsIgnored' => ['/api/*', '/basket-api', '/admin-check', '/callback-request', '/admin', '/admin/*', '/admin-main'],
 
 ];
