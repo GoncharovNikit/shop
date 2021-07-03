@@ -14,18 +14,18 @@ class ProductSizesSeeder extends Seeder
      */
     public function run()
     {
-        $vendorCodes = Product::select('vendorCode')
-        ->where('category_id', '=', '1')
-        ->orWhere('category_id', '=', '7')
+        $product_ids = Product::select('id')
+        ->where('category_id', '=', App\Category::firstWhere('name_rus', 'Браслеты')->id)
+        ->orWhere('category_id', '=', App\Category::firstWhere('name_rus', 'Кольца')->id)
         ->get();
 
         $sizes = Size::all();
 
-        foreach ($vendorCodes as $item) {
+        foreach ($product_ids as $item) {
             foreach ($sizes as $size) {
                 DB::table("product_sizes")->insert([
                     "size_id" => $size->id,
-                    "product_vendorCode" => $item->vendorCode
+                    "product_id" => $item->id
                 ]);
             }
         }

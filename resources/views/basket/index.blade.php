@@ -22,40 +22,13 @@
                 <th class="delete"></th>
             </tr>
             
-            @if(Auth::check())
-
             @forelse($products as $item)
             <tr class="cart-tr">
                 <td class="items">
                     <div class="cart-image">
-                        <img 
-                        src="{{asset('images/catComp/'.$item->products->categories->name.'/'.$item->products->vendorCode.'.jpg')}}" alt="productImage">
-                    </div>
-                    <h3><a href="#">Lorem ipsum dolor</a></h3>
-                    <p>
-                        {{$item->products->description}}
-                    </p>
-                </td>
-                <td class="price"><div>&#8372; {{$item->products->price}}</div></td>
-                <td class="qnt"><div><input data-singleprice="{{$item->products->price}}" type="number" name="countinp" class="countinp" value="{{$item->count}}" min="1" max="1000"></div></td>
-                <td class="size"><div>{{$item->sizes['size']}}</div></td>
-                <td class="total" data-total="{{$item->count * $item->products->price}}"><div>$ {{$item->count * $item->products->price}}</div></td>
-                <td class="delete"><div><a data-vendor="{{$item->products->vendorCode}}" class="ico-del"></a></div></td>
-            </tr>
-            @empty
-            <tr>
-                Товари не знайдені!
-            </tr>
-            @endforelse
-
-            @else
-
-            @forelse($products as $item)
-            <tr class="cart-tr">
-                <td class="items">
-                    <div class="cart-image">
-                        <img 
-                        src="{{asset('images/catComp/'.$item['product']->categories->name_rus.'/'.$item['product']->vendorCode.'.jpg')}}" alt="productImage">
+                        @if (count($images[$item['product']->vendorCode]) > 0)
+                        <img src="{{asset('images/cat/'.$item['product']->categories->folder_name.'/'.$item['product']->vendorCode.'/'.$images[$item['product']->vendorCode][0])}}" alt="productImage">
+                        @endif
                     </div>
                     <h3><a href="#">Lorem ipsum dolor</a></h3>
                     <p>
@@ -76,8 +49,6 @@
             </tr>
             @endforelse
 
-
-            @endif
         </table>
     </div>
 

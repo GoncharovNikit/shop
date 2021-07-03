@@ -14,7 +14,10 @@ class CreateProductsTable extends Migration
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->char('vendorCode', 15)->primary();
+
+            $table->id();
+
+            $table->char('vendorCode', 15)->unique();
             $table->unsignedDecimal('price', 8, 2);
             $table->longText('description');
             

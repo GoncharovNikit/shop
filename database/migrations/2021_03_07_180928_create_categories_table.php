@@ -17,6 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('name_rus');
+            $table->string('folder_name');
             //$table->timestamps();
         });
     }

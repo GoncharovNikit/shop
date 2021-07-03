@@ -21,7 +21,7 @@
 				<div class="slider-wrapper">
 					<ul class="<?= count($images) > 1 ? 'to-slide-single' : ''; ?>">
 						@foreach ($images as $img)
-						<li><img src="{{ asset('images/cat/'.$product->categories->name_rus.'/'.$product->vendorCode.'/'.$img) }}" /></li>
+						<li><img src="{{ asset('images/cat/'.$product->categories->folder_name.'/'.$product->vendorCode.'/'.$img) }}" /></li>
 						@endforeach
 					</ul>
 				</div>
@@ -38,7 +38,7 @@
 							<input type="number" name="count" id="count" min="1" max="1000" value="1">
 						</div>
 
-						@if($product->categories->id == 7 || $product->categories->id == 1)
+						@if($product->categories->name_rus == 'Кольца' || $product->categories->name_rus == 'Браслеты')
 						<div class="action-item">
 							<label>Розмір:</label>
 							<select name="size" id="size">

@@ -7,6 +7,7 @@ use App\Product;
 use App\Size;
 use App\User;
 use App\Basket;
+use App\Services\ProductImageService as Images;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -27,12 +28,7 @@ class ShopController extends Controller
         $minPrice = Product::min('price');
         $sizes = Size::all();
 
-        $images = [];
-        foreach ($products as $prod)
-            $images[$prod->vendorCode] = array_slice(array_diff(scandir(public_path("images/cat/{$prod->categories->name_rus}/{$prod->vendorCode}/")), array('..', '.')), 0, 2);
-
-        // dd($images["910001"][0]);
-
+        $images = Images::loadAllImages(0, 2);
         return view('shop.list', compact('products', 'maxPrice', 'minPrice', 'sizes', 'images'));
     }
 
@@ -54,24 +50,15 @@ class ShopController extends Controller
     public function main()
     {
         $products = Product::with('categories')->orderBy('created_at')->take(10)->get();
-        // dd($products);
         return view('shop.main', compact('products'));
     }
 
     public function single(Request $request, $category, $id)
     {
-        $product = Product::with(['categories', 'sizes'])->findOrFail($id);
-        $images = array_diff(scandir(public_path("images/cat/{$product->categories->name_rus}/{$product->vendorCode}/")), array('..', '.'));
+        $product = Product::with(['categories', 'sizes'])->firstWhere('vendorCode', $id);
+        $images = Images::loadImages($product->vendorCode);
 
         return view('shop.single-product', compact('product', 'images'));
     }
 
-    public function personal(Request $request, $userid)
-    {
-        if(!(Auth::check() && Auth::id() == $userid))return redirect()->back();
-        $user = User::where('id', '=', $userid)->first();
-        $basketProdCount = Basket::where('user_id', $userid)->count();
-        $ordersCount = 0;//Orders::where('user_id', $userid)->count();
-        return view('personal.main', compact('user', 'basketProdCount', 'ordersCount'));
-    }
 }

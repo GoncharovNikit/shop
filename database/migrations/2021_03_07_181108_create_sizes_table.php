@@ -16,7 +16,6 @@ class CreateSizesTable extends Migration
         Schema::create('sizes', function (Blueprint $table) {
             $table->id();
             $table->unsignedDecimal('size');
-            //$table->timestamps();
         });
     }
 

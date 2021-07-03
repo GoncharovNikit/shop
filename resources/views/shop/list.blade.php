@@ -34,9 +34,11 @@
 						<a href="{{ route('shop.single', ['category' => $product->categories->name, 'id' => $product->vendorCode]) }}">
 							<div class="prod-slider">
 
-								<div class="inner-prod-img-first"><img class="prod-slider-img" src="{{ asset('images/cat/'.$product->categories->name_rus.'/'.$product->vendorCode.'/'.$images[$product->vendorCode][0]) }}"></div>
+								@if (count($images[$product->vendorCode]) > 0)
+								<div class="inner-prod-img-first"><img class="prod-slider-img" src="{{ asset('images/cat/'.$product->categories->folder_name.'/'.$product->vendorCode.'/'.$images[$product->vendorCode][0]) }}"></div>
+								@endif
 								@if (count($images[$product->vendorCode]) > 1)
-								<div class="inner-prod-img-second"><img class="prod-slider-img second-img" src="{{ asset('images/cat/'.$product->categories->name_rus.'/'.$product->vendorCode.'/'.$images[$product->vendorCode][1]) }}"></div>
+								<div class="inner-prod-img-second"><img class="prod-slider-img second-img" src="{{ asset('images/cat/'.$product->categories->folder_name.'/'.$product->vendorCode.'/'.$images[$product->vendorCode][1]) }}"></div>
 								@endif
 
 							</div>

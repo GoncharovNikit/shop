@@ -16,10 +16,10 @@ class CreateProductSizesTable extends Migration
         Schema::create('product_sizes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('size_id');
-            $table->char('product_vendorCode', 15);
+            $table->unsignedBigInteger('product_id');
 
             $table->foreign('size_id')->on('sizes')->references('id')->onDelete('cascade');
-            $table->foreign('product_vendorCode')->on('products')->references('vendorCode')->onDelete('cascade');
+            $table->foreign('product_id')->on('products')->references('id')->onDelete('cascade');
         });
     }
 

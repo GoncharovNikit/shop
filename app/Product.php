@@ -6,9 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $primaryKey = 'vendorCode';
-    protected $keyType = 'char';
     const UPDATED_AT = null;
+    protected $guarded = ['id'];
     
     public function categories()
     {
@@ -24,10 +23,15 @@ class Product extends Model
     }
     public function sizes()
     {
-        return $this->belongsToMany(Size::class, 'product_sizes', 'product_vendorCode', 'size_id');
+        return $this->belongsToMany(Size::class, 'product_sizes', 'product_id', 'size_id');
     }
     public function users()
     {
-        return $this->belongsToMany(User::class, 'basket', 'product_vendorCode', 'user_id');
+        return $this->belongsToMany(User::class, 'basket', 'product_id', 'user_id');
+    }
+    public function images()
+    {
+        dd($this->with('categories'));
+
     }
 }

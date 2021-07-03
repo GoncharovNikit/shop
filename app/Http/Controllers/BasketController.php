@@ -10,35 +10,27 @@ use Illuminate\Support\Facades\Auth;
 
 class BasketController extends Controller
 {
-    private function logM($var)
-    {
-        file_put_contents('D:\logs.txt', "\n".$var."\r\n", FILE_APPEND);
-    }
     
     public function index(Request $request)
     {
         $products = $request->session()->get('tmpbasket') ?? [];
-        
-        return view('basket.index', compact('products'));
+        $images = \App\Services\ProductImageService::loadBasketImages(array_column($products, 'product'));
+
+        return view('basket.index', compact('products', 'images'));
     }
 
-    
     public function store(Request $request)
     {
-        $this->logM('storing');
         if ($request->has('vendorCode') && $request->has('count')) {
-            //добавление товара в сессию
-            $this->logM('adding not firstly');
             
             if ($request->session()->has('tmpbasket')) {
 
-                $this->logM('has tmpbasket');
                 $prods = $request->session()->get('tmpbasket');
                 $is_add = false;
                 $index = -1;
                 foreach ($prods as $key => $prod) {
                     if (
-                        $prod['product'] == Product::with(['categories'])->find($request->get('vendorCode'))
+                        $prod['product'] == Product::with(['categories'])->firstWhere('vendorCode', $request->get('vendorCode'))
                         && $prod['size'] == Size::find($request->get('size_id'))->size ?? 'null'
                     ) {
                         //$prod['count'] += $request->get('count');
@@ -52,7 +44,7 @@ class BasketController extends Controller
                     array_push(
                         $prods,
                         [
-                            'product' => Product::with(['categories'])->find($request->get('vendorCode')),
+                            'product' => Product::with(['categories'])->firstWhere('vendorCode', $request->get('vendorCode')),
                             'size' => Size::find($request->get('size_id'))->size ?? 'null',
                             'count' => $request->get('count')
                         ]
@@ -61,11 +53,10 @@ class BasketController extends Controller
 
                 $request->session()->put('tmpbasket', $prods);
             } else {
-                $this->logM('firstly adding');
                 $request->session()->put(
                     'tmpbasket',
                     [[
-                        'product' => Product::with(['categories'])->find($request->get('vendorCode')),
+                        'product' => Product::with(['categories'])->firstWhere('vendorCode', $request->get('vendorCode')),
                         'size' => Size::find($request->get('size_id'))->size ?? 'null',
                         'count' => $request->get('count')
                     ]]
@@ -74,6 +65,7 @@ class BasketController extends Controller
         }
         return response()->json(['Product has added']);
     }
+
     public function delete(Request $request)
     {
         if ($request->has('vendorCode') && $request->session()->has('tmpbasket') && $request->has('count')) {
@@ -81,7 +73,7 @@ class BasketController extends Controller
             $prods = $request->session()->get('tmpbasket');
 
             unset($prods[array_search([
-                'product' => Product::with(['categories'])->find($request->get('vendorCode')),
+                'product' => Product::with(['categories'])->firstWhere('vendorCode', $request->get('vendorCode')),
                 'size' => $request->get('size') ?? 'null',
                 'count' => $request->get('count')
             ], $prods)]);

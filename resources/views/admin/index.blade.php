@@ -1,22 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Admin panel</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <style>
-        form {
+        .main-form {
             background-color: silver;
             font-family: Arial, Helvetica, sans-serif;
             font-weight: 800;
             font-size: 20px;
+            width: 60%;
+            margin: 40px;
+            border: 2px solid black;
+            padding: 20px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            height: 1400px;
         }
 
         form button {
             background-color: whitesmoke;
         }
+
+        #selectSize {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            height: 300px;
+        }
+
+        @media(max-width: 780px) {
+            .main-form {
+                width: 90%;
+            }
+        }
+
+        @media(max-width: 550px) {
+            #selectSize {
+                height: 400px;
+            }
+        }
+
     </style>
 </head>
 
@@ -32,7 +62,7 @@
     </div>
     @endif
 
-    <form action="/admin" method="POST" style="width: 60%; margin: 40px; border: 2px solid black; padding: 20px; border-radius: 20px; display:flex; flex-direction:column; justify-content:space-around; height: 1400px;">
+    <form action="/admin" method="POST" class="main-form">
         <div class="mb-3">
             <label for="vendorCodeInput" class="form-label">Артикул</label>
             <input name="vendorCode" type="text" class="form-control" id="vendorCodeInput" autocomplete="off" value="{{ old('vendorCode') }}">
@@ -65,17 +95,22 @@
             @endforeach
         </select>
         <label for="selectSize">Размер</label>
-        <div name="size" id="selectSize" style="display:flex; flex-direction:column; flex-wrap:wrap; justify-content:space-around; height: 300px;">
+        <div name="size" id="selectSize">
             @foreach($sizes as $size)
-            <div><input name="size[{{$size->id}}]" class="sizeCheck" type="checkbox" checked style="width:20px; height:20px;" value="{{$size->id}}">&nbsp;&nbsp;{{$size->size}}</div> <br>
+            <div>
+                <input id="cb_size_{{ $size->id }}" name="size[{{$size->id}}]" class="sizeCheck" type="checkbox" checked style="width:20px; height:20px;" value="{{$size->id}}">
+                <label for="cb_size_{{ $size->id }}">&nbsp;&nbsp;{{$size->size}}</label>
+            </div> <br>
             @endforeach
         </div>
-        {{ csrf_field() }}
+        @csrf
 
         <button type="submit" class="btn btn-success">Создать</button>
     </form>
-    
-    <h1>Таблица товаров:</h1>
+
+    <h3 style="padding-left: 20px; margin-bottom: 20px;">Товаров всего: {{ count($products) }}</h3>
+
+    <h2 style="padding-left: 20px;">Таблица товаров:</h2>
 
     <table class="table table-striped table-hover" style="border: 2px solid black;">
         <thead>
@@ -102,10 +137,20 @@
                 <td>{{mb_substr($product->description, 0, 32).'...'}}</td>
                 <td>{{$product->metals->name}}</td>
                 <td>{{$product->stone_colors->name}}</td>
-                <td>{{$product->categories->name}}</td>
+                <td>{{$product->categories->name_rus}}</td>
                 <td>{{$product->created_at}}</td>
-                <td><a href="{{ route('admin.edit', ['id' => $product->vendorCode]) }}">Изменить</a></td>
-                <td><a href="{{route('admin.delete', ['id' => $product->vendorCode])}}">Удалить</a></td>
+                <td>
+                    <form style="background: none;" action="{{ route('admin.edit', ['id' => $product->vendorCode]) }}" method="GET">
+                        <button type="submit">Изменить</button>
+                    </form>
+                </td>
+                <td>
+                    <form style="background: none;" action="{{ route('admin.delete', ['id' => $product->vendorCode]) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Удалить</button>
+                    </form>
+                </td>
             </tr>
             <?php $counter += 1; ?>
             @endforeach
@@ -116,17 +161,12 @@
         window.jQuery || document.write("<script src='{{asset('js/jquery-1.11.1.min.js')}}'>\x3C/script>")
     </script>
     <script>
-        
-        
-  // ADDING CONF
-  $("#selectCategory").on("change", function(){
-    if(!($("#selectCategory").val() == "1" || $("#selectCategory").val() == "7")){
-      $(".sizeCheck").attr("disabled", true);
-    }
-    else $(".sizeCheck").attr("disabled", false);
-  });
-
-  
+        // ADDING CONF
+        $("#selectCategory").on("change", function() {
+            if (!($("#selectCategory").val() == "1" || $("#selectCategory").val() == "7")) {
+                $(".sizeCheck").attr("disabled", true);
+            } else $(".sizeCheck").attr("disabled", false);
+        });
     </script>
 </body>
 
