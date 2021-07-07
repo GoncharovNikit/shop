@@ -9,11 +9,14 @@ use App\Metal;
 use App\StoneColor;
 use App\Size;
 use App\ProductSize;
+use App\Http\Requests\ProductRequest;
 use Exception;
 use Illuminate\Foundation\Testing\HttpException;
 use Illuminate\Support\Facades\Auth;
 use SebastianBergmann\Environment\Console;
 use Symfony\Component\HttpKernel\Exception\HttpException as ExceptionHttpException;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
 
 use App\Services\ProductImageService as Images;
 
@@ -55,8 +58,8 @@ class AdminController extends Controller
         $metals = Metal::all();
         $colors = StoneColor::all();
         $sizes = Size::all();
-        $product->images = Images::loadImages($id);
-
+        $product->images = Images::loadImages($id) ?? [];
+        // dd($product->images);
         return view('admin.edit', compact('product', 'metals', 'colors', 'sizes'));
     }
 
@@ -66,30 +69,23 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        $this->validate($request, [
-            'vendorCode' => 'required|min:3|max:15',
-            'description' => 'required|max:150',
-            'price' => 'required',
-        ]);
-
         $product = new Product();
-
-        $product->vendorCode = request('vendorCode');
-        $product->price = request('price');
-        $product->description = request('description');
-        $product->metal_id = request('metal');
-        $product->stoneColor_id = request('color');
-        $product->category_id = request('category');
+        $product->vendorCode = $request->get('vendorCode');
+        $product->price = $request->get('price');
+        $product->description = $request->get('description');
+        $product->metal_id = $request->get('metal');
+        $product->stoneColor_id = $request->get('color');
+        $product->category_id = $request->get('category');
         $isSaved = $product->save();
 
         if ($isSaved) {
-            Images::createProductImageFolder(request('vendorCode'));
-            if ($product->category_id == 1 || $product->category_id == 7) {
-                foreach (request('size') as $size) {
+            Images::createProductImageFolder($request->get('vendorCode'));
+            if ($product->category_id == Category::firstWhere('name_rus', 'Кольца')->id || $product->category_id == Category::firstWhere('name_rus', 'Браслеты')->id) {
+                foreach ($request->get('size') as $size) {
                     $sizeProd = new ProductSize();
-                    $sizeProd->product_vendorCode = request('vendorCode');
+                    $sizeProd->product_id = $product->id;
                     $sizeProd->size_id = $size;
                     $sizeProd->save();
                 }
@@ -98,52 +94,49 @@ class AdminController extends Controller
         return redirect()->route('admin.main');
     }
 
-    public function save(Request $request)
+    public function save(ProductRequest $request)
     {
-        $this->validate($request, [
-            'old-vendor-code' => 'required|min:3|max:15',
-            'vendorCode' => 'required|min:3|max:15',
-            'description' => 'required|max:150',
-            'price' => 'required',
-            'metal' => 'required',
-            'category' => 'required',
+        $this->validate($request, ['old-vendor-code' => 'required|min:4|max:12', 'old-category' => 'required']);
+
+        if ($request->get('vendorCode') != $request->get('old-vendor-code')) 
+            Images::renameImageFolder($request->get('old-vendor-code'), $request->get('vendorCode'));
+
+        ProductSize::where('product_id', Product::firstWhere('vendorCode', $request->get('old-vendor-code'))->id)->delete();
+
+        Product::firstWhere('vendorCode', $request->get('old-vendor-code'))->update([
+            'vendorCode' => $request->get('vendorCode'),
+            'price' => $request->get('price'),
+            'description' => $request->get('description'),
+            'metal_id' => $request->get('metal'),
+            'stoneColor_id' => $request->get('color'),
+            'category_id' => $request->get('category'),
         ]);
 
-        if (request('vendorCode') != request('old-vendor-code'))
-            Images::renameImageFolder(request('old-vendor-code'), request('vendorCode'));
+        if ($request->get('old-category') != $request->get('category')) 
+            Images::changeProductCategoryFolder(Category::find($request->get('old-category'))->folder_name, 
+            Category::find($request->get('category'))->folder_name, $request->get('vendorCode'));
 
-        ProductSize::where('product_id', Product::firstWhere('vendorCode', request('old-vendor-code'))->id)->delete();
-
-        Product::firstWhere('vendorCode', request('old-vendor-code'))->update([
-            'vendorCode' => request('vendorCode'),
-            'price' => request('price'),
-            'description' => request('description'),
-            'metal_id' => request('metal'),
-            'stoneColor_id' => request('color'),
-            'category_id' => request('category'),
-        ]);
-
-        if (request('category') == Category::where('name_rus', 'Кольца')->get('id') || 
-            request('category') == Category::where('name_rus', 'Браслеты')->get('id')) {
-            foreach (request('size') as $size) {
+        if (
+            $request->get('category') == Category::firstWhere('name_rus', 'Кольца')->id ||
+            $request->get('category') == Category::firstWhere('name_rus', 'Браслеты')->id
+        ) {
+            foreach ($request->get('size') as $size) {
                 $sizeProd = new ProductSize();
-                $sizeProd->product_vendorCode = request('vendorCode');
+                $sizeProd->product_id = Product::firstWhere('vendorCode', $request->get('vendorCode'))->id;
                 $sizeProd->size_id = $size;
                 $sizeProd->save();
             }
         }
-
-
-        /*
-            Добавить размеры товара в edit вьюхе.
-            
-
-
-        */
         
-        
+        if ($request->has('btn-del')) Images::deleteImage($request->get('vendorCode'), $request->get('btn-del'));
 
-        return redirect()->route('admin.main');
+        if ($request->has('productimages') && !$request->has('btn-del')) Images::changeImageSequence($request->get('vendorCode'), $request->get('productimages'));
+
+        if ($request->hasFile('images'))
+            foreach ($request->file('images') as $img)
+                Images::storeImage($request->get('vendorCode'), $img);      
+
+        return redirect()->route('admin.edit', ['id' => $request->get('vendorCode')]);
     }
 
     public function delete($id)

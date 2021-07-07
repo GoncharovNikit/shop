@@ -17,7 +17,7 @@
     <div id="before-load">
         <i class="fa fa-spinner fa-spin"></i>
     </div>
-<input type="text" name="root" id="root" value="{{ $_SERVER['DOCUMENT_ROOT'] }}" hidden>
+    
     @include('layouts.partials.header')
     <!-- / header -->
 
