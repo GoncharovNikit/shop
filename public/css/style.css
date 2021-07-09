@@ -1171,10 +1171,10 @@ h1 {
     display: block;
     height: 40px;
     line-height: 36px;
-    padding: 0 0 0 15px;
+    padding: 0 0 10px 15px;
     color: #656567;
     font-family: "Novecentowide";
-    font-size: 12px;
+    font-size: 16px;
     font-weight: 500;
     border: 1px solid #cdcdcd;
     background-color: #fff;
@@ -1182,6 +1182,8 @@ h1 {
     display: block;
     cursor: pointer;
 }
+
+
 
 .crf-s:after {
     content: "";
@@ -1683,7 +1685,7 @@ h1 {
 
 
 
-
+/* 
 
 input[type="radio"]:after {
     width: 15px;
@@ -1712,6 +1714,47 @@ input[type="radio"]:checked:after {
     visibility: visible;
     border: 2px solid white;
 }
+ */
+
+.payment-wrapper {
+    width: 100%;
+}
+.payment-wrapper > div{
+    display: inline-block;
+}
+
+.payment-label {
+    width: 27%;
+}
+
+.payment-type {
+    width: 70%;
+}
+
+.payment-type-items {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+}
+
+.payment-type-item { 
+    display: flex;
+    flex-direction:row;
+    align-items: center;
+    justify-content: flex-start;
+}
+.payment-type-item label {
+    white-space: nowrap;
+}
+
+.payment-type-item input {
+    width: auto !important;
+    margin-right: 7px;
+    margin-bottom: 4px;
+}
+
+
 
 .btn-check-form {
     background-color: white;

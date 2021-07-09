@@ -338,6 +338,17 @@ document.addEventListener("DOMContentLoaded", () => {
   
   paginateProducts(1);
 
+
+  // ФОРМА ЗАКАЗА
+
+  $('input[type=radio][name=payment-radio]').on('change', () => {
+    if (this.value == 'card')
+      $('#card').prop("disabled", false)
+    else if (this.value == 'nal')
+      $('#card').prop("disabled", true)
+  })
+  
+
 });
 
 
