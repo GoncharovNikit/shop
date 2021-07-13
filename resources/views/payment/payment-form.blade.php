@@ -72,6 +72,45 @@
                 @enderror
             </div>
 
+            <div class="form-group row">
+                <div class="payment-wrapper">
+                    <div class="col-md-4 col-form-label text-md-right payment-label">
+                        Спосіб доставки
+                    </div>
+                    <div class="payment-type">
+                        <div class="payment-type-items">
+                            <div class="payment-type-item">
+                                <input type="radio" name="deliver-radio" value="novaposhta" id="novaposhta-inp" checked />
+                                <label for="novaposhta-inp">Нова пошта</label>
+                            </div>
+                            <div class="payment-type-item">
+                                <input type="radio" name="deliver-radio" value="ukrposhta" id="ukrposhta-inp" />
+                                <label for="ukrposhta-inp">Укр пошта</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @error('payment-type')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+
+            <div class="form-group row deliver-details-wrapper">
+            <h3>Дані доставки</h3>
+                <div class="deliver-details-novaposhta">
+                    <div class="payment-type-item">
+                        <label for="city-np-inp">Місто</label>
+                        <input type="text" name="city-np" id="city-np-inp" />
+                    </div>
+                </div>
+                <div class="deliver-details-ukrposhta">
+
+                </div>
+            </div>
+
             <div class="form-group row mb-0">
                 <button type="submit" id="order-request-send" class="btn btn-primary">
                     {{ __('Підтвердити замовлення') }}

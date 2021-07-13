@@ -341,12 +341,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ФОРМА ЗАКАЗА
 
-  $('input[type=radio][name=payment-radio]').on('change', () => {
-    if (this.value == 'card')
-      $('#card').prop("disabled", false)
-    else if (this.value == 'nal')
-      $('#card').prop("disabled", true)
-  })
+  // $('input[type=radio][name=payment-radio]').on('change', e => {
+  //   if (e.currentTarget.value == 'card')
+  //     $('#card').prop("disabled", false)
+  //   else if (e.currentTarget.value == 'nal')
+  //     $('#card').prop("disabled", true)
+  // })
   
 
 });
