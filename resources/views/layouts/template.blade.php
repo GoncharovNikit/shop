@@ -38,6 +38,7 @@
     <script src="{{asset('js/plugins.js')}}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.7/jquery.jgrowl.min.js"></script>
     <script src="{{asset('js/jquery.maskedinput.min.js')}}"></script>
+    <script src="{{asset('js/jquery-ui.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>
 </body>
 

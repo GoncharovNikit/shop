@@ -14,7 +14,7 @@ function mobileCheck() {
 }
 
 $(function () {
-  
+
   $("input[type=checkbox]").crfi();
   $("select").crfs();
   $("#slider ul").bxSlider({
@@ -22,8 +22,8 @@ $(function () {
     auto: true,
     mode: "fade",
     preventDefaultSwipeX: false,
-  }); 
-  
+  });
+
   $(".last-products .products").bxSlider({
     pager: false,
     minSlides: 1,
@@ -31,7 +31,7 @@ $(function () {
     slideWidth: 235,
     slideMargin: 0,
   });
-  
+
   $(".tabs .nav a").on("click", function () {
     var container = $(this).parentsUntil(".tabs").parent();
     if (!$(this).parent().hasClass("active")) {
@@ -135,7 +135,7 @@ $(function () {
   //SIZES
   $(".sizeCB").on("change", function () {
     paginateProducts(currentPage)
-  });  
+  });
 
   $("#checkAll").on("click", function () {
     $(".sizeCB")
@@ -167,10 +167,10 @@ $(function () {
       },
       data: {
         vendorCode: $(this).data("vendor"),
-        size_id: $("#size").val()?$("#size").val():null,
+        size_id: $("#size").val() ? $("#size").val() : null,
         count: $("#count").val(),
       },
-      success: function(){
+      success: function () {
         $.jGrowl('Товар додано!', {
           life: 1000,
           position: 'top-right'
@@ -206,8 +206,8 @@ $(function () {
       $(this).closest('.cart-tr').remove();
 
       sum = 0;
-      $(".total").each(function(){
-          sum += parseFloat(parseFloat($(this).data('total')).toFixed(2));
+      $(".total").each(function () {
+        sum += parseFloat(parseFloat($(this).data('total')).toFixed(2));
       });
       $("#totalSum").text('₴ ' + sum.toFixed(2));
       $('#totalSum-form').val(sum.toFixed(2));
@@ -220,7 +220,7 @@ $(function () {
         },
         data: {
           vendorCode: $(this).data("vendor"),
-          size: $(this).parent(".delete").siblings(".size").text()?$(this).parent(".delete").siblings(".size").text():null,
+          size: $(this).parent(".delete").siblings(".size").text() ? $(this).parent(".delete").siblings(".size").text() : null,
           count: $(this).parent(".delete").siblings(".qnt").children().first().val(),
         },
         success: refreshTotalSum,
@@ -249,74 +249,73 @@ $(function () {
 
   // ИЗМЕНЕНИЕ КОЛ_ВА ТОВАРА В КОРЗИНЕ
 
-  function refreshTotalSum()
-  {
+  function refreshTotalSum() {
     let sum = 0;
-    $(".total").each(function(index){
-      if(index != 0){
+    $(".total").each(function (index) {
+      if (index != 0) {
         sum += parseFloat(parseFloat($(this).data('total')).toFixed(2));
       }
     });
     $("#totalSum").text('₴ ' + sum.toFixed(2));
     $('#totalSum-form').val(sum.toFixed(2));
 
-    $(".countinp").on("change", function(){
+    $(".countinp").on("change", function () {
       sum = ($(this).data("singleprice") * $(this).val()).toFixed(2);
       $(this).parent(".qnt").siblings(".total").text('$ ' + sum);
       $(this).parent(".qnt").siblings(".total").data('total', sum);
       sum = 0;
-      $(".total").each(function(index){
-        if(index != 0){
+      $(".total").each(function (index) {
+        if (index != 0) {
           sum += parseFloat(parseFloat($(this).data('total')).toFixed(2));
         }
       });
-      
+
       $("#totalSum").text('₴ ' + sum.toFixed(2));
       $('#totalSum-form').val(sum.toFixed(2));
     });
   }
   refreshTotalSum();
-  
-  $("#sidebar-show-button").on('click', function(){
+
+  $("#sidebar-show-button").on('click', function () {
     $("#sidebar").slideToggle({
       duration: 300,
     });
   });
 
-  $(window).on('resize', function(){
-    
-    if(window.innerWidth >= 786){
+  $(window).on('resize', function () {
+
+    if (window.innerWidth >= 786) {
       $("#sidebar").show();
     }
-    else{
+    else {
       $("#sidebar").hide();
     }
   });
-  
-  $(".menu-categories-wrapper img").on('click', function(){
-    $(".menu-categories").slideToggle(200, function(){
+
+  $(".menu-categories-wrapper img").on('click', function () {
+    $(".menu-categories").slideToggle(200, function () {
       $(".darkback").removeAttr('hidden');
       $('body').css('overflow', 'hidden');
     });
   });
-  $('.darkback').on('click', function(){
-    $(".menu-categories").hide(200, () => { 
+  $('.darkback').on('click', function () {
+    $(".menu-categories").hide(200, () => {
       $('body').css('overflow', 'auto');
     })
     $('.callback-wrapper').attr('hidden', true)
     $('.darkback').attr('hidden', true)
   })
-  
-  
-  $('.callback-btn, #callback-block-min').on('click', ()=>{
+
+
+  $('.callback-btn, #callback-block-min').on('click', () => {
     $('.callback-wrapper').removeAttr('hidden')
     $('.darkback').removeAttr('hidden')
   })
-  
+
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  
+
   $('.to-slide').on('mouseenter', (e) => {
     $('.inner-prod-img-first', e.currentTarget).hide(100)
     $('.inner-prod-img-second', e.currentTarget).show(100)
@@ -324,8 +323,8 @@ document.addEventListener("DOMContentLoaded", () => {
     $('.inner-prod-img-first', e.currentTarget).show(100)
     $('.inner-prod-img-second', e.currentTarget).hide(100)
   })
-  
-  
+
+
   $('.to-slide-single').first().bxSlider({
     controls: false,
     pager: true,
@@ -334,19 +333,46 @@ document.addEventListener("DOMContentLoaded", () => {
     auto: true,
     mode: "fade",
     preventDefaultSwipeX: false,
-  }) 
-  
+  })
+
   paginateProducts(1);
 
 
   // ФОРМА ЗАКАЗА
 
-  // $('input[type=radio][name=payment-radio]').on('change', e => {
-  //   if (e.currentTarget.value == 'card')
-  //     $('#card').prop("disabled", false)
-  //   else if (e.currentTarget.value == 'nal')
-  //     $('#card').prop("disabled", true)
-  // })
+  $('input[type=radio][name=deliver-radio]').on('change', e => {
+    if (e.currentTarget.value == 'novaposhta') {
+      $('.deliver-details-novaposhta').removeAttr('hidden')
+      $('.deliver-details-novaposhta input').attr('required', true)
+      $('.deliver-details-ukrposhta').attr('hidden', true)
+      $('.deliver-details-ukrposhta input').removeAttr('required')
+    }
+    else if (e.currentTarget.value == 'ukrposhta') {
+      $('.deliver-details-novaposhta').attr('hidden', true)
+      $('.deliver-details-novaposhta input').removeAttr('required')
+      $('.deliver-details-ukrposhta').removeAttr('hidden')
+      $('.deliver-details-ukrposhta input').attr('required', true)
+    }
+  })
+
+  // НП АПИ
+  $('#city-np-inp').autocomplete()
+  
+  $('#city-np-inp').on('input', e => {
+    let city_m = e.currentTarget.value
+    $.post(
+      "https://api.novaposhta.ua/v2.0/json/",
+      "{\r\n \"modelName\": \"Address\",\r\n    \"calledMethod\": \"searchSettlements\",\r\n    \"methodProperties\": {\r\n        \"CityName\": \"" + city_m + "\",\r\n        \"Limit\": 5\r\n    }\r\n}",
+        data => {
+          let cities = data.data[0].Addresses.map((val, id) => { return val.Present })
+          console.log(cities)
+          $('#city-np-inp').autocomplete({
+            source: cities
+          })
+        }, 
+        "json")
+  })
+  
   
 
 });
@@ -372,7 +398,7 @@ function paginateProducts(currentPage) {
   for (let i = 20 * (currentPage - 1); i <= 20 * currentPage - 1; i++) {
     try {
       $(products[i]).show();
-    } catch (e) {}
+    } catch (e) { }
   }
 }
 

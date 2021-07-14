@@ -99,16 +99,32 @@
             </div>
 
             <div class="form-group row deliver-details-wrapper">
-            <h3>Дані доставки</h3>
+                <h2 class="form-h2">Дані доставки</h2>
                 <div class="deliver-details-novaposhta">
-                    <div class="payment-type-item">
-                        <label for="city-np-inp">Місто</label>
-                        <input type="text" name="city-np" id="city-np-inp" />
+                    <div class="np-details-item">
+                        <label for="city-np-inp" class="col-md-4 col-form-label text-md-right">Місто</label>
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="city-np" required id="city-np-inp" />
+                    </div>
+                    <div class="np-details-item">
+                        <label for="otd-np-inp" class="col-md-4 col-form-label text-md-right">Відділення/поштомат</label>
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="otd-np" required id="otd-np-inp" />
                     </div>
                 </div>
-                <div class="deliver-details-ukrposhta">
-
+                <div class="deliver-details-ukrposhta" hidden>
+                    <div class="up-details-item">
+                        <label for="city-up-inp" class="col-md-4 col-form-label text-md-right">Місто</label>
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="city-up" id="city-up-inp" />
+                    </div>
+                    <div class="up-details-item">
+                        <label for="otd-up-inp" class="col-md-4 col-form-label text-md-right">Індекс відділення</label>
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="otd-up" id="otd-up-inp" />
+                    </div>
                 </div>
+            </div>
+
+            <div class="form-group row">
+                <h2 class="form-h2"2>Примітки</h2>
+                <textarea name="notes" id="notes" class="form-control @error('name') is-invalid @enderror"></textarea>
             </div>
 
             <div class="form-group row mb-0">
