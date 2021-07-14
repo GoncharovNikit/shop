@@ -103,7 +103,9 @@
                 <div class="deliver-details-novaposhta">
                     <div class="np-details-item">
                         <label for="city-np-inp" class="col-md-4 col-form-label text-md-right">Місто</label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="city-np" required id="city-np-inp" />
+                        <input type="text" list="cities-np" class="form-control @error('name') is-invalid @enderror" name="city-np" required id="city-np-inp" />
+                        <datalist id="cities-np">
+                        </datalist>
                     </div>
                     <div class="np-details-item">
                         <label for="otd-np-inp" class="col-md-4 col-form-label text-md-right">Відділення/поштомат</label>

@@ -356,23 +356,24 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 
   // НП АПИ
-  $('#city-np-inp').autocomplete()
   
   $('#city-np-inp').on('input', e => {
+    document.querySelector('#cities-np').innerHTML = "";
+    
     let city_m = e.currentTarget.value
     $.post(
       "https://api.novaposhta.ua/v2.0/json/",
       "{\r\n \"modelName\": \"Address\",\r\n    \"calledMethod\": \"searchSettlements\",\r\n    \"methodProperties\": {\r\n        \"CityName\": \"" + city_m + "\",\r\n        \"Limit\": 5\r\n    }\r\n}",
         data => {
           let cities = data.data[0].Addresses.map((val, id) => { return val.Present })
-          console.log(cities)
-          $('#city-np-inp').autocomplete({
-            source: cities
-          })
+          let html = ''
+          cities.forEach((city) => html += `<option value=\"${city}\" />`)
+          document.querySelector('#cities-np').innerHTML = html
         }, 
         "json")
-  })
+    })
   
+
   
 
 });
