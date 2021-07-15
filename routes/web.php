@@ -27,7 +27,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
     //Route::view('/about', 'about')->name('about');
     Route::post('/order-form', 'OrderController@form')->name('order.form');
-    Route::post('/order-check', 'OrderController@check')->name('order.check');
+    Route::post('/order', 'OrderController@store')->name('order.store');
 
 });
 

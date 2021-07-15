@@ -29,9 +29,8 @@ class Product extends Model
     {
         return $this->belongsToMany(User::class, 'basket', 'product_id', 'user_id');
     }
-    public function images()
+    public function orders()
     {
-        dd($this->with('categories'));
-
+        return $this->belongsToMany(Order::class, 'product_orders', 'product_id', 'order_id');
     }
 }

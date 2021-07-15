@@ -14,4 +14,11 @@ class OrderController extends Controller
         
         return view('payment.payment-form', compact('amount'));
     }
+    public function store(Request $request)
+    {
+        $request->validate([
+
+        ]);
+        dd('storing the order...');
+    }
 }

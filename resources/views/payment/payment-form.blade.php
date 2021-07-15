@@ -5,7 +5,7 @@
     <div class="card-header">{{ __('Оформлення заказу') }}</div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route('order.check') }}">
+        <form method="POST" action="{{ route('order.store') }}">
             @csrf
 
             <h1 style="text-align: center; margin-bottom:20px;">До сплати: <span style="white-space: nowrap">₴ {{ $amount }}</span></h1>
@@ -59,19 +59,6 @@
                 @enderror
             </div>
 
-
-            <div class="form-group row">
-                <label for="card" class="col-md-4 col-form-label text-md-right">{{ __('Номер банківської карти') }}</label>
-
-                <input id="card" type="text" class="form-control @error('card') is-invalid @enderror" name="card" value="{{ old('card') }}" required>
-
-                @error('card')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>
-
             <div class="form-group row">
                 <div class="payment-wrapper">
                     <div class="col-md-4 col-form-label text-md-right payment-label">
@@ -109,7 +96,9 @@
                     </div>
                     <div class="np-details-item">
                         <label for="otd-np-inp" class="col-md-4 col-form-label text-md-right">Відділення/поштомат</label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="otd-np" required id="otd-np-inp" />
+                        <input type="text" list="otds-np" class="form-control @error('name') is-invalid @enderror" name="otd-np" required id="otd-np-inp" />
+                        <datalist id="otds-np">
+                        </datalist>
                     </div>
                 </div>
                 <div class="deliver-details-ukrposhta" hidden>

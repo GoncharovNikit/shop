@@ -365,18 +365,40 @@ document.addEventListener("DOMContentLoaded", () => {
       "https://api.novaposhta.ua/v2.0/json/",
       "{\r\n \"modelName\": \"Address\",\r\n    \"calledMethod\": \"searchSettlements\",\r\n    \"methodProperties\": {\r\n        \"CityName\": \"" + city_m + "\",\r\n        \"Limit\": 5\r\n    }\r\n}",
         data => {
-          let cities = data.data[0].Addresses.map((val, id) => { return val.Present })
+          let cities = data.data[0].Addresses
           let html = ''
-          cities.forEach((city) => html += `<option value=\"${city}\" />`)
+          cities.forEach((city) => html += `<option value=\"${city.MainDescription}\">${city.Present}<option/>`)
           document.querySelector('#cities-np').innerHTML = html
         }, 
         "json")
     })
-  
 
-  
+    
+  $('#otd-np-inp').on('focus', e => {
+    e.currentTarget.value = ''
+    document.querySelector('#otds-np').innerHTML = ""
 
-});
+    $.post(
+      "https://api.novaposhta.ua/v2.0/json/",
+      JSON.stringify({
+        "modelName": "AddressGeneral",
+        "calledMethod": "getWarehouses",
+        "methodProperties": {
+          "CityName": `${$('#city-np-inp').val()}` 
+        }
+      }),
+      data => {
+        console.log(data)
+        let otds = data.data
+        let html = ''
+        otds.forEach((otd) => html += `<option>${otd.Description}<option/>`)
+        document.querySelector('#otds-np').innerHTML = html
+      },
+      "json"
+    )   
+  })
+
+})
 
 
 
