@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->string('phone');
             $table->unsignedBigInteger('payment_type_id');
             $table->unsignedBigInteger('delivery_type_id');
+            $table->string('delivery_data');
             $table->string('remarks');
             $table->timestamps();
 

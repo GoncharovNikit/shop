@@ -24,7 +24,7 @@
             <div class="form-group row">
                 <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Номер телефону') }}</label>
 
-                <input type="text" class="form-control @error('phone') is-invalid @enderror phone-inp" name="phone" value="{{ old('phone') }}" required>
+                <input type="text" class="form-control @error('phone') is-invalid @enderror phone-inp" name="phone" value="{{ old('phone') ?? '' }}" required>
 
                 @error('phone')
                 <span class="invalid-feedback" role="alert">
@@ -67,12 +67,12 @@
                     <div class="payment-type">
                         <div class="payment-type-items">
                             <div class="payment-type-item">
-                                <input type="radio" name="deliver-radio" value="novaposhta" id="novaposhta-inp" checked />
+                                <input type="radio" name="delivery-radio" value="novaposhta" id="novaposhta-inp" checked />
                                 <label for="novaposhta-inp">Нова пошта</label>
                             </div>
                             <div class="payment-type-item">
-                                <input type="radio" name="deliver-radio" value="ukrposhta" id="ukrposhta-inp" />
-                                <label for="ukrposhta-inp">Укр пошта</label>
+                                <input type="radio" name="delivery-radio" value="ukrposhta" id="ukrposhta-inp" />
+                                <label for="ukrposhta-inp">Укрпошта</label>
                             </div>
                         </div>
                     </div>
@@ -90,13 +90,13 @@
                 <div class="deliver-details-novaposhta">
                     <div class="np-details-item">
                         <label for="city-np-inp" class="col-md-4 col-form-label text-md-right">Місто</label>
-                        <input type="text" list="cities-np" class="form-control @error('name') is-invalid @enderror" name="city-np" required id="city-np-inp" />
+                        <input type="text" list="cities-np" value="{{ old('city-np') ?? '' }}"class="form-control @error('name') is-invalid @enderror" name="city-np" required id="city-np-inp" />
                         <datalist id="cities-np">
                         </datalist>
                     </div>
                     <div class="np-details-item">
                         <label for="otd-np-inp" class="col-md-4 col-form-label text-md-right">Відділення/поштомат</label>
-                        <input type="text" list="otds-np" class="form-control @error('name') is-invalid @enderror" name="otd-np" required id="otd-np-inp" />
+                        <input type="text" list="otds-np" value="{{ old('otd-np') ?? '' }}" class="form-control @error('name') is-invalid @enderror" name="otd-np" required id="otd-np-inp" />
                         <datalist id="otds-np">
                         </datalist>
                     </div>
@@ -104,18 +104,18 @@
                 <div class="deliver-details-ukrposhta" hidden>
                     <div class="up-details-item">
                         <label for="city-up-inp" class="col-md-4 col-form-label text-md-right">Місто</label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="city-up" id="city-up-inp" />
+                        <input type="text" value="{{ old('city-up') ?? '' }}" class="form-control @error('name') is-invalid @enderror" name="city-up" id="city-up-inp" />
                     </div>
                     <div class="up-details-item">
                         <label for="otd-up-inp" class="col-md-4 col-form-label text-md-right">Індекс відділення</label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="otd-up" id="otd-up-inp" />
+                        <input type="text" value="{{ old('otd-up') ?? '' }}" class="form-control @error('name') is-invalid @enderror" name="otd-up" id="otd-up-inp" />
                     </div>
                 </div>
             </div>
 
             <div class="form-group row">
                 <h2 class="form-h2"2>Примітки</h2>
-                <textarea name="notes" id="notes" class="form-control @error('name') is-invalid @enderror"></textarea>
+                <textarea name="remarks" value="{{ old('notes') ?? '' }}" id="notes" class="form-control @error('name') is-invalid @enderror"></textarea>
             </div>
 
             <div class="form-group row mb-0">

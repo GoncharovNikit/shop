@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\AfterOrderMiddleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,10 +26,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     //BASKET
     Route::get('/basket', 'BasketController@index')->name('basket');
 
-    //Route::view('/about', 'about')->name('about');
-    Route::post('/order-form', 'OrderController@form')->name('order.form');
+    Route::get('/order-form', 'OrderController@index')->name('order.form');
     Route::post('/order', 'OrderController@store')->name('order.store');
-
+    Route::get('/order-thanks', 'OrderController@thanks')->name('order.thanks');
 });
 
 Route::get('/admin', 'AdminController@login')->name('admin.login');

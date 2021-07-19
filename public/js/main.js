@@ -44,7 +44,7 @@ $(function () {
   });
 
   $('.phone-inp').mask('+380(99) 999-99-99')
-  $('#card').mask('9999 9999 9999 9999')
+  // $('#card').mask('9999 9999 9999 9999')
 
 
 
@@ -249,33 +249,6 @@ $(function () {
 
   // ИЗМЕНЕНИЕ КОЛ_ВА ТОВАРА В КОРЗИНЕ
 
-  function refreshTotalSum() {
-    let sum = 0;
-    $(".total").each(function (index) {
-      if (index != 0) {
-        sum += parseFloat(parseFloat($(this).data('total')).toFixed(2));
-      }
-    });
-    $("#totalSum").text('₴ ' + sum.toFixed(2));
-    $('#totalSum-form').val(sum.toFixed(2));
-
-    $(".countinp").on("change", function () {
-      sum = ($(this).data("singleprice") * $(this).val()).toFixed(2);
-      $(this).parent(".qnt").siblings(".total").text('$ ' + sum);
-      $(this).parent(".qnt").siblings(".total").data('total', sum);
-      sum = 0;
-      $(".total").each(function (index) {
-        if (index != 0) {
-          sum += parseFloat(parseFloat($(this).data('total')).toFixed(2));
-        }
-      });
-
-      $("#totalSum").text('₴ ' + sum.toFixed(2));
-      $('#totalSum-form').val(sum.toFixed(2));
-    });
-  }
-  refreshTotalSum();
-
   $("#sidebar-show-button").on('click', function () {
     $("#sidebar").slideToggle({
       duration: 300,
@@ -336,11 +309,12 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 
   paginateProducts(1);
-
+  refreshTotalSum();
 
   // ФОРМА ЗАКАЗА
 
-  $('input[type=radio][name=deliver-radio]').on('change', e => {
+  $('input[type=radio][name=delivery-radio]').on('change', e => {
+    console.log('changed')
     if (e.currentTarget.value == 'novaposhta') {
       $('.deliver-details-novaposhta').removeAttr('hidden')
       $('.deliver-details-novaposhta input').attr('required', true)
@@ -367,7 +341,7 @@ document.addEventListener("DOMContentLoaded", () => {
         data => {
           let cities = data.data[0].Addresses
           let html = ''
-          cities.forEach((city) => html += `<option value=\"${city.MainDescription}\">${city.Present}<option/>`)
+          cities.forEach((city) => html += `<option value=\"${city.Present}\">${city.MainDescription}<option/>`)
           document.querySelector('#cities-np').innerHTML = html
         }, 
         "json")
@@ -384,7 +358,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "modelName": "AddressGeneral",
         "calledMethod": "getWarehouses",
         "methodProperties": {
-          "CityName": `${$('#city-np-inp').val()}` 
+          "CityName": `${$('#cities-np option').first().text()}` 
         }
       }),
       data => {
@@ -398,9 +372,23 @@ document.addEventListener("DOMContentLoaded", () => {
     )   
   })
 
+  // НП АПИ
+
+
+  
+  
 })
 
 
+function refreshTotalSum() {
+  let sum = 0
+  $(".total-price-p").each((id, elem) => {
+    sum += parseFloat(parseFloat($(elem).data('total')).toFixed(2))
+  })
+  
+  $("#totalSum").text('₴ ' + sum.toFixed(2))
+  $('#totalSum-form').val(sum.toFixed(2))
+}
 
 function getNonFilteredProducts() {
   return $(".productArt")
@@ -410,8 +398,8 @@ function getNonFilteredProducts() {
         parseInt($(elem).data("price")) >= parseInt($("#minv").val()) &&
         parseInt($(elem).data("price")) <= parseInt($("#maxv").val()) &&
         isSize(elem)
-      );
-    });
+      )
+    })
 }
 
 function paginateProducts(currentPage) {
