@@ -73,8 +73,7 @@ class OrderController extends Controller
         }
 
         $job = new \App\Jobs\AfterOrderConfirmJob($order, $prods);
-        $job->delay(now()->addSeconds(4));
-        $this->dispatch($job);
+        $this->dispatchNow($job);
         $request->session()->remove('tmpbasket');
 
         $request->session()->put('after_order', true);

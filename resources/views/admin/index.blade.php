@@ -1,5 +1,8 @@
 @extends('admin.layouts.template')
 @section('content')
+<div class="menu">
+    <a href="{{ route('admin.orders') }}" class="simple-link">Заказы</a>
+</div>
 <form action="/admin" method="POST" class="main-form">
     <div class="mb-5">
         <label for="vendorCodeInput" class="form-label">Артикул</label>

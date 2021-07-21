@@ -139,6 +139,28 @@
         .btn-del-img:focus {
             outline: none;
         }
+
+        .menu {
+            padding: 5px;
+            width: 100%;
+            height: 60px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .simple-link {
+            text-decoration: none;
+            padding: 7px 15px;
+            border: 1px solid black;
+            background: black;
+            color: white;
+            font-size: 14pt;
+        }
+        .simple-link:hover {
+            color: whitesmoke;
+            background: gray;
+        }
     </style>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

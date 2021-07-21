@@ -10,6 +10,9 @@ use App\StoneColor;
 use App\Size;
 use App\ProductSize;
 use App\Http\Requests\ProductRequest;
+use App\Services\TelegramService as TG;
+use App\Order;
+use App\ProductOrder;
 use Exception;
 use Illuminate\Foundation\Testing\HttpException;
 use Illuminate\Support\Facades\Auth;
@@ -66,6 +69,8 @@ class AdminController extends Controller
     public function mobile()
     {
         $phone = request('phone', 'error phone!');
+        TG::sendTgMessage("Перезвоните мне пожалуйста: \n$phone");
+        
         return redirect()->back();
     }
 
@@ -147,4 +152,16 @@ class AdminController extends Controller
         $prod->delete();
         return redirect()->route('admin.main');
     }
+
+    public function orders() {
+        $orders = Order::with(['payment_type', 'delivery_type'])->orderBy('created_at', 'desc')->get();
+        return view('admin.orders', compact('orders'));
+    }
+
+    public function order_details($id) {
+        $order = Order::with(['products', 'size'])->findOrFail($id);
+        // dd($order);
+        return view('admin.order-details', compact('order'));
+    }
+    
 }

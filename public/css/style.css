@@ -2402,6 +2402,13 @@ input[type="radio"]:checked:after {
         display: inline-block;
     }
 
+    .payment-type {
+        padding: 0 10%;
+    }
+    .payment-label {
+        white-space: nowrap;
+    }
+
     #menu .trigger {
         display: block;
         width: 35px;
@@ -2520,6 +2527,13 @@ input[type="radio"]:checked:after {
     }
     .last-products .products article {
         border: 0;
+    }
+    .payment-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+    .payment-type-item label {
     }
 }
 
@@ -2700,7 +2714,7 @@ input[type="radio"]:checked:after {
 }
 @media (max-width: 992px) {
     .card-body form {
-        width: 80% !important;
+        width: 97% !important;
     }
     .card-body form input,
     .card-body form label {
@@ -2708,6 +2722,12 @@ input[type="radio"]:checked:after {
     }
     .card-body form button {
         width: 60%;
+    }
+    .card-body form input[type=radio] {
+        width: auto !important;
+    }
+    .payment-type-items {
+        flex-direction: column;
     }
 }
 

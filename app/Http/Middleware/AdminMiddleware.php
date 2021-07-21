@@ -17,7 +17,6 @@ class AdminMiddleware
     {
         if ($request->session()->get('IS_ADMIN', 'no') == 'no')
             return redirect()->route('admin.login');           
-
         return $next($request);                                 
     }
 }

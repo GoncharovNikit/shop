@@ -37,6 +37,8 @@ Route::post('/callback-request', 'AdminController@mobile');
 Route::middleware([AdminMiddleware::class])->group(function (){
     Route::post('/admin', 'AdminController@store')->name('admin.store');
     Route::get('/admin-main', 'AdminController@index')->name('admin.main');
+    Route::get('/admin/orders', 'AdminController@orders')->name('admin.orders');
+    Route::get('/admin/orders/{id}', 'AdminController@order_details')->name('admin.order-details');
     Route::get('/admin/{id}', 'AdminController@edit')->name('admin.edit');
     Route::delete('/admin/{id}', 'AdminController@delete')->name('admin.delete');
     Route::patch('/admin', 'AdminController@save')->name('admin.save');

@@ -90,13 +90,13 @@
                 <div class="deliver-details-novaposhta">
                     <div class="np-details-item">
                         <label for="city-np-inp" class="col-md-4 col-form-label text-md-right">Місто</label>
-                        <input type="text" list="cities-np" value="{{ old('city-np') ?? '' }}"class="form-control @error('name') is-invalid @enderror" name="city-np" required id="city-np-inp" />
+                        <input spellcheck="false" type="text" list="cities-np" value="{{ old('city-np') ?? '' }}"class="form-control @error('name') is-invalid @enderror" name="city-np" required id="city-np-inp" />
                         <datalist id="cities-np">
                         </datalist>
                     </div>
                     <div class="np-details-item">
                         <label for="otd-np-inp" class="col-md-4 col-form-label text-md-right">Відділення/поштомат</label>
-                        <input type="text" list="otds-np" value="{{ old('otd-np') ?? '' }}" class="form-control @error('name') is-invalid @enderror" name="otd-np" required id="otd-np-inp" />
+                        <input spellcheck="false" type="text" list="otds-np" value="{{ old('otd-np') ?? '' }}" class="form-control @error('name') is-invalid @enderror" name="otd-np" required id="otd-np-inp" />
                         <datalist id="otds-np">
                         </datalist>
                     </div>
@@ -104,11 +104,11 @@
                 <div class="deliver-details-ukrposhta" hidden>
                     <div class="up-details-item">
                         <label for="city-up-inp" class="col-md-4 col-form-label text-md-right">Місто</label>
-                        <input type="text" value="{{ old('city-up') ?? '' }}" class="form-control @error('name') is-invalid @enderror" name="city-up" id="city-up-inp" />
+                        <input spellcheck="false" type="text" value="{{ old('city-up') ?? '' }}" class="form-control @error('name') is-invalid @enderror" name="city-up" id="city-up-inp" />
                     </div>
                     <div class="up-details-item">
                         <label for="otd-up-inp" class="col-md-4 col-form-label text-md-right">Індекс відділення</label>
-                        <input type="text" value="{{ old('otd-up') ?? '' }}" class="form-control @error('name') is-invalid @enderror" name="otd-up" id="otd-up-inp" />
+                        <input spellcheck="false" type="text" value="{{ old('otd-up') ?? '' }}" class="form-control @error('name') is-invalid @enderror" name="otd-up" id="otd-up-inp" />
                     </div>
                 </div>
             </div>
