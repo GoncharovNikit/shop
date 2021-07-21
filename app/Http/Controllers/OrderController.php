@@ -67,7 +67,7 @@ class OrderController extends Controller
                 'product_id' => $prod['product']->id,
                 'order_id' => $order->id,
                 'product_count' => $prod['count'],
-                'size_id' => Size::firstWhere('size', $prod['size'])->id ?? null
+                'size' => $prod['size'] ?? null
             ]);
             $order_prod->save();
         }

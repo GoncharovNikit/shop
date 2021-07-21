@@ -159,8 +159,7 @@ class AdminController extends Controller
     }
 
     public function order_details($id) {
-        $order = Order::with(['products', 'size'])->findOrFail($id);
-        // dd($order);
+        $order = Order::with(['products'])->findOrFail($id);
         return view('admin.order-details', compact('order'));
     }
     

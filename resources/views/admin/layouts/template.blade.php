@@ -161,6 +161,10 @@
             color: whitesmoke;
             background: gray;
         }
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+        }
     </style>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
