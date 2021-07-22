@@ -5,8 +5,6 @@
 	<div class="widget">
 		<h3>Сортувати за:</h3>
 		<fieldset>
-			<input type="radio" id="sortDate" name="sorting" class="sort" data-sort="addedDate" checked>
-			<label for="sortDate">Датою додавання</label><br>
 			<input type="radio" id="sortPriceDesc" name="sorting" class="sort" data-sort="priceDes">
 			<label for="sortPriceDesc">Ціною(по спаданню)</label><br>
 			<input type="radio" id="sortPriceAsc" name="sorting" class="sort" data-sort="priceAsc">

@@ -13,9 +13,11 @@
                         @foreach ($categories as $category)
                         <a href="{{ route('shop.list', ['category' => $category->name]) }}"><li class="category-mob-menu">{{ $category->name_rus }}</li></a>
                         @endforeach
+                        <a href="{{ route('shop.list', ['category' => 'all']) }}"><li class="category-mob-menu">Все товары</li></a>
+                        <a href="{{ route('shop.list', ['category' => 'sales']) }}"><li class="category-mob-menu">Распродажа</li></a>
                     </ul>
                     <div class="lang-wrapper">
-                        <img src="{{asset('images/lang.png')}}" class="header-min-img" alt="">
+                        <img src="{{asset('images/lang.png')}}" class="header-min-img" alt="language">
                         <a href="{{ LaravelLocalization::getLocalizedURL('uk') }}">UK</a>
                         /
                         <a href="{{ LaravelLocalization::getLocalizedURL('ru') }}">RU</a>
@@ -65,6 +67,8 @@
                 @foreach ($categories as $category)
                 <li><a href="{{ route('shop.list', ['category' => $category->name]) }}">{{ $category->name_rus }}</a></li>
                 @endforeach
+                <li><a href="{{ route('shop.list', ['category' => 'all']) }}">Все товары</a></li>
+                <li><a href="{{ route('shop.list', ['category' => 'sales']) }}">Распродажа</a></li>
             </ul>
         </div>
     </div>

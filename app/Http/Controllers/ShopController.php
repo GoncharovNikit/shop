@@ -16,7 +16,7 @@ class ShopController extends Controller
     public function list(Request $request, $category = 'all')
     {
         $products = [];
-        if ($category == 'all') $products = Product::with(['sizes'])->get();
+        if ($category == 'all') $products = Product::with(['sizes'])->get()->shuffle();
         else {
             $products = Product::with(['categories', 'sizes'])
             ->whereHas('categories', function($query) use($category){

@@ -17,6 +17,8 @@ class CreateSalesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('product_id');
             $table->decimal('discount', 5, 2);
+
+            $table->foreign('product_id')->on('products')->references('id')->onDelete('cascade');
         });
     }
 
