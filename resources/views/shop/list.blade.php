@@ -1,5 +1,4 @@
 @extends('layouts.template')
-
 @section('content')
 <div id="breadcrumbs">
 	<div class="container">
@@ -26,7 +25,6 @@
 				<section class="products productList">
 
 					@foreach ($products as $product)
-
 					<article class="hovarticle productArt<?= count($images[$product->vendorCode]) > 1 ? " to-slide" : "" ?>" 
 					data-sizes="{{ json_encode($product->sizes->pluck('size')) }}" 
 					data-category="{{ $product->categories->name_rus }}" 
@@ -49,8 +47,8 @@
 							<div class="prod-description">{{ substr($product->description, 0, 50) }}..</div>
 						</div>
 					</article>
-
 					@endforeach
+
 				</section>
 			</div>
 			<!-- / content -->

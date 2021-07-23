@@ -1,15 +1,12 @@
 @extends('admin.layouts.template')
 @section('content')
-@if ($errors->any())
-<div class="alert alert-danger">
-    <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>
+<div class="menu">
+    @if ($product->sale_count)
+    <a href="{{ route('admin.sale-details', ['id' => $product->sale->id]) }}" class="simple-link">Страница распродажи</a>
+    @else
+    <a href="{{ route('admin.sale-create', ['product' => $product->id]) }}" class="simple-link">Назначить распродажу</a>
+    @endif
 </div>
-@endif
-
 <form class="main-form" action="{{ route('admin.save') }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PATCH')
@@ -57,6 +54,11 @@
     <div class="mb-5">
         <label for="selectSize">Размер</label>
         <br><br>
+        <div class="size-sale-btn-wrapper">
+            <button type="button" class="size-sale-btn check-all simple-link">Выбрать всё</button>
+            <button type="button" class="size-sale-btn decheck-all simple-link">Отменить всё</button>
+        </div>
+        <br>
         <div name="size" id="selectSize">
             @foreach($sizes as $size)
             <div>

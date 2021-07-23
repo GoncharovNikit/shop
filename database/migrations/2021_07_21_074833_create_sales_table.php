@@ -15,7 +15,7 @@ class CreateSalesTable extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('product_id')->unique();
             $table->decimal('discount', 5, 2);
 
             $table->foreign('product_id')->on('products')->references('id')->onDelete('cascade');

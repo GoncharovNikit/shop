@@ -33,4 +33,8 @@ class Product extends Model
     {
         return $this->belongsToMany(Order::class, 'product_orders', 'product_id', 'order_id');
     }
+    public function sale()
+    {
+        return $this->belongsTo(Sale::class, 'id', 'product_id');
+    }
 }

@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <style>
         .main-form {
-            background-color: silver;
+            background-color: whitesmoke;
             font-family: Arial, Helvetica, sans-serif;
             font-weight: 800;
             font-size: 20px;
@@ -156,6 +156,7 @@
             background: black;
             color: white;
             font-size: 14pt;
+            white-space: nowrap;
         }
         .simple-link:hover {
             color: whitesmoke;
@@ -165,12 +166,17 @@
             text-align: center;
             margin: 20px 0;
         }
+        td, th {
+            text-align: center;
+            vertical-align: middle;
+        }
+
     </style>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $(document).ready(() => {
-            if (!($("#selectCategory option:selected").text() == "Кольца" || $("#selectCategory option:selected").text() == "Браслеты"))
+            if ((!($("#selectCategory option:selected").text() == "Кольца" || $("#selectCategory option:selected").text() == "Браслеты")) && $('#is-sale').val() != 'on')
                 $(".sizeCheck").attr("disabled", true)
             else $(".sizeCheck").attr("disabled", false)
 
@@ -183,6 +189,18 @@
 
             $('#images-wrapper').sortable()
 
+            $('.size-sale-btn.check-all').on('click', () => {
+                $('.sizeCheck').prop('checked', true)
+            })
+            $('.size-sale-btn.decheck-all').on('click', () => {
+                $('.sizeCheck').prop('checked', false)
+            })
+            $('.discount-inp').on('change', (e) => {
+                $('.discount-td-handler').text(e.currentTarget.value)
+                let price = parseFloat($('.product-price').text())
+                let discount = parseFloat(e.currentTarget.value)
+                $('.discount-price').text((price - (price * discount / 100)).toFixed(2))
+            })
         })
     </script>
 </head>

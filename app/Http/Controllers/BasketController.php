@@ -37,10 +37,11 @@ class BasketController extends Controller
 
     public function delete(Request $request)
     {
-        if ($request->has('vendorCode') && $request->session()->has('tmpbasket') && $request->has('count'))
+        if ($request->has('vendorCode') && $request->session()->has('tmpbasket') && $request->has('count')) {
             $request->session()->put('tmpbasket', BasketService::removeProduct($request));
-
-        return response()->json(['Product has deleted']);
+            return response()->json(['Product has deleted']);
+        }
+        return response()->json(['Leck of information!']);
     }
 
 }

@@ -221,10 +221,10 @@ $(function () {
         data: {
           vendorCode: $(this).data("vendor"),
           size: $(this).parent(".delete").siblings(".size").text() ? $(this).parent(".delete").siblings(".size").text() : null,
-          count: $(this).parent(".delete").siblings(".qnt").children().first().val(),
+          count: $(this).parent(".delete").siblings(".qnt").text(),
         },
         success: refreshTotalSum,
-        /*error: function (jqXHR, exception) {
+        /*error: (jqXHR, exception) => {
           var msg = "";
           if (jqXHR.status === 0) {
             msg = "Not connect.\n Verify Network.";
@@ -374,11 +374,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // НП АПИ
 
-
-  
-  
+  checkSizeInSale()
+  $('#size').on('change', e => { checkSizeInSale() })
+  setColorsToSaleSizes()
 })
 
+function setColorsToSaleSizes() {
+  let saleSizes = $('input#sale-sizes').val()
+  if(saleSizes === undefined) return
+  $('.link').each((id, element) => {
+    if (saleSizes.includes($(element).text())) element.style.color = '#B92828'
+  })
+}
+
+function checkSizeInSale() {
+  let saleSizes = $('input#sale-sizes').val()
+  if(saleSizes === undefined) return
+  let currentSize = $('select#size option:selected').text()
+  if (saleSizes.includes(currentSize)) {
+    $('.sale-size-price').removeAttr('hidden')
+    $('.not-sale-size-price').attr('hidden', true)
+  } else {
+    $('.sale-size-price').attr('hidden', true)
+    $('.not-sale-size-price').removeAttr('hidden')
+  }
+
+}
 
 function refreshTotalSum() {
   let sum = 0

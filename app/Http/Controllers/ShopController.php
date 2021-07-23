@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Size;
-use App\User;
-use App\Basket;
+use App\Sale;
 use App\Services\ProductImageService as Images;
 
 use Illuminate\Support\Facades\Auth;
@@ -15,8 +14,18 @@ class ShopController extends Controller
 {
     public function list(Request $request, $category = 'all')
     {
+        $maxPrice = Product::max('price');
+        $minPrice = Product::min('price');
+        $sizes = Size::all();
+
+        $images = Images::loadAllImages(0, 2);
+        
         $products = [];
         if ($category == 'all') $products = Product::with(['sizes'])->get()->shuffle();
+        elseif ($category == 'sales') {
+            $sales = Sale::with(['product', 'sizes'])->get()->shuffle();
+            return view('shop.sales.list', compact('sales', 'maxPrice', 'minPrice', 'sizes', 'images'));
+        }
         else {
             $products = Product::with(['categories', 'sizes'])
             ->whereHas('categories', function($query) use($category){
@@ -24,11 +33,7 @@ class ShopController extends Controller
             })
             ->get();
         }
-        $maxPrice = Product::max('price');
-        $minPrice = Product::min('price');
-        $sizes = Size::all();
-
-        $images = Images::loadAllImages(0, 2);
+        
         return view('shop.list', compact('products', 'maxPrice', 'minPrice', 'sizes', 'images'));
     }
 
@@ -53,12 +58,21 @@ class ShopController extends Controller
         return view('shop.main', compact('products'));
     }
 
-    public function single(Request $request, $category, $id)
+    public function single($category, $id)
     {
-        $product = Product::with(['categories', 'sizes'])->firstWhere('vendorCode', $id);
+        $product = Product::with(['categories', 'sizes', 'sale.sizes'])->withCount('sale')->firstWhere('vendorCode', $id);
         $images = Images::loadImages($product->vendorCode);
-
+        if ($product->sale_count > 0) $product->discount_price = $product->price - ($product->price * $product->sale->discount / 100);
+        $product->is_sale_page = false;
         return view('shop.single-product', compact('product', 'images'));
     }
 
+    public function single_sale($category, $id)
+    {
+        $product = Product::with(['categories', 'sale.sizes'])->withCount('sale')->firstWhere('vendorCode', $id);
+        $images = Images::loadImages($product->vendorCode);
+        $product->discount_price = $product->price - ($product->price * $product->sale->discount / 100);
+        $product->is_sale_page = true;
+        return view('shop.single-product', compact('product', 'images'));
+    }
 }

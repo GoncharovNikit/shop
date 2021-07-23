@@ -13,6 +13,7 @@ use App\Http\Requests\ProductRequest;
 use App\Services\TelegramService as TG;
 use App\Order;
 use App\ProductOrder;
+use App\Sale;
 use Exception;
 use Illuminate\Foundation\Testing\HttpException;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +21,7 @@ use SebastianBergmann\Environment\Console;
 use Symfony\Component\HttpKernel\Exception\HttpException as ExceptionHttpException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 use App\Services\ProductImageService as Images;
 
@@ -57,12 +59,11 @@ class AdminController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $product = Product::with(['categories', 'metals', 'stone_colors', 'sizes'])->firstWhere('vendorCode', $id);
+        $product = Product::with(['categories', 'metals', 'stone_colors', 'sizes', 'sale'])->withCount('sale')->firstWhere('vendorCode', $id);
         $metals = Metal::all();
         $colors = StoneColor::all();
         $sizes = Size::all();
         $product->images = Images::loadImages($id) ?? [];
-        // dd($product->images);
         return view('admin.edit', compact('product', 'metals', 'colors', 'sizes'));
     }
 
@@ -102,7 +103,7 @@ class AdminController extends Controller
     public function save(ProductRequest $request)
     {
         $this->validate($request, ['old-vendor-code' => 'required|min:4|max:12', 'old-category' => 'required']);
-
+            
         if ($request->get('vendorCode') != $request->get('old-vendor-code')) 
             Images::renameImageFolder($request->get('old-vendor-code'), $request->get('vendorCode'));
 
@@ -125,7 +126,7 @@ class AdminController extends Controller
             $request->get('category') == Category::firstWhere('name_rus', 'Кольца')->id ||
             $request->get('category') == Category::firstWhere('name_rus', 'Браслеты')->id
         ) {
-            foreach ($request->get('size') as $size) {
+            foreach ($request->get('size', []) as $size) {
                 $sizeProd = new ProductSize();
                 $sizeProd->product_id = Product::firstWhere('vendorCode', $request->get('vendorCode'))->id;
                 $sizeProd->size_id = $size;
@@ -161,6 +162,48 @@ class AdminController extends Controller
     public function order_details($id) {
         $order = Order::with(['products'])->findOrFail($id);
         return view('admin.order-details', compact('order'));
+    }
+
+    public function sales() {
+        $sales = Sale::with(['product'])->withCount('sizes')->get();
+        return view('admin.sales', compact('sales'));
+    }
+    
+    public function sale_details($id) {
+        $sale = Sale::with(['product.sizes', 'sizes'])->findOrFail($id);
+        return view('admin.sale-details', compact('sale'));
+    }
+    
+    public function sale_remove($id) {
+        Sale::findOrFail($id)->delete();
+        return redirect()->route('admin.sales')->withSuccess('Удалено успешно!');
+    }
+
+    public function sale_edit(Request $request, $id) {
+        $request->validate([ 'discount' => 'required|min:0.01|max:99.99' ]);
+
+        Sale::findOrFail($id)->update(['discount' => $request->get('discount')]);
+        DB::table('sale_sizes')->where('sale_id', $id)->delete();
+        foreach ($request->get('size', []) as $size) 
+            DB::table('sale_sizes')->insert(['sale_id' => $id, 'size_id' => $size ]);
+        return redirect()->route('admin.sale-details', ['id' => $id]);
+    }
+
+    public function sale_create(Product $product) {
+        $product->load(['sizes']);
+        return view('admin.sale-create', compact('product'));
+    }
+
+    public function sale_store(Request $request) {
+        $request->validate(['product_id' => 'required', 'discount' => 'required|min:0.01|max:99.99']);
+        $product = Product::with('categories')->findOrFail($request->get('product_id'));
+        if ($product->categories->name_rus == 'Кольца' || $product->categories->name_rus == 'Браслеты')
+            $request->validate(['size' => 'required']);
+        $sale = Sale::create(['product_id' => $request->get('product_id'), 'discount' => $request->get('discount')]);
+        if ($product->categories->name_rus == 'Кольца' || $product->categories->name_rus == 'Браслеты')
+            foreach ($request->get('size', []) as $size) 
+                DB::table('sale_sizes')->insert(['sale_id' => $sale->id, 'size_id' => $size]);
+        return redirect()->route('admin.sale-details', ['id' => $sale->id]);
     }
     
 }

@@ -25,9 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer(['shop.list', 'admin.index', 'admin.edit', 'layouts.partials.header'], function($view){
+        View::composer(['shop.list', 'admin.index', 'admin.edit', 'layouts.partials.header', 'shop.sales.list'], function($view){
             $view->with('categories', Category::all());
         });
-        // json_encode(array_map(function (size) { return size->size }, $product->sizes));
     }
 }

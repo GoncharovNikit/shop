@@ -2,6 +2,7 @@
 @section('content')
 <div class="menu">
     <a href="{{ route('admin.orders') }}" class="simple-link">Заказы</a>
+    <a href="{{ route('admin.sales') }}" class="simple-link">Распродажи</a>
 </div>
 <form action="/admin" method="POST" class="main-form">
     <div class="mb-5">

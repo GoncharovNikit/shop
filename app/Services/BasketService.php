@@ -51,7 +51,7 @@ class BasketService
     public static function removeProduct($request)
     {
         $prods = $request->session()->get('tmpbasket');
-
+        
         unset($prods[array_search([
             'product' => Product::with(['categories'])->firstWhere('vendorCode', $request->get('vendorCode')),
             'size' => $request->get('size') ?? 'null',

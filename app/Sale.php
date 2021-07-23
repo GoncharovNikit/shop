@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sale extends Model
 {
     public $timestamps = FALSE;
+    protected $guarded = ['id'];
 
     public function product()
     {
