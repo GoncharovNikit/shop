@@ -212,11 +212,9 @@ class AdminController extends Controller
     }
 
     public function slider_save(Request $request) {
-        if ($request->has('image_links') && !$request->has('btn-del')) Images::setSliderImageLinks($request->get('image_links'));
-        
-        if ($request->has('btn-del')) Images::deleteSliderImage($request->get('btn-del'));
-
         if ($request->has('productimages') && !$request->has('btn-del')) Images::changeSliderImageSequence($request->get('productimages'));
+        if ($request->has('image_links') && !$request->has('btn-del')) Images::setSliderImageLinks($request->get('image_links'));
+        if ($request->has('btn-del')) Images::deleteSliderImage($request->get('btn-del'));
 
         if ($request->hasFile('images'))
             foreach ($request->file('images') as $img)

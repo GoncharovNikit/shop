@@ -2,13 +2,13 @@
 
 @section('content')
 <div id="breadcrumbs">
-	<div class="container">
-		<ul>
-			<li><a href="{{route('shop.main')}}">Головна</a></li>
-			<li>Кошик</li>
-		</ul>
-	</div>
-	<!-- / container -->
+    <div class="container">
+        <ul>
+            <li><a href="{{route('shop.main')}}">Головна</a></li>
+            <li>Кошик</li>
+        </ul>
+    </div>
+    <!-- / container -->
 </div>
 <div id="content" class="full">
     <div class="cart-table">
@@ -21,17 +21,24 @@
                 <th class="total">Усього</th>
                 <th class="delete"></th>
             </tr>
-            
+
             @forelse($products as $item)
-            <?php $tmp = clone $item['product']; $tmp->load('sale'); ?>
+            <?php $tmp = clone $item['product'];
+            $tmp->load('sale'); ?>
             <tr class="cart-tr">
-                <td class="items">
-                    <div class="cart-image sale-img-relative">
+                <td class="items sale-img-relative">
+                    <div class="cart-image">
                         @if (count($images[$item['product']->vendorCode]) > 0)
-                        <img src="{{asset('images/catalog/'.$item['product']->categories->folder_name.'/'.$item['product']->vendorCode.'/'.$images[$item['product']->vendorCode][0])}}" alt="productImage">
-                        @endif
-                        @if (!(($tmp->sale == null || (($tmp->categories->name_rus == 'Кольца' || $tmp->categories->name_rus == 'Браслеты') && !in_array($item['size'], array_column($tmp->sale->sizes->toArray(), 'size'))))))
-                        <img src="{{ asset('images/sale.png') }}" class="sale-basket-img" alt="sale">
+                        <div class="sale-img-relative">
+                            @if ($tmp->sale != null)
+                            @if (($tmp->categories->name_rus == 'Кольца' || $tmp->categories->name_rus == 'Браслеты') && in_array($item['size'], array_column($tmp->sale->sizes->toArray(), 'size')))
+                            <img src="{{ asset('images/sale.png') }}" class="sale-basket-img" alt="sale">
+                            @else
+                            <img src="{{ asset('images/sale.png') }}" class="sale-basket-img" alt="sale">
+                            @endif
+                            @endif
+                            <img src="{{asset('images/catalog/'.$item['product']->categories->folder_name.'/'.$item['product']->vendorCode.'/'.$images[$item['product']->vendorCode][0])}}" alt="productImage">
+                        </div>
                         @endif
                     </div>
                     <h3><a href="#">Lorem ipsum dolor</a></h3>
@@ -67,7 +74,7 @@
     <div class="total-count">
         <h3>Всього до сплати: <strong id="totalSum"></strong></h3>
         <form action="{{route('order.form')}}" method="get">
-            <input id="totalSum-form" type="number" step="0.01" name="amount" hidden />   
+            <input id="totalSum-form" type="number" step="0.01" name="amount" hidden />
             <button class="btn payment" type="submit">Замовити</button>
         </form>
     </div>

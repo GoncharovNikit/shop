@@ -144,7 +144,7 @@ class ProductImageService
     {
         ProductImageService::renameAllSliderImages();
         foreach (array_column(ProductImageService::loadMainSliderImages(), 'folder') as $key => $value) {
-            $newname = ($key - 1);
+            $newname = ($key + 1);
             try { rename(public_path("images/main_slider/$value"), public_path("images/main_slider/$newname")); } catch(Exception $e) { }
         }
     }

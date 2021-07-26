@@ -11,28 +11,24 @@ use App\Services\BasketService;
 
 class BasketController extends Controller
 {
-    
+
     public function index(Request $request)
     {
         $products = $request->session()->get('tmpbasket') ?? [];
         $images = \App\Services\ProductImageService::loadBasketImages(array_column($products, 'product'));
-
+        // dd($products);
         return view('basket.index', compact('products', 'images'));
     }
 
     public function store(Request $request)
     {
-        if ($request->has('vendorCode') && $request->has('count')) {
-            
-            if ($request->session()->has('tmpbasket'))
-                $request->session()->put('tmpbasket', BasketService::storeProduct($request));
-            else
-                $request->session()->put(
-                    'tmpbasket',
-                    BasketService::startBasket($request)
-                );
+        if ($request->session()->has('tmpbasket')) $request->session()->put('tmpbasket', BasketService::storeProduct($request));
+        else {
+            $request->session()->put(
+                'tmpbasket',
+                BasketService::startBasket($request)
+            );
         }
-        return response()->json(['Product has added']);
     }
 
     public function delete(Request $request)
@@ -43,5 +39,4 @@ class BasketController extends Controller
         }
         return response()->json(['Leck of information!']);
     }
-
 }

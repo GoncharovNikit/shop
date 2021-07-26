@@ -824,9 +824,9 @@ a:hover {
 
 .sale-basket-img{ 
     position: absolute;
-    width: 70px !important;
-    bottom: 20px;
-    left: -10px;
+    width: 60px !important;
+    top: -10px;
+    left: 0;    
 }
 
 .single-prod-sale-img {
@@ -2499,6 +2499,19 @@ input[type="radio"]:checked:after {
         margin-top: 90px;
         margin-bottom: 106px;
         font-size: 10pt;
+    }
+
+    .sale-basket-img { 
+        left: 35%;
+        top: 0;
+    }
+    
+}
+
+@media(max-width: 497px) {
+    .sale-basket-img { 
+        left: 25%;
+        top: 0;
     }
 }
 

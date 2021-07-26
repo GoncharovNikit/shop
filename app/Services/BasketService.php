@@ -10,7 +10,7 @@ class BasketService
     public static function isEmpty($request)
     {
         return count($request->session()->get('tmpbasket', []) ?? []) == 0;
-    }    
+    }
     public static function startBasket($request)
     {
         return [[
@@ -22,36 +22,37 @@ class BasketService
     public static function storeProduct($request)
     {
         $prods = $request->session()->get('tmpbasket');
-        $is_add = false;
-        $index = -1;
+        if (!$request->has('vendorCode') || !$request->has('count')) return $prods;
+        $product = Product::with(['categories'])->firstWhere('vendorCode', $request->get('vendorCode'));
+        if (($product->categories->name_rus == 'Кольца' || $product->categories->name_rus == 'Браслеты') && !$request->has('size_id')) return $prods;
+
         foreach ($prods as $key => $prod) {
-            if (
-                $prod['product'] == Product::with(['categories'])->firstWhere('vendorCode', $request->get('vendorCode'))
-                && $prod['size'] == Size::find($request->get('size_id'))->size ?? 'null'
-            ) {
-                $is_add = true;
-                $index = $key;
-                break;
+            if ($prod['product'] == $product) {
+                if ($product->categories->name_rus == 'Кольца' || $product->categories->name_rus == 'Браслеты') {
+                    if ($prod['size'] == Size::find($request->get('size_id'))->size) {
+                        $prods[$key]['count'] += $request->get('count');
+                        return $prods;
+                    } 
+                }
+                $prods[$key]['count'] += $request->get('count');
+                return $prods;
             }
         }
-
-        if (!$is_add) {
-            array_push(
-                $prods,
-                [
-                    'product' => Product::with(['categories'])->firstWhere('vendorCode', $request->get('vendorCode')),
-                    'size' => Size::find($request->get('size_id'))->size ?? 'null',
-                    'count' => $request->get('count')
-                ]
-            );
-        } else $prods[$index]['count'] += $request->get('count');
+        array_push(
+            $prods,
+            [
+                'product' => Product::with(['categories'])->firstWhere('vendorCode', $request->get('vendorCode')),
+                'size' => Size::find($request->get('size_id'))->size ?? 'null',
+                'count' => $request->get('count')
+            ]
+        );
 
         return $prods;
     }
     public static function removeProduct($request)
     {
         $prods = $request->session()->get('tmpbasket');
-        
+
         unset($prods[array_search([
             'product' => Product::with(['categories'])->firstWhere('vendorCode', $request->get('vendorCode')),
             'size' => $request->get('size') ?? 'null',
@@ -64,8 +65,8 @@ class BasketService
     {
         $prods = $request->session()->get('tmpbasket') ?? [];
         $sum = 0;
-        foreach ($prods as $prod) 
+        foreach ($prods as $prod)
             $sum += $prod['product']->price * $prod['count'];
-        return $sum;        
+        return $sum;
     }
 }

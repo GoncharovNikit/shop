@@ -1,5 +1,3 @@
-//const { round } = require("lodash");
-//const { forEach } = require("lodash");
 $(function () {
   $("#before-load").find("i").fadeOut().end().fadeOut("slow");
 });
@@ -159,6 +157,7 @@ $(function () {
   // ДОБАВЛЕНИЕ ТОВАРА В КОРЗИНУ
 
   $(".basket-adding").on("click", function () {
+    
     $.ajax({
       type: "POST",
       url: "/basket-api",
