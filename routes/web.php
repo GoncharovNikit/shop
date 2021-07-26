@@ -40,6 +40,8 @@ Route::middleware([AdminMiddleware::class])->group(function (){
     Route::get('/admin-main', 'AdminController@index')->name('admin.main');
     Route::get('/admin/orders', 'AdminController@orders')->name('admin.orders');
     Route::get('/admin/sales', 'AdminController@sales')->name('admin.sales');
+    Route::get('/admin/slider', 'AdminController@slider')->name('admin.slider');
+    Route::put('/admin/slider/save', 'AdminController@slider_save')->name('admin.slider.save');
     Route::get('/admin/orders/{id}', 'AdminController@order_details')->name('admin.order-details');
     Route::delete('/admin/sales/{id}/remove', 'AdminController@sale_remove')->name('admin.sale-remove');
     Route::get('/admin/sales/{id}', 'AdminController@sale_details')->name('admin.sale-details');

@@ -20,8 +20,4 @@ class Order extends Model
     {
         return $this->belongsToMany(Product::class, 'product_orders', 'order_id', 'product_id')->withPivot(['product_count', 'size']);
     }
-    public function size()
-    {
-        return $this->hasOne(Size::class, 'id', 'size_id');
-    }
 }

@@ -205,5 +205,24 @@ class AdminController extends Controller
                 DB::table('sale_sizes')->insert(['sale_id' => $sale->id, 'size_id' => $size]);
         return redirect()->route('admin.sale-details', ['id' => $sale->id]);
     }
+
+    public function slider() {
+        $images = Images::loadMainSliderImages();
+        return view('admin.slider', compact('images'));
+    }
+
+    public function slider_save(Request $request) {
+        if ($request->has('image_links') && !$request->has('btn-del')) Images::setSliderImageLinks($request->get('image_links'));
+        
+        if ($request->has('btn-del')) Images::deleteSliderImage($request->get('btn-del'));
+
+        if ($request->has('productimages') && !$request->has('btn-del')) Images::changeSliderImageSequence($request->get('productimages'));
+
+        if ($request->hasFile('images'))
+            foreach ($request->file('images') as $img)
+                Images::storeSliderImage($img);      
+
+        return redirect()->route('admin.slider', ['id' => $request->get('vendorCode')]);
+    }
     
 }

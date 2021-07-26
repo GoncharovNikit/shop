@@ -24,17 +24,18 @@
 
                     @foreach ($sales as $sale)
                     <article class="hovarticle productArt<?= count($images[$sale->product->vendorCode]) > 1 ? " to-slide" : "" ?>" data-sizes="{{ json_encode($sale->sizes->pluck('size')) }}" data-category="{{ $sale->product->categories->name_rus }}" data-price="{{ $sale->product->price }}">
+                        <img src="{{ asset('images/discount.png') }}" alt="Sale" class="discount-product-image" width="65">
                         <a href="{{ route('shop.sales.single', ['category' => $sale->product->categories->name, 'id' => $sale->product->vendorCode]) }}">
                             <div class="prod-slider">
 
                                 @if (count($images[$sale->product->vendorCode]) > 0)
                                 <div class="inner-prod-img-first">
-                                    <img class="prod-slider-img" src="{{ asset('images/cat/'.$sale->product->categories->folder_name.'/'.$sale->product->vendorCode.'/'.$images[$sale->product->vendorCode][0]) }}">
+                                    <img class="prod-slider-img" src="{{ asset('images/catalog/'.$sale->product->categories->folder_name.'/'.$sale->product->vendorCode.'/'.$images[$sale->product->vendorCode][0]) }}">
                                 </div>
                                 @endif
                                 @if (count($images[$sale->product->vendorCode]) > 1)
                                 <div class="inner-prod-img-second">
-                                    <img class="prod-slider-img second-img" src="{{ asset('images/cat/'.$sale->product->categories->folder_name.'/'.$sale->product->vendorCode.'/'.$images[$sale->product->vendorCode][1]) }}">
+                                    <img class="prod-slider-img second-img" src="{{ asset('images/catalog/'.$sale->product->categories->folder_name.'/'.$sale->product->vendorCode.'/'.$images[$sale->product->vendorCode][1]) }}">
                                 </div>
                                 @endif
 
@@ -46,12 +47,12 @@
                                 <a href="{{ route('shop.single', ['category' => $sale->product->categories->name, 'id' => $sale->product->vendorCode]) }}">
                                     <small>
                                         <strike>
-                                            &#8372; {{ $sale->product->price }}
+                                            &#8372; {{ round($sale->product->price) }}
                                         </strike>
                                     </small>
                                     <br>
                                     <span style="color:#B92828;">
-                                        {{round($sale->product->price - ($sale->product->price * $sale->discount / 100), 2)}}
+                                        &#8372; {{round($sale->product->price - ($sale->product->price * $sale->discount / 100))}}
                                     </span>
                                 </a>
                             </h4>

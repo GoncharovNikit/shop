@@ -79,7 +79,7 @@
         <div id="images-wrapper">
             @forelse ($product->images as $img)
             <div class="prod-img-item">
-                <img src="{{ asset('images/cat/'.$product->categories->folder_name.'/'.$product->vendorCode.'/'.$img) }}" />
+                <img src="{{ asset('images/catalog/'.$product->categories->folder_name.'/'.$product->vendorCode.'/'.$img) }}" />
                 <input type="text" value="{{ $img }}" name="productimages[]" hidden>
                 <button type="submit" name="btn-del" value="{{ $img }}" class="btn-del-img"><img src="{{ asset('images/ico-del.png') }}" alt="Удалить"></button>
             </div>

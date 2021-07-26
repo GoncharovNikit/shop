@@ -59,6 +59,7 @@ class OrderController extends Controller
         ]);
 
         $order->save();
+        $order->load(['payment_type', 'delivery_type', 'products']);
         
         $prods = $request->session()->get('tmpbasket');
 
@@ -82,10 +83,10 @@ class OrderController extends Controller
 
     public function thanks(Request $request)
     {
-        if ($request->session()->get('after_order', false)) {
-            $request->session()->put('after_order', false);
+        // if ($request->session()->get('after_order', false)) {
+        //     $request->session()->put('after_order', false);
             return view('order.thanks');
-        }
-        return redirect()->back();
+        // }
+        abort(404);
     }
 }

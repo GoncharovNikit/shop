@@ -314,7 +314,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // ФОРМА ЗАКАЗА
 
   $('input[type=radio][name=delivery-radio]').on('change', e => {
-    console.log('changed')
     if (e.currentTarget.value == 'novaposhta') {
       $('.deliver-details-novaposhta').removeAttr('hidden')
       $('.deliver-details-novaposhta input').attr('required', true)
@@ -362,7 +361,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }),
       data => {
-        console.log(data)
         let otds = data.data
         let html = ''
         otds.forEach((otd) => html += `<option>${otd.Description}<option/>`)
@@ -377,6 +375,10 @@ document.addEventListener("DOMContentLoaded", () => {
   checkSizeInSale()
   $('#size').on('change', e => { checkSizeInSale() })
   setColorsToSaleSizes()
+
+  // Accordion facts
+  $('.facts-accordion').accordion();
+  
 })
 
 function setColorsToSaleSizes() {
@@ -407,8 +409,8 @@ function refreshTotalSum() {
     sum += parseFloat(parseFloat($(elem).data('total')).toFixed(2))
   })
   
-  $("#totalSum").text('₴ ' + sum.toFixed(2))
-  $('#totalSum-form').val(sum.toFixed(2))
+  $("#totalSum").text('₴ ' + Math.round(sum))
+  $('#totalSum-form').val(Math.round(sum))
 }
 
 function getNonFilteredProducts() {
@@ -432,10 +434,6 @@ function paginateProducts(currentPage) {
       $(products[i]).show();
     } catch (e) { }
   }
-}
-
-function csl(item) {
-  console.log(item);
 }
 
 function isSize(elem) {
@@ -478,7 +476,7 @@ function isSize(elem) {
 // 						data-price="` + elem.price + `">
 // 						<a href="` + rootDir + `list/` + elem.categories.name + '/' + elem.vendorCode + `">
 // 							<img 
-// 								src="` + rootDir + `images/cat/` + elem.categories.name_rus + `/` + elem.vendorCode + `.jpg" 
+// 								src="` + rootDir + `images/catalog/` + elem.categories.name_rus + `/` + elem.vendorCode + `.jpg" 
 // 								width="194" alt="https://via.placeholder.com/194x210">
 // 						</a>
 // 						<div class="art-div">

@@ -1,8 +1,8 @@
 @extends('layouts.template')
 
 @section('content')
-
-<h1>Thanks for order!</h1>
-<h2>Спасибо за покупку! Корзина очищена!</h2>
+<hr>
+<h1 class="thx-h1">Заказ сформирован!</h1>
+<h2 class="thx-h2">Спасибо за покупку!<br>Наши менеджеры свяжутся с Вами в близжайшее время.</h2>
 
 @endsection

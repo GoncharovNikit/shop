@@ -41,7 +41,9 @@
         <h3 style="padding-left: 1.2em;">Скидка, %</h3>
         <input class="discount-inp" type="number" value="{{$sale->discount}}" step="0.01" min="0.01" max="99.99" name="discount" style="padding-left:0.5em; width: 30%;" required>
 
-        <br><br>
+        <br>
+        @if ($sale->product->categories->name_rus == 'Кольца' || $sale->product->categories->name_rus == 'Браслеты')
+        <br>
         <h3 style="padding-left: 1.2em;">Размеры, учавствующие в распродаже</h3>
         <br>
         <div class="size-sale-btn-wrapper">
@@ -58,7 +60,7 @@
             <br>
             @endforeach
         </div>
-
+        @endif
         <button type="submit" class="btn btn-success">Сохранить</button>
     </form>
 </div>

@@ -14,10 +14,10 @@ class ProductSeeder extends Seeder
     {
         $faker = Faker\Factory::create();
 
-        $dirs = array_diff(scandir(public_path('images/cat/')), array('..', '.'));
+        $dirs = array_diff(scandir(public_path('images/catalog/')), array('..', '.'));
 
         foreach ($dirs as $category) {
-            $prod_folders = array_diff(scandir(public_path('images/cat/') . $category), array('..', '.'));
+            $prod_folders = array_diff(scandir(public_path('images/catalog/') . $category), array('..', '.'));
             $name_rus = str_replace('_', ' ', substr($category, 0, strpos($category, '.')));
             $category_id = \App\Category::where('name_rus', "$name_rus")->firstOrFail()->id;
 

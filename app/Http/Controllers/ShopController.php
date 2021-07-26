@@ -7,6 +7,7 @@ use App\Product;
 use App\Size;
 use App\Sale;
 use App\Services\ProductImageService as Images;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -21,19 +22,18 @@ class ShopController extends Controller
         $images = Images::loadAllImages(0, 2);
         
         $products = [];
-        if ($category == 'all') $products = Product::with(['sizes'])->get()->shuffle();
+        if ($category == 'all') $products = $products = Product::with(['categories', 'sizes', 'sale.sizes'])->withCount('sale')->get()->shuffle();
         elseif ($category == 'sales') {
             $sales = Sale::with(['product', 'sizes'])->get()->shuffle();
             return view('shop.sales.list', compact('sales', 'maxPrice', 'minPrice', 'sizes', 'images'));
         }
         else {
-            $products = Product::with(['categories', 'sizes'])
+            $products = Product::with(['categories', 'sale.sizes', 'sizes'])->withCount('sale')
             ->whereHas('categories', function($query) use($category){
                 $query->where('name', $category);
             })
             ->get();
         }
-        
         return view('shop.list', compact('products', 'maxPrice', 'minPrice', 'sizes', 'images'));
     }
 
@@ -54,8 +54,12 @@ class ShopController extends Controller
 
     public function main()
     {
-        $products = Product::with('categories')->orderBy('created_at')->take(10)->get();
-        return view('shop.main', compact('products'));
+        $slider_images = Images::loadMainSliderImages();
+        $bestsellers = DB::select('SELECT product_id, SUM(product_count) as total_count FROM product_orders GROUP BY product_id ORDER BY total_count DESC');
+        $bestsellers = array_slice($bestsellers, 0, 12);
+        $bestsellers = array_map(function($e) { return Product::with('categories')->findOrFail($e->product_id); }, $bestsellers);
+        $images = Images::loadBasketImages($bestsellers);
+        return view('shop.main', compact('slider_images', 'bestsellers', 'images'));
     }
 
     public function single($category, $id)

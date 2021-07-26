@@ -12,7 +12,7 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        $dirs = array_diff(scandir(public_path('images/cat/')), array('..', '.'));
+        $dirs = array_diff(scandir(public_path('images/catalog/')), array('..', '.'));
 
         foreach ($dirs as $category) {
             $name_rus = str_replace('_', ' ', substr($category, 0, strpos($category, '.')));

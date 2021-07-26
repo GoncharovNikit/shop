@@ -23,11 +23,15 @@
             </tr>
             
             @forelse($products as $item)
+            <?php $tmp = clone $item['product']; $tmp->load('sale'); ?>
             <tr class="cart-tr">
                 <td class="items">
-                    <div class="cart-image">
+                    <div class="cart-image sale-img-relative">
                         @if (count($images[$item['product']->vendorCode]) > 0)
-                        <img src="{{asset('images/cat/'.$item['product']->categories->folder_name.'/'.$item['product']->vendorCode.'/'.$images[$item['product']->vendorCode][0])}}" alt="productImage">
+                        <img src="{{asset('images/catalog/'.$item['product']->categories->folder_name.'/'.$item['product']->vendorCode.'/'.$images[$item['product']->vendorCode][0])}}" alt="productImage">
+                        @endif
+                        @if (!(($tmp->sale == null || (($tmp->categories->name_rus == 'Кольца' || $tmp->categories->name_rus == 'Браслеты') && !in_array($item['size'], array_column($tmp->sale->sizes->toArray(), 'size'))))))
+                        <img src="{{ asset('images/sale.png') }}" class="sale-basket-img" alt="sale">
                         @endif
                     </div>
                     <h3><a href="#">Lorem ipsum dolor</a></h3>
@@ -35,10 +39,18 @@
                         {{$item['product']->description}}
                     </p>
                 </td>
-                <td class="price basket-td">&#8372; {{$item['product']->price}}</td>
-                <td class="qnt basket-td" data-singleprice="{{$item['product']->price}}">{{$item['count']}}</td>
+                @if (($tmp->sale == null || (($tmp->categories->name_rus == 'Кольца' || $tmp->categories->name_rus == 'Браслеты') && !in_array($item['size'], array_column($tmp->sale->sizes->toArray(), 'size')))))
+                <td class="price basket-td">&#8372; {{round($item['product']->price)}}</td>
+                @else
+                <td class="price basket-td">&#8372; {{round($tmp->price - ($tmp->price * $tmp->sale->discount / 100))}}</td>
+                @endif
+                <td class="qnt basket-td" data-singleprice="{{round($item['product']->price)}}">{{$item['count']}}</td>
                 <td class="size basket-td">{{$item['size'] == 'null'?'':$item['size']}}</td>
-                <td class="total-price-p basket-td" data-total="{{$item['count'] * $item['product']->price}}">$ {{$item['count'] * $item['product']->price}}</td>
+                @if (($tmp->sale == null || (($tmp->categories->name_rus == 'Кольца' || $tmp->categories->name_rus == 'Браслеты') && !in_array($item['size'], array_column($tmp->sale->sizes->toArray(), 'size')))))
+                <td class="total-price-p basket-td" data-total="{{round($item['count'] * $item['product']->price)}}">$ {{round($item['count'] * $item['product']->price)}}</td>
+                @else
+                <td class="total-price-p basket-td" data-total="{{round($item['count'] * ($tmp->price - ($tmp->price * $tmp->sale->discount / 100)))}}">$ {{round($item['count'] * ($tmp->price - ($tmp->price * $tmp->sale->discount / 100)))}}</td>
+                @endif
                 <td class="delete basket-td"><a data-vendor="{{$item['product']->vendorCode}}" class="ico-del"></a></td>
             </tr>
             @empty

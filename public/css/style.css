@@ -570,6 +570,11 @@ a:hover {
     padding: 28px 0 11px;
 }
 
+/* SLIDER MARGIN TOP */
+#slider {
+    /* margin-top: 4vh; */
+}
+
 #slider, .slider-wrapper {
     text-align: center;
     position: relative;
@@ -607,7 +612,7 @@ a:hover {
 }
 
 #slider .bx-pager a.active {
-    background: #fff;
+    background: #0c3046d6;
 }
 
 .slider-wrapper .bx-pager a.active {
@@ -619,7 +624,7 @@ a:hover {
     width: 13px;
     text-indent: -999em;
     height: 13px;
-    border: 2px solid #fff;
+    border: 2px solid #244455;
     border-radius: 70px;
 }
 
@@ -656,17 +661,25 @@ a:hover {
 }
 
 #slider .btn-more {
-    width: 112px;
     display: block;
     color: #a5b1d5;
     font-family: "Novecentowide";
     font-size: 10px;
     font-weight: 500;
-    margin: 29px auto;
+    margin: 49px auto;
     text-align: center;
     line-height: 27px;
     height: 31px;
     border: 1px solid #a5b1d5;
+}
+
+#slider .main-slider-link {
+    font-size: 2em;
+    width: 200px;
+    height: 50px;
+    vertical-align: middle;
+    padding-top: 7px;
+    letter-spacing: 3px;
 }
 
 #slider .btn-more:hover {
@@ -796,6 +809,31 @@ a:hover {
     text-align: center;
     float: left;
     margin: 0 0 -1px -1px;
+}
+
+.discount-product-image { 
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.sale-img-relative, .relative-img-sale {
+    position: relative;
+}
+
+.sale-basket-img{ 
+    position: absolute;
+    width: 70px !important;
+    bottom: 20px;
+    left: -10px;
+}
+
+.single-prod-sale-img {
+    position: absolute;
+    top: -17px;
+    right: -17px;
+    z-index: 1000;
 }
 
 .products article .art-div {
@@ -1914,30 +1952,6 @@ input[type="radio"]:checked:after {
     z-index: 1000;
     border: 1px solid black;
 }
-#about-wrap {
-    margin: 10px auto;
-    padding: 40px;
-    /* border: 1px solid black; */
-    font-size: 100%;
-}
-#about-wrap h1 {
-    font-size: 300%;
-    font-family: "Times New Roman", Times, serif;
-    text-align: center;
-}
-#about-wrap #about-text {
-    padding: 40px 10px 30px 20px;
-    width: 100%;
-    margin: 0 auto;
-}
-#about-text p {
-    text-indent: 60px;
-    margin-bottom: 7px;
-}
-.about-ul li {
-    list-style: disc;
-    margin-left: 40px;
-}
 
 .form-wrap-body {
     border: 1px solid black;
@@ -2104,11 +2118,7 @@ input[type="radio"]:checked:after {
         width: 85%;
     }
 }
-@media and (max-width: 1292px) {
-  .card-body form {
-    width: 60%;
-  }
-}
+
 @media screen and (max-width: 1220px) {
     .card-body form {
         width: 80%;
@@ -2452,8 +2462,7 @@ input[type="radio"]:checked:after {
         margin-left: 0;
     }
 
-    .entry h2,
-    h1 {
+    .entry h2 {
         font-size: 20px;
         line-height: normal;
     }
@@ -2619,6 +2628,9 @@ input[type="radio"]:checked:after {
     .productArt {
         margin: 0 auto;
     }
+    .single-prod-fullsale-img { 
+        display: none;
+    }
 }
 
 @media (max-width: 404px) {
@@ -2669,6 +2681,9 @@ input[type="radio"]:checked:after {
     }
     #sidebar {
         display: none;
+    }
+    .thx-h1 {
+        width: 80% !important;
     }
 }
 
@@ -2822,4 +2837,182 @@ input[type="radio"]:checked:after {
     text-align: center;
     border: none;
     background-color: inherit;
+}
+
+
+/* THANKS PAGE */
+.thx-h1, .thx-h2 {
+    text-align: center;
+    margin: 1rem 0;
+}
+.thx-h1 {
+    font-size: 2.6rem;
+    border-bottom: 1px solid #000;
+    width: 35%;
+    margin: 4% auto 3rem auto;
+}
+.thx-h2 {
+    margin-bottom: 12%;
+    font-size: 1.4rem !important;
+    color: black;
+}
+
+
+/* MAIN PAGE */
+/* bestsellers */
+.bestsellers {
+    display: grid;
+    width: 70%;
+    margin: 9vh auto;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    justify-items: center;
+    gap: 20px;
+}
+.grid-header {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    align-self: end;
+    white-space: nowrap;
+}
+.bestseller-prod-item { 
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #000;
+}
+.bestseller-prod-item:hover {
+    border-right: 1px solid #000;
+    box-shadow: 2px 2px 3px black;
+    transition: 200ms;
+}
+
+@media(max-width: 1278px) {
+    .bestsellers {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .grid-header {
+        grid-column-start: 1;
+        grid-column-end: 4;
+        align-self: end;
+    }
+}
+@media(max-width: 960px) {
+    .bestsellers {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .grid-header {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        align-self: end;
+    }
+}
+@media(max-width: 642px) {
+    .bestsellers {
+        grid-template-columns: 1fr;
+    }
+    .grid-header {
+        grid-column-start: 1;
+        grid-column-end: 2;
+        align-self: end;
+    }
+}
+
+/* MAIN MENU CATEGORY ICONS */
+.category-images {
+    display: grid;
+    width: 60%;
+    margin: 7vh auto;
+    row-gap: 30px;
+    column-gap: 10px;
+    border-bottom: 1px solid #000;
+    padding-bottom: 30px;
+    grid-template-columns: repeat(4, 1fr);
+}
+.grid-category-header { 
+    grid-column-start: 1;
+    grid-column-end: 5;
+}
+.category-img-item { 
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.category-img-item img {
+    width: 8vw;
+}
+.category-img-title {
+    color: black;
+    font-size: 11pt;
+}
+@media(max-width: 1030px) {
+    .category-img-item img {
+        width: 10vw;
+    }
+}
+@media(max-width: 660px) {
+    .category-img-item img {
+        width: 14vw;
+    }
+    .category-images {
+        width: 80%;
+    }
+}
+@media(max-width: 440px) {
+    .category-img-item img {
+        width: 17vw;
+    }
+    .category-images {
+        width: 100%;
+    }
+}
+
+.grid-category-header, .grid-header, .about-header, .facts-header {
+    color: #080960;
+    text-align: center;
+}
+
+/* MAIN MENU ABOUT */
+
+#about-wrap, .facts {
+    margin: 7vh auto;
+    padding: 40px;
+    font-size: 100%;
+}
+
+#about-wrap #about-text, .facts-accordion {
+    width: 80vw;
+    margin: 0 auto;
+}
+#about-text p {
+    text-indent: 60px;
+    margin-bottom: 7px;
+}
+.about-ul li {
+    list-style: disc;
+    margin-left: 40px;
+}
+@media (max-width: 500px) {
+    #about-wrap #about-text {
+        width: 100%;
+    }
+    #about-text p {
+        text-indent: 20px;
+    }
+    #about-wrap {
+        padding: 10px;
+    }
+}
+
+
+/* MAIN MENU FACTS */
+@media(max-width: 738px) {
+    .facts {
+        padding: 10px;
+    }
 }

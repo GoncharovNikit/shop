@@ -25,10 +25,6 @@ class Product extends Model
     {
         return $this->belongsToMany(Size::class, 'product_sizes', 'product_id', 'size_id');
     }
-    public function users()
-    {
-        return $this->belongsToMany(User::class, 'basket', 'product_id', 'user_id');
-    }
     public function orders()
     {
         return $this->belongsToMany(Order::class, 'product_orders', 'product_id', 'order_id');
