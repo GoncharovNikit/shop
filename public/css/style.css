@@ -1583,7 +1583,7 @@ h1 {
 #footer {
     clear: both;
     background: #222224 url(../images/bg_footer.png);
-    padding: 27px 0 0;
+    padding: 20px 0 0;
     color: #a5a5aa;
     font-size: 14px;
     line-height: 30px;
@@ -1591,7 +1591,7 @@ h1 {
 
 #footer h3 {
     color: #fff;
-    font-family: "Novecentowide";
+    font-family: Arial, "Novecentowide";
     font-size: 14px;
     text-transform: uppercase;
     font-weight: 500;
@@ -1647,67 +1647,18 @@ h1 {
     padding: 2px 0 0;
     margin-bottom: 8px;
 }
-
-#footer .newsletter p {
-    line-height: 24px;
-    font-size: 14px;
-    padding: 2px 0 0;
-    margin-bottom: 8px;
+#footer .cols {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
 }
-
-#footer form {
-    height: 52px;
-    margin: 22px 0;
-    position: relative;
-    background-color: #fff;
-}
-
-#footer form button {
-    width: 44px;
-    height: 44px;
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    border: 0;
-    background: #b8bcbe url(../images/ico_plus.png) no-repeat 50% 50%;
-}
-
-#footer form button:hover {
-    opacity: 0.9;
-}
-
-#footer form input {
-    width: 100%;
-    border: 0;
-    color: #656567;
-    font-size: 14px;
-    padding: 15px 75px 15px 25px;
-    line-height: normal;
-    height: 52px;
-    background: #fff;
-}
-
-::-webkit-input-placeholder {
-    color: #656567;
-}
-
-::-moz-placeholder {
-    color: #656567;
-    opacity: 1;
-}
-
 #footer .col {
-    float: left;
-    width: 25.7%;
-    padding-bottom: 37px;
+    padding-bottom: 14px;
 }
 
-#footer .col.media {
-    width: 17%;
-}
-
-#footer .col.contact {
-    width: 25.7%;
+#footer .social-media-footer-img {
+    width: 20px;
 }
 
 #footer .col.newsletter {
@@ -1721,44 +1672,15 @@ h1 {
 #footer .copy {
     color: #717176;
     font-size: 14px;
-    padding: 28px 0;
+    padding: 14px 0;
     clear: both;
     border-top: 1px solid #333336;
+    text-align: center;
+}
+.copy span {
+    white-space: nowrap;
 }
 
-
-
-
-/* 
-
-input[type="radio"]:after {
-    width: 15px;
-    height: 15px;
-    border-radius: 15px;
-    top: -2px;
-    left: -1px;
-    position: relative;
-    background-color: #d1d3d1;
-    content: "";
-    display: inline-block;
-    visibility: visible;
-    border: 2px solid white;
-}
-
-input[type="radio"]:checked:after {
-    width: 15px;
-    height: 15px;
-    border-radius: 15px;
-    top: -2px;
-    left: -1px;
-    position: relative;
-    background-color: #ffa500;
-    content: "";
-    display: inline-block;
-    visibility: visible;
-    border: 2px solid white;
-}
- */
 
 .payment-wrapper {
     width: 100%;
@@ -2140,13 +2062,19 @@ input[type="radio"]:checked:after {
         width: auto;
         padding: 0 20px;
     }
+    .col {
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: left;
+    }
 
     #menu li {
         padding: 19px 10px 21px;
     }
 
     #footer .col {
-        width: 49% !important;
         float: none;
         vertical-align: top;
         display: inline-block;
@@ -2519,6 +2447,18 @@ input[type="radio"]:checked:after {
     .second-header-row {
         flex-wrap: wrap;
     }
+    #footer .cols {
+        flex-direction: column;
+        padding-left: 10%;
+    }
+    #footer .info,#footer .col {
+        width: 100%;
+    }
+    #footer h3 {
+        padding-left: 10%;
+        width: 100%;
+        white-space: nowrap;
+    }
 }
 
 @media screen and (max-width: 600px) {
@@ -2555,8 +2495,6 @@ input[type="radio"]:checked:after {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-    }
-    .payment-type-item label {
     }
 }
 
@@ -2722,16 +2660,6 @@ input[type="radio"]:checked:after {
     }
 }
 
-@media screen and (min-width: 460px) and (max-width: 768px) {
-    #footer .col:nth-child(1) {
-        width: 49% !important;
-        padding-right: 15px;
-    }
-
-    #footer .col:nth-child(2) {
-        width: 49% !important;
-    }
-}
 @media (max-width: 1040px) {
     .saveMe {
         flex-direction: column !important;
@@ -3029,3 +2957,7 @@ input[type="radio"]:checked:after {
         padding: 10px;
     }
 }
+
+
+
+
