@@ -2,7 +2,7 @@
 
 @section('content')
 <hr>
-<h1 class="thx-h1">Заказ сформирован!</h1>
-<h2 class="thx-h2">Спасибо за покупку!<br>Наши менеджеры свяжутся с Вами в близжайшее время.</h2>
+<h1 class="thx-h1">@lang('messages.thanks.h1')</h1>
+<h2 class="thx-h2">@lang('messages.thanks.h2')</h2>
 
 @endsection

@@ -83,10 +83,10 @@ class OrderController extends Controller
 
     public function thanks(Request $request)
     {
-        // if ($request->session()->get('after_order', false)) {
-        //     $request->session()->put('after_order', false);
+        if ($request->session()->get('after_order', false)) {
+            $request->session()->put('after_order', false);
             return view('order.thanks');
-        // }
+        }
         abort(404);
     }
 }

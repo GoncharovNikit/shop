@@ -22,7 +22,8 @@ class ProductRequest extends FormRequest
     {
         $rules = [
             'vendorCode' => 'required|min:4|max:12',
-            'description' => 'required|max:200',
+            'description_ru' => 'required|max:200',
+            'description_uk' => 'required|max:200',
             'price' => 'required',
             'metal' => 'required',
             'category' => 'required',
@@ -38,7 +39,8 @@ class ProductRequest extends FormRequest
     {
         return [
             'vendorCode.*' => 'Артикул указан некорректно!',
-            'description.*' => 'Описание указано некорректно!',
+            'description_ru.*' => 'Описание указано некорректно (ru)!',
+            'description_uk.*' => 'Описание указано некорректно (uk)!',
             'price.*' => 'Цена указана некорректно!',
             'metal.*' => 'Метал указан некорректно!',
             'category.*' => 'Категория указана некорректно!',

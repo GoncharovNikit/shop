@@ -21,11 +21,7 @@
     @include('layouts.partials.header')
     <!-- / header -->
 
-    <!-- / navigation -->
-
-
     @yield('content')
-
 
     @include('layouts.partials.footer')
     <!-- / footer -->

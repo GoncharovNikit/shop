@@ -104,7 +104,14 @@ $(function () {
           return +a.dataset.price - +b.dataset.price;
         })
         .appendTo($wrapper);
-    }
+      } else if ($(this).data("sort") == "newer") {
+        $wrapper
+          .find(".productArt")
+          .sort(function (a, b) {
+            return +a.dataset.id - +b.dataset.id;
+          })
+          .appendTo($wrapper);
+      }
 
   });
 
@@ -157,7 +164,6 @@ $(function () {
   // ДОБАВЛЕНИЕ ТОВАРА В КОРЗИНУ
 
   $(".basket-adding").on("click", function () {
-    
     $.ajax({
       type: "POST",
       url: "/basket-api",
@@ -169,8 +175,13 @@ $(function () {
         size_id: $("#size").val() ? $("#size").val() : null,
         count: $("#count").val(),
       },
-      success: function () {
-        $.jGrowl('Товар додано!', {
+      success: data => {
+        let new_count = +$('.prod-count').text() + +data['count']
+        if (new_count > 0) {
+          $('.prod-count').removeAttr('hidden')
+          $('.prod-count').text(new_count)
+        }
+        $.jGrowl($('html').attr('lang') == 'uk' ? 'Товар додано!' : 'Товар добавлен!', {
           life: 1000,
           position: 'top-right'
         });
@@ -222,7 +233,11 @@ $(function () {
           size: $(this).parent(".delete").siblings(".size").text() ? $(this).parent(".delete").siblings(".size").text() : null,
           count: $(this).parent(".delete").siblings(".qnt").text(),
         },
-        success: refreshTotalSum,
+        success: data => { 
+          $('.prod-count').text(+$('.prod-count').text() - +data['count']);
+          +$('.prod-count').text() < 1 ? $('.prod-count').attr('hidden', true) : ''
+          refreshTotalSum() 
+        },
         /*error: (jqXHR, exception) => {
           var msg = "";
           if (jqXHR.status === 0) {
@@ -329,6 +344,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // НП АПИ
   
+  // мультиязычная версия
+  // $('#city-np-inp').on('input', e => {
+  //   document.querySelector('#cities-np').innerHTML = "";
+    
+  //   let city_m = e.currentTarget.value
+  //   $.post(
+  //     "https://api.novaposhta.ua/v2.0/json/",
+  //     "{\r\n \"modelName\": \"Address\",\r\n    \"calledMethod\": \"getCities\",\r\n    \"methodProperties\": {\r\n        \"FindByString\": \"" + city_m + "\",\r\n        \"Limit\": 5\r\n    }\r\n}",
+  //       data => {
+  //         let cities = data.data
+  //         let lang = $('html').attr('lang')
+  //         let html = ''
+  //         cities.forEach((city) => html += `<option value=\"${ lang == 'uk' ? city.Description : city.DescriptionRu }\"><option/>`)
+  //         document.querySelector('#cities-np').innerHTML = html
+  //       }, 
+  //       "json")
+  //   })
+
+    
+  // $('#otd-np-inp').on('focus', e => {
+  //   e.currentTarget.value = ''
+  //   document.querySelector('#otds-np').innerHTML = ""
+
+  //   $.post(
+  //     "https://api.novaposhta.ua/v2.0/json/",
+  //     JSON.stringify({
+  //       "modelName": "AddressGeneral",
+  //       "calledMethod": "getWarehouses",
+  //       "methodProperties": {
+  //         "CityName": `${$('#cities-np option').first().val() ?? 'a080fawef80' }`,
+  //         "Limit": 5
+  //       }
+  //     }),
+  //     data => {
+  //       let otds = data.data
+  //       let html = ''
+  //       otds.forEach((otd) => html += `<option>${$('html').attr('lang') == 'uk' ? otd.Description : otd.DescriptionRu }<option/>`)
+  //       document.querySelector('#otds-np').innerHTML = html
+  //     },
+  //     "json"
+  //   )   
+  // })
+
   $('#city-np-inp').on('input', e => {
     document.querySelector('#cities-np').innerHTML = "";
     
@@ -375,9 +433,7 @@ document.addEventListener("DOMContentLoaded", () => {
   $('#size').on('change', e => { checkSizeInSale() })
   setColorsToSaleSizes()
 
-  // Accordion facts
-  $('.facts-accordion').accordion();
-  
+
 })
 
 function setColorsToSaleSizes() {
@@ -457,35 +513,3 @@ function isSize(elem) {
   }
   return false;
 }
-
-
-// function upload_products_ajax(index, currentPage)
-// {
-//   $(".productList").empty();
-//   $.get(index == "all" ? rootDir + "api/products/" : rootDir + "api/products/category/" + index, 
-//   data => {
-//     JSON.parse(data).forEach(elem => {
-//     получаем массив размеров товара
-//     let sizeArr = elem.sizes.map( val => val.size );  
-//     заполняем товар
-//     let product = `
-//     <article class="hovarticle productArt" 
-// 						data-sizes="`+ sizeArr +`" 
-// 						data-category="` + elem.categories.name + `" 
-// 						data-price="` + elem.price + `">
-// 						<a href="` + rootDir + `list/` + elem.categories.name + '/' + elem.vendorCode + `">
-// 							<img 
-// 								src="` + rootDir + `images/catalog/` + elem.categories.name_rus + `/` + elem.vendorCode + `.jpg" 
-// 								width="194" alt="https://via.placeholder.com/194x210">
-// 						</a>
-// 						<div class="art-div">
-// 							<h3><a href="` + rootDir + `list/` + elem.vendorCode + `">` + elem.vendorCode + `</a></h3>
-// 							<h4><a href="` + rootDir + `list/` + elem.vendorCode + `">&#8372; ` + elem.price + `</a></h4>
-// 							<small style="padding:3px;">` + elem.description.substring(0, 50) + `</small>
-// 						</div>
-// 					</article>`;
-
-//           $(".productList").append(product);
-//     });
-//   });
-// }

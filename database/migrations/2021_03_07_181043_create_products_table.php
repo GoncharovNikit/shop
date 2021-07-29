@@ -19,17 +19,16 @@ class CreateProductsTable extends Migration
 
             $table->char('vendorCode', 15)->unique();
             $table->unsignedDecimal('price', 8, 2);
-            $table->longText('description');
+            $table->longText('description_ru');
+            $table->longText('description_uk');
             
             $table->unsignedBigInteger('metal_id');
-            $table->unsignedBigInteger('stoneColor_id')->nullable();
             $table->unsignedBigInteger('category_id');
             
             $table->timestamp('created_at')->useCurrent();
             
             $table->foreign('metal_id')->references('id')->on('metals');
             $table->foreign('category_id')->references('id')->on('categories');
-            $table->foreign('stoneColor_id')->references('id')->on('stone_colors');
         });
     }
 

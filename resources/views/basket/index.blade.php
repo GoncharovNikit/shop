@@ -1,24 +1,23 @@
-@extends('layouts.template');
+@extends('layouts.template')
 
 @section('content')
 <div id="breadcrumbs">
     <div class="container">
         <ul>
-            <li><a href="{{route('shop.main')}}">Головна</a></li>
-            <li>Кошик</li>
+            <li><a href="{{route('shop.main')}}">@lang('messages.breadcrumbs.main')</a></li>
+            <li>@lang('messages.breadcrumbs.basket')</li>
         </ul>
     </div>
-    <!-- / container -->
 </div>
 <div id="content" class="full">
-    <div class="cart-table">
+    <div class="cart-table basket-table">
         <table>
             <tr>
-                <th class="items">Товари</th>
-                <th class="price">Ціна</th>
-                <th class="qnt">Кількість</th>
-                <th class="qnt">Розмір</th>
-                <th class="total">Усього</th>
+                <th class="items">@lang('messages.basket_table_product')</th>
+                <th class="price">@lang('messages.basket_table_price')</th>
+                <th class="qnt">@lang('messages.basket_table_count')</th>
+                <th class="qnt">@lang('messages.basket_table_size')</th>
+                <th class="total">@lang('messages.basket_table_totally')</th>
                 <th class="delete"></th>
             </tr>
 
@@ -41,7 +40,7 @@
                         </div>
                         @endif
                     </div>
-                    <h3><a href="#">Lorem ipsum dolor</a></h3>
+                    <h3><a href="{{ route('shop.single', ['category' => $tmp->categories->name, 'id' => $tmp->vendorCode]) }}">{{ $tmp->vendorCode }}</a></h3>
                     <p>
                         {{$item['product']->description}}
                     </p>
@@ -63,7 +62,7 @@
             @empty
             <tr>
                 <td>
-                    Товари не знайдені!
+                    @lang('messages.basket_prods_not_found')
                 </td>
             </tr>
             @endforelse
@@ -72,10 +71,10 @@
     </div>
 
     <div class="total-count">
-        <h3>Всього до сплати: <strong id="totalSum"></strong></h3>
+        <h3>@lang('messages.basket_totally_to_pay') <strong id="totalSum"></strong></h3>
         <form action="{{route('order.form')}}" method="get">
             <input id="totalSum-form" type="number" step="0.01" name="amount" hidden />
-            <button class="btn payment" type="submit">Замовити</button>
+            <button class="btn payment" type="submit" <?= count($products) < 1 ? 'disabled' : '' ?> >@lang('messages.basket_order_btn')</button>
         </form>
     </div>
 

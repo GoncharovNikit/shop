@@ -3,8 +3,8 @@
 <div id="breadcrumbs">
     <div class="container">
         <ul>
-            <li><a href="{{route('shop.main')}}">Головна</a></li>
-            <li>Товари</li>
+            <li><a href="{{route('shop.main')}}">@lang('messages.breadcrumbs.main')</a></li>
+            <li>@lang('messages.breadcrumbs.products')</li>
         </ul>
     </div>
     <!-- / container -->
@@ -23,7 +23,7 @@
                 <section class="products productList">
 
                     @foreach ($sales as $sale)
-                    <article class="hovarticle productArt<?= count($images[$sale->product->vendorCode]) > 1 ? " to-slide" : "" ?>" data-sizes="{{ json_encode($sale->sizes->pluck('size')) }}" data-category="{{ $sale->product->categories->name_rus }}" data-price="{{ $sale->product->price }}">
+                    <article class="hovarticle productArt<?= count($images[$sale->product->vendorCode]) > 1 ? " to-slide" : "" ?>" data-id="<?= $loop->iteration ?>" data-sizes="{{ json_encode($sale->sizes->pluck('size')) }}" data-category="{{ $sale->product->categories->name_rus }}" data-price="{{ $sale->product->price }}">
                         <img src="{{ asset('images/discount.png') }}" alt="Sale" class="discount-product-image" width="65">
                         <a href="{{ route('shop.sales.single', ['category' => $sale->product->categories->name, 'id' => $sale->product->vendorCode]) }}">
                             <div class="prod-slider">

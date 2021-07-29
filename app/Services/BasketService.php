@@ -19,6 +19,15 @@ class BasketService
             'count' => $request->get('count')
         ]];
     }
+    public static function productCount()
+    {
+        if (self::isEmpty(request())) return 0;
+        $prods = request()->session()->get('tmpbasket');
+        return array_reduce($prods, function($total, $item) {
+            $total += $item['count'];
+            return $total;
+        }, 0);
+    }
     public static function storeProduct($request)
     {
         $prods = $request->session()->get('tmpbasket');
@@ -32,10 +41,11 @@ class BasketService
                     if ($prod['size'] == Size::find($request->get('size_id'))->size) {
                         $prods[$key]['count'] += $request->get('count');
                         return $prods;
-                    } 
+                    }
+                } else {
+                    $prods[$key]['count'] += $request->get('count');
+                    return $prods;
                 }
-                $prods[$key]['count'] += $request->get('count');
-                return $prods;
             }
         }
         array_push(

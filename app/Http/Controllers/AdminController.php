@@ -6,7 +6,6 @@ use App\Category;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Metal;
-use App\StoneColor;
 use App\Size;
 use App\ProductSize;
 use App\Http\Requests\ProductRequest;
@@ -30,12 +29,11 @@ class AdminController extends Controller
 
     public function index()
     {
-        $products = Product::with(['categories', 'metals', 'stone_colors', 'sizes'])->orderByDesc('created_at')->get();
+        $products = Product::with(['categories', 'metals', 'sizes'])->orderByDesc('created_at')->get();
         $metals = Metal::all();
-        $colors = StoneColor::all();
         $sizes = Size::all();
         array_reverse((array)$products);
-        return view('admin.index', compact('products', 'metals', 'colors', 'sizes'));
+        return view('admin.index', compact('products', 'metals', 'sizes'));
     }
 
     public function login(Request $request)
@@ -59,12 +57,11 @@ class AdminController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $product = Product::with(['categories', 'metals', 'stone_colors', 'sizes', 'sale'])->withCount('sale')->firstWhere('vendorCode', $id);
+        $product = Product::with(['categories', 'metals', 'sizes', 'sale'])->withCount('sale')->firstWhere('vendorCode', $id);
         $metals = Metal::all();
-        $colors = StoneColor::all();
         $sizes = Size::all();
         $product->images = Images::loadImages($id) ?? [];
-        return view('admin.edit', compact('product', 'metals', 'colors', 'sizes'));
+        return view('admin.edit', compact('product', 'metals', 'sizes'));
     }
 
     public function mobile()
@@ -80,9 +77,9 @@ class AdminController extends Controller
         $product = new Product();
         $product->vendorCode = $request->get('vendorCode');
         $product->price = $request->get('price');
-        $product->description = $request->get('description');
+        $product->description_ru = $request->get('description_ru');
+        $product->description_uk = $request->get('description_uk');
         $product->metal_id = $request->get('metal');
-        $product->stoneColor_id = $request->get('color');
         $product->category_id = $request->get('category');
         $isSaved = $product->save();
 
@@ -112,9 +109,9 @@ class AdminController extends Controller
         Product::firstWhere('vendorCode', $request->get('old-vendor-code'))->update([
             'vendorCode' => $request->get('vendorCode'),
             'price' => $request->get('price'),
-            'description' => $request->get('description'),
+            'description_ru' => $request->get('description_ru'),
+            'description_uk' => $request->get('description_uk'),
             'metal_id' => $request->get('metal'),
-            'stoneColor_id' => $request->get('color'),
             'category_id' => $request->get('category'),
         ]);
 

@@ -4,9 +4,9 @@
 <div id="breadcrumbs">
 	<div class="container">
 		<ul>
-			<li><a href="{{route('shop.main')}}">Головна</a></li>
-			<li><a href="{{route('shop.list', ['category' => 'sales'])}}">Акции</a></li>
-			<li>Перегляд товару</li>
+			<li><a href="{{route('shop.main')}}">@lang('messages.breadcrumbs.main')</a></li>
+			<li><a href="{{route('shop.list', ['category' => 'all'])}}">@lang('messages.breadcrumbs.products')</a></li>
+			<li>@lang('messages.breadcrumbs.single')</li>
 		</ul>
 	</div>
 	<!-- / container -->
@@ -48,7 +48,7 @@
 					</div>
 					<div class="actions">
 						<div class="action-item">
-							<label for="count">Кілкість:</label>
+							<label for="count">@lang('messages.single_count')</label>
 							<input type="number" name="count" id="count" min="1" max="1000" value="1">
 						</div>
 
@@ -57,7 +57,7 @@
 							@if (count($product->sizes) != count($product->sale->sizes ?? []) && $product->sale_count)
 							<img src="{{ asset('images/sale.png') }}" class="single-prod-sale-img" alt="sale" width="35">
 							@endif
-							<label>Розмір:</label>
+							<label>@lang('messages.single_size')</label>
 							<select name="size" id="size">
 								@if ($product->is_sale_page)
 								@forelse($product->sale->sizes as $size)
@@ -76,7 +76,7 @@
 						</div>
 						@endif
 
-						<button class="btn-grey basket-adding action-item" data-vendor="{{$product->vendorCode}}">Додати до кошика</button>
+						<button class="btn-grey basket-adding action-item" data-vendor="{{$product->vendorCode}}">@lang('messages.single_add_to_basket')</button>
 					</div>
 				</div>
 			</div>

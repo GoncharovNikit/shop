@@ -15,9 +15,15 @@
         <input name="price" type="number" min="1" max="10000" step="0.01" class="form-control" id="priceInput" value="{{ old('price') }}">
     </div>
     <div class="mb-5">
-        <label for="descriptionInput">Описание</label>
+        <label for="descriptionInputRu">Описание (ru)</label>
         <div class="form-floating">
-            <textarea name="description" class="form-control" placeholder="Description" id="descriptionInput" style="height: 100px" value="{{ old('description') }}"></textarea>
+            <textarea name="description_ru" class="form-control" placeholder="Description" id="descriptionInputRu" style="height: 100px" value="{{ old('description_ru') }}"></textarea>
+        </div>
+    </div>
+    <div class="mb-5">
+        <label for="descriptionInputUk">Описание (uk)</label>
+        <div class="form-floating">
+            <textarea name="description_uk" class="form-control" placeholder="Description" id="descriptionInputUk" style="height: 100px" value="{{ old('description_uk') }}"></textarea>
         </div>
     </div>
     <div class="mb-5">
@@ -26,15 +32,6 @@
             @foreach($metals as $metal)
             <option value="{{$metal->id}}">{{$metal->name}}</option>
             @endforeach
-        </select>
-    </div>
-    <div class="mb-5">
-        <label for="selectColor">Цвет камня</label>
-        <select name="color" class="form-select" id="selectColor" value="{{ old('color') }}">
-            @foreach($colors as $color)
-            <option value="{{$color->id}}">{{$color->name}}</option>
-            @endforeach
-            <option value="null">Без камня</option>
         </select>
     </div>
     <div class="mb-5">
@@ -72,9 +69,9 @@
             <th scope="col">#</th>
             <th scope="col">Артикул</th>
             <th scope="col">Цена</th>
-            <th scope="col">Описание</th>
+            <th scope="col">Описание (ru)</th>
+            <th scope="col">Описание (uk)</th>
             <th scope="col">Метал</th>
-            <th scope="col">Цвет камня</th>
             <th scope="col">Категория</th>
             <th scope="col">Дата создания</th>
             <th scope="col"></th>
@@ -88,9 +85,9 @@
             <th scope="row">{{$counter}}</th>
             <td>{{$product->vendorCode}}</td>
             <td>{{$product->price}}</td>
-            <td>{{mb_substr($product->description, 0, 32).'...'}}</td>
+            <td>{{mb_substr($product->description_ru, 0, 32).'...'}}</td>
+            <td>{{mb_substr($product->description_uk, 0, 32).'...'}}</td>
             <td>{{$product->metals->name}}</td>
-            <td>{{$product->stone_colors->name}}</td>
             <td>{{$product->categories->name_rus}}</td>
             <td>{{$product->created_at}}</td>
             <td>

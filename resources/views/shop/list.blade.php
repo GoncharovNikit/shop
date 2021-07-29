@@ -3,8 +3,8 @@
 <div id="breadcrumbs">
 	<div class="container">
 		<ul>
-			<li><a href="{{route('shop.main')}}">Головна</a></li>
-			<li>Товари</li>
+			<li><a href="{{route('shop.main')}}">@lang('messages.breadcrumbs.main')</a></li>
+			<li>@lang('messages.breadcrumbs.products')</li>
 		</ul>
 	</div>
 	<!-- / container -->
@@ -26,7 +26,7 @@
 
 					@foreach ($products as $product)
 
-					<article class="hovarticle productArt<?= count($images[$product->vendorCode]) > 1 ? " to-slide" : "" ?>" data-sizes="{{ json_encode($product->sizes->pluck('size')) }}" data-category="{{ $product->categories->name_rus }}" data-price="{{ $product->price }}">
+					<article class="hovarticle productArt<?= count($images[$product->vendorCode]) > 1 ? " to-slide" : "" ?>" data-id="<?= $loop->iteration ?>" data-sizes="{{ json_encode($product->sizes->pluck('size')) }}" data-category="{{ $product->categories->name_rus }}" data-price="{{ $product->price }}">
 						@if ($product->sale_count > 0)
 						<img src="{{ asset('images/discount.png') }}" alt="Sale" class="discount-product-image" width="65">
 						@endif
@@ -61,7 +61,11 @@
 							@else
 							<h4><a href="{{ route('shop.single', ['category' => $product->categories->name, 'id' => $product->vendorCode]) }}">&#8372; {{ round($product->price) }}</a></h4>
 							@endif
-							<div class="prod-description">{{ substr($product->description, 0, 50) }}..</div>
+							@if (iconv_strlen(str_replace("'", " ", $product->description)) > 40)
+							<div class="prod-description">{{ str_replace("\'", "'", substr(str_replace("'", "\'", $product->description), 0, 40)) }}..</div>
+							@else
+							<div class="prod-description">{{ $product->description }}</div>
+							@endif
 						</div>
 					</article>
 

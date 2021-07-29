@@ -16,7 +16,6 @@ class BasketController extends Controller
     {
         $products = $request->session()->get('tmpbasket') ?? [];
         $images = \App\Services\ProductImageService::loadBasketImages(array_column($products, 'product'));
-        // dd($products);
         return view('basket.index', compact('products', 'images'));
     }
 
@@ -29,13 +28,14 @@ class BasketController extends Controller
                 BasketService::startBasket($request)
             );
         }
+        return response()->json(['count' => $request->has('count') ? $request->get('count') : 0]);
     }
 
     public function delete(Request $request)
     {
         if ($request->has('vendorCode') && $request->session()->has('tmpbasket') && $request->has('count')) {
             $request->session()->put('tmpbasket', BasketService::removeProduct($request));
-            return response()->json(['Product has deleted']);
+            return response()->json(['count' => $request->has('count') ? $request->get('count') : 0]);
         }
         return response()->json(['Leck of information!']);
     }

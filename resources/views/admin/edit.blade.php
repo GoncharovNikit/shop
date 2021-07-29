@@ -21,9 +21,15 @@
         <input name="price" type="number" min="1" max="10000" step="0.01" class="form-control" id="priceInput" value="{{ old('price') ?? $product->price }}">
     </div>
     <div class="mb-5">
-        <label for="descriptionInput">Описание</label>
+        <label for="descriptionInputRu">Описание (ru)</label>
         <div class="form-floating">
-            <textarea name="description" class="form-control" placeholder="Description" id="descriptionInput" style="height: 100px">{{ old('description') ?? $product->description }}</textarea>
+            <textarea name="description_ru" class="form-control" placeholder="Description" id="descriptionInputRu" style="height: 100px">{{ old('description_ru') ?? $product->description_ru }}</textarea>
+        </div>
+    </div>
+    <div class="mb-5">
+        <label for="descriptionInputUk">Описание (uk)</label>
+        <div class="form-floating">
+            <textarea name="description_uk" class="form-control" placeholder="Description" id="descriptionInputUk" style="height: 100px">{{ old('description_uk') ?? $product->description_uk }}</textarea>
         </div>
     </div>
     <div class="mb-5">
@@ -32,15 +38,6 @@
             @foreach($metals as $metal)
             <option value="{{$metal->id}}" <?= $product->metals->id == $metal->id ? 'selected' : '' ?>>{{$metal->name}}</option>
             @endforeach
-        </select>
-    </div>
-    <div class="mb-5">
-        <label for="selectColor">Цвет камня</label>
-        <select name="color" class="form-select" id="selectColor">
-            @foreach($colors as $color)
-            <option value="{{$color->id}}" <?= $product->stone_colors->id == $color->id ? 'selected' : '' ?>>{{$color->name}}</option>
-            @endforeach
-            <option value="null">Без камня</option>
         </select>
     </div>
     <div class="mb-5">

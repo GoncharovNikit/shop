@@ -25,10 +25,10 @@ class ProductSeeder extends Seeder
                 DB::table('products')->insert([
                     'vendorCode' => $vendorCode,
                     'price' => $faker->randomFloat(2, 10, 5000),
-                    'description' => $faker->paragraph(3),
+                    'description_ru' => 'Russian :'.$faker->paragraph(3),
+                    'description_uk' => 'Ukranian :'.$faker->paragraph(3),
                     'metal_id' => 1,
                     'category_id' => $category_id,
-                    'stoneColor_id' => 4
                 ]);
             }
         }

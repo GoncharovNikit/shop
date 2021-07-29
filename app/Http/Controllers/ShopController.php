@@ -22,7 +22,8 @@ class ShopController extends Controller
         $images = Images::loadAllImages(0, 2);
         
         $products = [];
-        if ($category == 'all') $products = $products = Product::with(['categories', 'sizes', 'sale.sizes'])->withCount('sale')->get()->shuffle();
+        if ($category == 'all') $products = $products = Product::with(['categories', 'sizes', 'sale.sizes'])
+            ->withCount('sale')->orderBy('created_at', 'desc')->get()->shuffle();
         elseif ($category == 'sales') {
             $sales = Sale::with(['product', 'sizes'])->get()->shuffle();
             return view('shop.sales.list', compact('sales', 'maxPrice', 'minPrice', 'sizes', 'images'));
@@ -32,6 +33,7 @@ class ShopController extends Controller
             ->whereHas('categories', function($query) use($category){
                 $query->where('name', $category);
             })
+            ->orderBy('created_at', 'desc')
             ->get();
         }
         return view('shop.list', compact('products', 'maxPrice', 'minPrice', 'sizes', 'images'));

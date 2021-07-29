@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class Product extends Model
 {
@@ -17,10 +18,6 @@ class Product extends Model
     {
         return $this->belongsTo(Metal::class, 'metal_id');
     }
-    public function stone_colors()
-    {
-        return $this->belongsTo(StoneColor::class, 'stoneColor_id');
-    }
     public function sizes()
     {
         return $this->belongsToMany(Size::class, 'product_sizes', 'product_id', 'size_id');
@@ -32,5 +29,10 @@ class Product extends Model
     public function sale()
     {
         return $this->belongsTo(Sale::class, 'id', 'product_id');
+    }
+
+    public function getDescriptionAttribute()
+    {
+        return LaravelLocalization::getCurrentLocale() == 'uk' ? $this->description_uk : $this->description_ru;
     }
 }

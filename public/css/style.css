@@ -829,6 +829,28 @@ a:hover {
     left: 0;    
 }
 
+.cart {
+    position: relative;
+}
+.prod-count {
+    position: absolute;
+    top: 25px;
+    left: 3px;
+    background-color: rgb(153, 0, 0);
+    z-index: 10;
+    color: whitesmoke;
+    border-radius: 50%;
+    padding: 0 7px !important;
+    margin: 0;
+    font-size: 14px;
+    height: 22px;
+    width: auto;
+    /* display: flex; */
+    line-height: 22px;
+    justify-content: center;
+    align-items: center;
+}
+
 .single-prod-sale-img {
     position: absolute;
     top: -17px;
@@ -1180,6 +1202,10 @@ h1 {
     white-space: nowrap;
 }
 
+.delete.basket-td a { 
+    cursor: pointer;
+}
+
 .cart-table .total {
     width: 94px;
     white-space: nowrap;
@@ -1209,6 +1235,10 @@ h1 {
 .cart-table table {
     margin-left: auto;
     margin-right: auto;
+}
+
+.basket-table {
+    min-height: 22.5vh;
 }
 
 .crf-s {
@@ -2499,6 +2529,12 @@ h1 {
 }
 
 @media screen and (max-width: 480px) {
+    .prod-count {
+        padding: 0 5px !important;
+        height: 18px;
+        line-height: 19px;
+
+    }
     #sidebar {
         padding-bottom: 40px;
     }
@@ -2790,10 +2826,10 @@ h1 {
     font-size: 2.6rem;
     border-bottom: 1px solid #000;
     width: 35%;
-    margin: 4% auto 3rem auto;
+    margin: 11.7vh auto 3rem auto;
 }
 .thx-h2 {
-    margin-bottom: 12%;
+    margin-bottom: 26.2vh;
     font-size: 1.4rem !important;
     color: black;
 }

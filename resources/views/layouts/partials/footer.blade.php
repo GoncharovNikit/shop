@@ -3,7 +3,7 @@
         <div class="cols">
             <div class="col media">
                 <div class="info">
-                    <h3>Мы в социальных сетях</h3>
+                    <h3>@lang('messages.social_footer_header')</h3>
                     <ul class="social">
                         <li>
                             <a href="https://www.facebook.com/pages/category/Jewelry-Watches/avangard_jewellery_factory-102604741119313/">
@@ -20,10 +20,9 @@
             </div>
             <div class="col contact">
                 <div class="info">
-                    <h3>Контактная информация</h3>
+                    <h3>@lang('messages.contact_info')</h3>
                     <p><span class="ico ico-em"></span>ag.avangard17@gmail.com</p>
-                    <p><span class="ico ico-ph"></span>(590) 423 446 924</p>
-                    <p><span class="ico ico-ph"></span>(590) 423 446 924</p>
+                    <p><span class="ico ico-ph"></span>+380(50) 500-01-71</p>
                 </div>
             </div>
         </div>
