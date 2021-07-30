@@ -361,7 +361,7 @@ a:hover {
     font-size: inherit;
 }
 .callback-block-header .callback-btn:hover {
-    background-color: rgb(70, 106, 206);
+    background-color: #0A0A4C;
     color: rgb(251, 240, 240);
     transition: 300ms;
 }
