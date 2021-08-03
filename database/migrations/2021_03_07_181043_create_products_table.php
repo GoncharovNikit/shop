@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
 
             $table->id();
 
-            $table->char('vendorCode', 15)->unique();
+            $table->char('vendorCode', 15)->unique()->index('products_vendorCode_index');
             $table->unsignedDecimal('price', 8, 2);
             $table->longText('description_ru');
             $table->longText('description_uk');
@@ -40,7 +40,6 @@ class CreateProductsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('product_sizes');
-        Schema::dropIfExists('basket');
         Schema::dropIfExists('products');
     }
 }
